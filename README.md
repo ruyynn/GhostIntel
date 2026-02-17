@@ -18,8 +18,9 @@ Tool ini cocok untuk:
 
 ## 📸 Screenshots
 
-output
+OUTPUT
 
+![GhostIntel Screenshot](https://github.com/ruyynn/GhostIntel/blob/main/Screenshot%202026-02-16%20223558.png)
 
 
 ## 🚀 Features (Fitur Utama)
