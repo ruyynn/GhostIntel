@@ -74,17 +74,20 @@ python3 ghostintel.py
 💻 OS: Linux / Windows / macOS
 
 ## 🤝 Contributing
+
 Kontribusi sangat terbuka 🚀
 
 Silakan:
 
-🍴 Fork repo
+🍴 Fork repository
 
 🌿 Buat branch baru
 
-🔄 Pull Request dengan deskripsi jelas
+🔄 Kirim Pull Request dengan deskripsi yang jelas
 
-Lihat detail di CONTRIBUTING.md
+📌 Panduan lengkap:  
+👉 [CONTRIBUTING.md](./Contributing.md)
+
 
 
 ## 📫 Author
