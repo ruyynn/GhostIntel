@@ -44,10 +44,15 @@ class CorrelationEngine:
             elif module_name == 'ip':
                 self._correlate_ip(data)
         
+        # Convert sets to lists for JSON serialization
+        entities_serializable = {}
+        for etype, entity_set in self.entities.items():
+            entities_serializable[etype] = sorted(list(entity_set))
+        
         # Build correlation result
         correlation = {
             'primary': self._get_primary_entity(results),
-            'entities': dict(self.entities),
+            'entities': entities_serializable,  # Sudah dalam bentuk list
             'connections': self.connections,
             'summary': self._generate_summary()
         }
