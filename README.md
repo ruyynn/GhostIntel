@@ -1,237 +1,340 @@
-# GhostIntel
-Framework OSINT Indonesia berbasis Python untuk analisis nomor telepon, username, email, dan informasi IP dari sumber publik.
+```
+       ▄████  ██░ ██  ▒█████   ██████ ▄▄▄█████▓     
+      ██▒ ▀█▒▓██░ ██▒▒██▒  ██▒▒██    ▒ ▓  ██▒ ▓▒    
+     ▒██░▄▄▄░▒██▀▀██░▒██░  ██▒░ ▓██▄   ▒ ▓██░ ▒░    
+     ░▓█  ██▓░▓█ ░██ ▒██   ██░  ▒   ██▒░ ▓██▓ ░     
+     ░▒▓███▀▒░▓█▒░██▓░ ████▓▒░▒██████▒▒  ▒██▒ ░     
+      ░▒   ▒  ▒ ░░▒░▒░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░  ▒ ░░       
+       ░   ░  ▒ ░▒░ ░  ░ ▒ ▒░ ░ ░▒  ░ ░    ░        
+     ░ ░   ░  ░  ░░ ░░ ░ ░ ▒  ░  ░  ░    ░          
+           ░  ░  ░  ░    ░ ░        ░               
+```
 
+<div align="center">
 
-<p align="center"> <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&duration=2500&pause=500&color=22D3EE&center=true&vCenter=true&width=500&lines=+GhostIntel;Advanced+OSINT+Framework;Open+Source+Intelligence" /> </p><p align="center"> <img src="https://img.shields.io/badge/Versi-1.0.0-blue?style=for-the-badge" /> <img src="https://img.shields.io/badge/Python-3.8%2B-green?style=for-the-badge" /> <img src="https://img.shields.io/badge/Lisensi-MIT-red?style=for-the-badge" /> <img src="https://img.shields.io/badge/Author-Ruyynn-purple?style=for-the-badge" /> </p><p align="center"> <img src="https://img.shields.io/github/stars/ruyynn/GhostIntel?style=social" /> <img src="https://img.shields.io/github/forks/ruyynn/GhostIntel?style=social" /> <img src="https://img.shields.io/github/watchers/ruyynn/GhostIntel?style=social" /> </p>
+# GhostIntel v2.0
+
+**API-Less OSINT Mashup Engine**
+
+[![Version](https://img.shields.io/badge/Versi-2.0.0-blue?style=for-the-badge)](https://github.com/ruyynn/GhostIntel)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-green?style=for-the-badge)](https://python.org)
+[![License](https://img.shields.io/badge/Lisensi-MIT-red?style=for-the-badge)](LICENSE)
+[![Author](https://img.shields.io/badge/Author-Ruyynn-purple?style=for-the-badge)](https://github.com/ruyynn)
+[![Stars](https://img.shields.io/github/stars/ruyynn/GhostIntel?style=social)](https://github.com/ruyynn/GhostIntel/stargazers)
+
+*Update besar dari [GhostIntel v1.0](https://github.com/ruyynn/GhostIntel) — dibangun ulang dari nol dengan arsitektur async, lebih cepat, lebih lengkap.*
+
+⚠️ **Untuk bahan pembelajaran. Jangan doxing orang tanpa izin.** ⚠️
+
+</div>
+
+---
 
 ## 📋 Deskripsi
-GhostIntel adalah OSINT Framework berbasis Python yang dirancang untuk melakukan pengumpulan informasi dari sumber publik (Open Source Intelligence) secara cepat, legal, dan etis.
 
-Tool ini cocok untuk:
+GhostIntel v2.0 adalah **OSINT Mashup Engine** berbasis Python yang dirancang untuk melakukan pengumpulan informasi dari sumber publik secara cepat, legal, dan etis — **tanpa memerlukan API key apapun**.
 
-● 🔍 OSINT Analyst
-
-● 📚 Edukasi & pembelajaran keamanan siber
-
-<p align="center"> <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=2000&pause=500&color=22D3EE&center=true&vCenter=true&width=600&lines=osint+tool+indonesia;phone+number+osint+github;username+search+multi+platform;imsi+generator+indonesia;provider+detection+indonesia;ghostintel+ruyynn;osint+framework+python" /> </p>
-
-
-## 📸 Screenshots
-
-OUTPUT
-
-![GhostIntel Screenshot](https://github.com/ruyynn/GhostIntel/blob/main/Screenshot%202026-02-16%20223558.png)
-
-
-## 🚀 Features (Fitur Utama)
-
-● 📱 Phone OSINT
-
-● 👤 Username OSINT
-
-● 📧 Email OSINT
-
-● 🌐 My IP Intelligence
+Versi ini merupakan **rewrite penuh** dari v1.0 dengan arsitektur async, modul yang diperluas, sistem korelasi data antar modul, dan output report dalam berbagai format.
 
 ---
 
-## 🧠 Why GhostIntel?
+## ✨ Apa yang Baru di v2.0?
 
-✔ Tidak melakukan hacking  
-✔ Tidak brute-force  
-✔ Tidak mengakses database privat  
-✔ Tidak doxing  
-✔ Hanya menggunakan **data publik**
-
-> GhostIntel dibuat untuk **edukasi & riset keamanan**, bukan untuk penyalahgunaan.
+| Fitur | v1.0 | v2.0 |
+|---|---|---|
+| Arsitektur | Sync/Sequential | **Async/Concurrent** |
+| Phone OSINT | Indonesia only | **ID, US, UK, MY, IN** |
+| Username check | Beberapa platform | **100+ platform** |
+| Domain OSINT | ❌ | **✅ DNS + HTTP** |
+| IP OSINT | Basic | **✅ RDAP + Geolocation** |
+| Auto-detect target | ❌ | **✅ EntityDetector** |
+| Korelasi data | ❌ | **✅ CorrelationEngine** |
+| Export report | ❌ | **✅ JSON / HTML / TXT** |
+| API key required | Beberapa | **❌ Zero API keys** |
+| Concurrent threads | 1 | **20 (configurable)** |
 
 ---
 
-## 🖥️ Installation
+## 🚀 Fitur Utama
 
-### 1️⃣ Clone Repository
+### 👤 Username OSINT
+- Cek username di **100+ platform** secara bersamaan
+- Kategorisasi: social, dev, gaming, musik, forum, profesional, Indonesia-specific
+- Parse judul halaman untuk validasi profil aktif
+- Generate variasi username dan possible emails
+
+### 📧 Email OSINT
+- Validasi format & cek MX records via DNS live
+- Deteksi SPF dan DMARC record
+- Cek Gravatar profile
+- Identifikasi disposable email & free provider
+- Generate variasi username dari email
+
+### 📱 Phone OSINT (Multi-Country)
+- Support **5 negara**: 🇮🇩 Indonesia, 🇺🇸 USA, 🇬🇧 UK, 🇲🇾 Malaysia, 🇮🇳 India
+- Deteksi provider/operator dari prefix nomor
+- Format output: E.164, International, National, RFC3966
+- Deteksi jenis line (Mobile, Fixed, VoIP, dll)
+- Timezone detection
+
+### 🌐 Domain OSINT
+- DNS records lengkap: **A, AAAA, NS, MX, TXT, SOA, CNAME**
+- Cek HTTP/HTTPS status & server header
+- Ambil title website otomatis
+- Semua via live DNS query (bukan cache)
+
+### 🌍 IP OSINT
+- Geolocation via **ip-api.com** (gratis, tanpa key)
+- Reverse DNS lookup
+- **RDAP lookup** ke 5 RIR: ARIN, RIPE, APNIC, LACNIC, AFRINIC
+- Deteksi private/loopback/multicast
+
+### 🔗 Correlation Engine
+- Menghubungkan data dari semua modul secara otomatis
+- Ekstrak entitas: email, domain, IP, username, ASN, ISP
+- Visualisasi tree di terminal
+
+### 📊 Report Generator
+- Export ke **JSON**, **HTML** (via Jinja2 template), atau **TXT**
+- Auto-naming dengan timestamp
+- Summary table per modul
+
+---
+
+## 🗂️ Struktur Project
+
+```
+GhostIntel/
+├── ghostintel.py           # Entry point utama
+├── requirements.txt
+│
+├── core/
+│   ├── engine.py           # Orchestrator utama
+│   ├── detector.py         # Auto-detect tipe target
+│   ├── correlation.py      # Korelasi data antar modul
+│   ├── banner.py           # CLI styling (Rich)
+│   └── utils.py            # Help menu & utilities
+│
+├── modules/
+│   ├── base.py             # Base class semua modul
+│   ├── username.py         # Username checker (100+ platform)
+│   ├── email.py            # Email investigator
+│   ├── phone.py            # Phone number analyzer
+│   ├── domain.py           # Domain DNS scanner
+│   └── ip.py               # IP geolocation & RDAP
+│
+├── sources/
+│   ├── social_media.py     # Database 100+ platform URL
+│   ├── phone_db.py         # Database prefix → provider
+│   └── breach_db.py        # Database breach publik
+│
+└── reports/
+    ├── generator.py         # Report generator (JSON/HTML/TXT)
+    ├── html_template.py     # Jinja2 HTML template
+    └── json_formatter.py    # JSON serializer
+```
+
+---
+
+## 🖥️ Instalasi
+
+### 1. Clone Repository
+
 ```bash
 git clone https://github.com/ruyynn/GhostIntel.git
 cd GhostIntel
 ```
-### 2️⃣ Install Dependencies
+
+### 2. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
-````
-3️⃣ Run Tool
-```bash
-python3 ghostintel.py
 ```
 
-## 📌 Requirements
+### 3. Jalankan
 
-🐍 Python 3.8+
+```bash
+python3 ghostintel.py --help
+```
 
-📦 requests
+### Requirements
 
-📦 dnspython (optional)
+- Python 3.8+
+- Linux / Windows / macOS
 
-💻 OS: Linux / Windows / macOS
+---
+
+## 📌 Cara Penggunaan
+
+### Auto-detect (Recommended)
+
+```bash
+python3 ghostintel.py investigate TARGET
+```
+
+GhostIntel akan otomatis mendeteksi apakah target adalah email, domain, IP, nomor telepon, atau username.
+
+### Spesifik per Tipe
+
+```bash
+python3 ghostintel.py -u USERNAME        # Username
+python3 ghostintel.py -e EMAIL           # Email
+python3 ghostintel.py -p PHONE           # Phone
+python3 ghostintel.py -d DOMAIN          # Domain
+python3 ghostintel.py -i IP              # IP Address
+```
+
+### Generate Report
+
+```bash
+# HTML report
+python3 ghostintel.py -u asep --report --format html
+
+# JSON output ke file
+python3 ghostintel.py -d example.com --format json -o hasil.json
+
+# Text report
+python3 ghostintel.py -p +62812345678 --report --format txt
+```
+
+### Contoh Lengkap
+
+```bash
+# Cek username
+python3 ghostintel.py -u johndoe
+
+# Investigasi nomor Indonesia
+python3 ghostintel.py -p 081234567890
+
+# Investigasi nomor US
+python3 ghostintel.py -p +12125551234
+
+# Domain recon dengan laporan HTML
+python3 ghostintel.py -d example.com --report --format html -o hasil.html
+
+# IP lookup
+python3 ghostintel.py -i 8.8.8.8
+
+# Email investigation
+python3 ghostintel.py -e user@example.com
+
+# Auto-detect + comprehensive report
+python3 ghostintel.py investigate target@example.com --report
+```
+
+---
+
+## 📱 Phone OSINT — Format per Negara
+
+| Negara | Format Lokal | Format Internasional |
+|--------|-------------|---------------------|
+| 🇮🇩 Indonesia | `081234567890` | `+62 812-3456-7890` |
+| 🇺🇸 USA | `(212) 555-1234` | `+1 212-555-1234` |
+| 🇬🇧 UK | `07700 123456` | `+44 7700 123456` |
+| 🇲🇾 Malaysia | `012-3456789` | `+60 12-3456789` |
+| 🇮🇳 India | `09876543210` | `+91 98765 43210` |
+
+---
+
+## ⚙️ Opsi Lanjutan
+
+| Opsi | Default | Deskripsi |
+|------|---------|-----------|
+| `--timeout` | 10 | Request timeout (detik) |
+| `--threads` | 20 | Concurrent threads |
+| `--format` | json | Format output: json / html / txt |
+| `-o, --output` | auto | Nama file output |
+| `--report` | false | Generate laporan lengkap |
+| `--no-color` | false | Nonaktifkan warna terminal |
+
+---
+
+## 🧠 Kenapa GhostIntel?
+
+- ✅ **Zero API Keys** — tidak perlu daftar ke layanan apapun
+- ✅ **Async & Fast** — investigasi concurrent, bukan sequential
+- ✅ **Multi-country** — tidak hanya Indonesia
+- ✅ **Correlation** — data dari berbagai modul dihubungkan otomatis
+- ✅ **Tidak hacking** — hanya menggunakan data publik
+- ✅ **Tidak brute-force** — tidak mengakses database privat
+
+---
 
 ## 🤝 Contributing
 
-Kontribusi sangat terbuka 🚀
+Kontribusi sangat terbuka! 🚀
 
-Silakan:
+1. 🍴 Fork repository
+2. 🌿 Buat branch baru (`git checkout -b fitur-baru`)
+3. 💾 Commit perubahan (`git commit -m 'Tambah fitur X'`)
+4. 📤 Push ke branch (`git push origin fitur-baru`)
+5. 🔄 Kirim Pull Request
 
-🍴 Fork repository
+Panduan lengkap: [CONTRIBUTING.md](Contributing.md)
 
-🌿 Buat branch baru
-
-🔄 Kirim Pull Request dengan deskripsi yang jelas
-
-📌 Panduan lengkap:  
-👉 [CONTRIBUTING.md](./Contributing.md)
-
-
+---
 
 ## 📫 Author
 
-<p align="center"> <a href="https://github.com/ruyynn"> <img src="https://img.shields.io/badge/GitHub-Ruyynn-black?style=for-the-badge&logo=github" /> </a> <br> <a href="https://www.instagram.com/ellreynn"> <img src="https://img.shields.io/badge/Instagram-@ellreynn-purple?style=for-the-badge&logo=instagram" /> </a> <br> <a href="mailto:ruyynn25@gmail.com"> <img src="https://img.shields.io/badge/Email-ruyynn25%40gmail.com-red?style=for-the-badge&logo=gmail" /> </a> </p>
+[![GitHub](https://img.shields.io/badge/GitHub-Ruyynn-black?style=for-the-badge&logo=github)](https://github.com/ruyynn)
+[![Instagram](https://img.shields.io/badge/Instagram-@ellreynn-purple?style=for-the-badge&logo=instagram)](https://www.instagram.com/ellreynn)
+[![Email](https://img.shields.io/badge/Email-ruyynn25@gmail.com-red?style=for-the-badge&logo=gmail)](mailto:ruyynn25@gmail.com)
 
-## 🧾 License & Copyright
+---
 
-© 2026 Ruyynn. All Rights Reserved.
-```text
-Dilarang mengedit, memodifikasi, atau mendistribusikan ulang kode
-tanpa izin tertulis dari pembuat.
-```
 ## ☕ Dukungan
-<p align="center"> <b>Jika merasa terbantu dengan tools ini,</b><br> <b>boleh banget kasih star atau donasi:</b> </a> </p><p align="center"> <a href="https://saweria.co/Ruyynn"> <img src="https://user-images.githubusercontent.com/26188697/180601310-e82c63e4-412b-4c36-b7b5-7ba713c80380.png" width="180" /> </a> </p><p align="center"> <a href="https://github.com/ruyynn/GhostIntel"> <img src="https://img.shields.io/github/stars/ruyynn/GhostIntel?style=for-the-badge&logo=github&color=yellow&label=Star%20Repo" /> </a> <a href="https://github.com/ruyynn?tab=followers"> <img src="https://img.shields.io/github/followers/ruyynn?style=for-the-badge&logo=github&color=blue&label=Follow%20Me" /> </a> </p><p align="center"> <i>⭐ Setiap donasi dan bintang sangat berarti untuk pengembangan tools ini ⭐</i> </p>
 
+Jika tools ini bermanfaat, boleh banget kasih ⭐ atau donasi:
 
-# ⚠️ DISCLAIMER
+[![Saweria](https://img.shields.io/badge/Donasi-Saweria-orange?style=for-the-badge)](https://saweria.co/Ruyynn)
 
-## 1. TUJUAN PEMBUATAN
-GhostIntel dibuat untuk tujuan:
+---
 
-✅ Edukasi dan pembelajaran keamanan siber
+## ⚠️ Disclaimer & Legal
 
-✅ Riset keamanan yang sah
+### Tujuan Pembuatan
 
-✅ Pengujian keamanan pada sistem milik sendiri
+GhostIntel dibuat **semata-mata** untuk:
+- ✅ Edukasi dan pembelajaran keamanan siber
+- ✅ Riset keamanan yang sah
+- ✅ Pengujian pada sistem milik sendiri
+- ✅ Pengembangan skill OSINT untuk keperluan profesional
 
-✅ Pengembangan skill OSINT untuk keperluan profesional
+### Sumber Data
 
-## 2. SUMBER DATA
-GhostIntel HANYA mengumpulkan informasi dari:
+GhostIntel **HANYA** menggunakan:
+- ✅ Sumber publik yang tersedia di internet
+- ✅ API publik yang legal
+- ✅ Data yang sudah terbuka untuk umum
 
-✅ Sumber publik yang tersedia di internet
+### Larangan Penggunaan
 
-✅ API publik yang legal
+**DILARANG KERAS** menggunakan GhostIntel untuk:
+- ❌ Doxing (mengekspos data pribadi orang tanpa izin)
+- ❌ Stalking atau pelecehan
+- ❌ Pelanggaran privasi
+- ❌ Aktivitas kriminal atau ilegal
 
-✅ Data yang sudah terbuka untuk umum
+> Dengan menggunakan GhostIntel, Anda bertanggung jawab penuh atas segala konsekuensi penggunaan tool ini. Author tidak bertanggung jawab atas penyalahgunaan.
 
-❌ BUKAN dari database privat
+---
 
-❌ BUKAN hasil hacking/peretasan
+## 📜 License
 
-❌ BUKAN hasil scraping ilegal
+© 2026 Ruyynn. Licensed under the [MIT License](LICENSE).
 
-## 3. LARANGAN PENGGUNAAN
-DILARANG KERAS menggunakan GhostIntel untuk:
+Dilarang mendistribusikan ulang untuk tujuan komersial tanpa izin tertulis dari pembuat.
 
-❌ DOXING (mengekspos data pribadi orang tanpa izin)
+---
 
-❌ Stalking atau pelecehan
+<div align="center">
 
-❌ Pelanggaran privasi
+**GhostIntel v2.0** — *OSINT Mashup Engine*
 
-❌ Aktivitas kriminal atau ilegal
+*Dibuat untuk pembelajaran • Gunakan dengan bijak • Hormati privasi orang lain*
 
-❌ Teror atau intimidasi
+*"Ilmu yang bermanfaat adalah ilmu yang digunakan untuk kebaikan, bukan untuk menyakiti sesama."*
 
-❌ Mengganggu keamanan orang lain
+[![Star Repo](https://img.shields.io/github/stars/ruyynn/GhostIntel?style=for-the-badge&logo=github&color=yellow&label=Star%20Repo)](https://github.com/ruyynn/GhostIntel)
 
-❌ Mengakses data tanpa izin
-
-❌ Segala bentuk penyalahgunaan OSINT
-
-## 4. TANGGUNG JAWAB PENGGUNA
-Dengan menggunakan GhostIntel, Anda:
-
-✅ Bertanggung jawab PENUH atas penggunaan tool ini
-
-✅ Wajib mematuhi hukum yang berlaku di wilayah Anda
-
-✅ Wajib mendapatkan izin jika target bukan milik Anda
-
-✅ Memahami bahwa informasi publik tetap memiliki batasan etis
-
-✅ Setuju untuk tidak menyalahgunakan tool ini
-
-## 5. BATASAN TANGGUNG JAWAB AUTHOR
-Author (Ruyynn) TIDAK BERTANGGUNG JAWAB atas:
-
-❌ Penyalahgunaan tool ini oleh pengguna
-
-❌ Pelanggaran hukum yang dilakukan pengguna
-
-❌ Konsekuensi hukum dari penggunaan ilegal
-
-❌ Kerugian yang timbul akibat penggunaan tool ini
-
-❌ Tindakan kriminal yang menggunakan tool ini
-
-## 6. HAK CIPTA DAN LISENSI
-⚠️ GhostIntel adalah karya orisinal Ruyynn
-
-⚠️ Seluruh hak cipta dilindungi undang-undang
-
-⚠️ DILARANG mengedit, memodifikasi, atau mendistribusikan ulang tanpa izin tertulis dari pembuat
-
-⚠️ Tidak diperbolehkan untuk tujuan komersial tanpa izin
-
-## 7. ETIKA OSINT
-Ingatlah selalu:
-
-🔹 "With great power comes great responsibility"
-
-🔹 Informasi publik bukan berarti bebas digunakan untuk menyakiti
-
-🔹 Selalu hormati privasi orang lain
-
-🔹 Gunakan skill ini untuk kebaikan, bukan kejahatan
-
-🔹 Jadi white hat, bukan black hat
-
-## 8. PENUTUP
-GhostIntel dibuat dengan niat baik untuk edukasi dan kemajuan dunia keamanan siber di Indonesia. Jika Anda menggunakan tool ini untuk hal-hal negatif, ANDA SENDIRI yang bertanggung jawab, BUKAN pembuat tool.
-
-> "Ilmu yang bermanfaat adalah ilmu yang digunakan untuk kebaikan, bukan untuk menyakiti sesama."
-
-## 🔴 PERNYATAAN TEGAS</h3>
-
-<p align="center" style="color:#FF0000; font-weight:700;">
-⚠️ GHOSTINTEL BUKAN ALAT UNTUK KEJAHATAN! ⚠️
-</p>
-
-<p align="center" style="color:#FF0000; font-weight:600;">
-DOXXING = KRIMINAL!<br>
-STALKING = KRIMINAL!<br>
-PELANGGARAN PRIVASI = KRIMINAL!
-</p>
-
-<p align="center">
-<b>Jika Anda menggunakan GhostIntel untuk aktivitas ilegal,</b><br>
-<b style="color:#FF0000;">ANDA AKAN MENGHADAPI KONSEKUENSI HUKUM!</b>
-</p>
-
-
-### 📞 LAPOR PENYALAHGUNAAN
-Jika Anda melihat penyalahgunaan GhostIntel, silakan laporkan:
-
-<p align="center"> <a href="mailto:ruyynn25@gmail.com"> <img src="https://img.shields.io/badge/Laporkan%20Penyalahgunaan-ruyynn25%40gmail.com-red?style=for-the-badge&logo=gmail" /> </a> </p>
-
-
-## 📌 INGAT!
-<p align="center"> <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&duration=2000&pause=500&color=22D3EE&center=true&vCenter=true&width=600&lines=+GhostIntel+untuk+edukasi!;+OSINT+yang+bertanggung+jawab!;+Gunakan+dengan+bijak!;+Hormati+privasi+orang+lain!" /> </p><p align="center"> </b> </p>
-
-
-## ⭐ Terima Kasih
-<p align="center"> <b>GhostIntel v1.0</b><br> <b>OSINT Framework</b><br> <i>Information from Public Sources Only</i> </p><p align="center"> <b>━━━━━━━━━━━━━━━━━━━━━━</b><br> <b>Terima kasih telah menggunakan</b><br> <b>Semoga bermanfaat untuk pembelajaran</b> </p><p align="center"> <b>━━━━━━━━━━━━━━━━━━━━━━</b> </p><p align="center"> <img src="https://komarev.com/ghpvc/?username=ruyynn&label=GhostIntel%20Views&color=22d3ee&style=flat-square" /> </p><p align="center"> <b>© 2026 Ruyynn. All Rights Reserved.</b><br> <i>Dibuat untuk pembelajaran OSINT • Gunakan dengan bijak • Hormati privasi orang lain</i> </p><p align="center"> <b>━━━━━━━━━━━━━━━━━━━━━━</b> </p><p align="center"> <i>"Ilmu yang bermanfaat adalah ilmu yang digunakan untuk kebaikan"</i> </p>
+</div>
