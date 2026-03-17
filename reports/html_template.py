@@ -959,32 +959,37 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         {% endfor %}
 
         <!-- Correlation -->
-        {% if correlation and correlation.entities %}
-        <div class="module-card">
-            <div class="module-header" onclick="toggleModule(this)">
-                <div class="module-title">
-                    <span class="module-icon">🔗</span>
-                    <h3>INTELLIGENCE CORRELATION</h3>
+{% if correlation and correlation.entities %}
+<div class="module-card">
+    <div class="module-header" onclick="toggleModule(this)">
+        <div class="module-title">
+            <span class="module-icon">🔗</span>
+            <h3>INTELLIGENCE CORRELATION</h3>
+        </div>
+        <span class="toggle-btn">▼</span>
+    </div>
+    <div class="module-content">
+        <div class="correlation-tree">
+            <div class="tree-root">{{ correlation.primary }}</div>
+            
+            {% for etype, entities in correlation.entities.items() %}
+                {% if entities %}
+                <div class="tree-branch">
+                    <div class="tree-leaf">
+                        <strong>{{ etype|upper }}</strong>
+                    </div>
+                    {% for entity in entities %}
+                    <div class="tree-leaf">
+                        <span>{{ entity }}</span>
+                    </div>
+                    {% endfor %}
                 </div>
-                <span class="toggle-btn">▼</span>
-            </div>
-            <div class="module-content">
-                <div class="correlation-tree">
-                    <div class="tree-root">{{ correlation.primary }}</div>
-                    
-                    {% for etype, entities in correlation.entities.items() %}
-                        {% if entities %}
-                        <div class="tree-branch">
-                            <div class="tree-leaf">
-                                <strong>{{ etype|upper }}</strong>
-                            </div>
-                            {% for entity in entities|list|sort %}
-                            <div class="tree-leaf">
-                                <span>{{ entity }}</span>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
                     {% endfor %}
                 </div>
 
