@@ -14,6 +14,7 @@ from typing import Dict, Optional
 from jinja2 import Template
 
 from reports.html_template import HTML_TEMPLATE
+from core.banner import console  # Tambahin ini untuk logging
 
 
 class ReportGenerator:
@@ -54,6 +55,17 @@ class ReportGenerator:
         # Prepare template data
         template_data = self._prepare_html_data(results)
         
+        # Debug: cek tipe data correlation
+        if 'correlation' in template_data and template_data['correlation']:
+            corr = template_data['correlation']
+            console.print("[dim]Debug: Correlation data type[/dim]")
+            if 'entities' in corr:
+                for etype, entities in corr['entities'].items():
+                    console.print(f"  [dim]{etype}: {type(entities)}[/dim]")
+                    # Kalau masih set, convert
+                    if isinstance(entities, set):
+                        corr['entities'][etype] = list(entities)
+        
         # Render template
         template = Template(HTML_TEMPLATE)
         html_content = template.render(**template_data)
@@ -61,6 +73,7 @@ class ReportGenerator:
         async with aiofiles.open(filepath, 'w', encoding='utf-8') as f:
             await f.write(html_content)
         
+        console.print(f"[green]✅ HTML report saved: {filepath}[/green]")
         return filepath
     
     async def save_txt(self, results: Dict, filename: Optional[str] = None) -> Path:
@@ -105,7 +118,10 @@ class ReportGenerator:
             lines.append("-" * 40)
             if 'entities' in corr:
                 for etype, entities in corr['entities'].items():
-                    lines.append(f"  {etype}: {', '.join(list(entities)[:10])}")
+                    # Convert set ke list untuk join
+                    if isinstance(entities, set):
+                        entities = list(entities)
+                    lines.append(f"  {etype}: {', '.join(str(e) for e in entities[:10])}")
             lines.append("")
         
         lines.append("=" * 60)
@@ -115,6 +131,7 @@ class ReportGenerator:
         async with aiofiles.open(filepath, 'w', encoding='utf-8') as f:
             await f.write('\n'.join(lines))
         
+        console.print(f"[green]✅ Text report saved: {filepath}[/green]")
         return filepath
     
     def _make_serializable(self, obj):
@@ -123,6 +140,8 @@ class ReportGenerator:
             return {k: self._make_serializable(v) for k, v in obj.items()}
         elif isinstance(obj, (list, tuple)):
             return [self._make_serializable(i) for i in obj]
+        elif isinstance(obj, set):  # Handle set!
+            return list(obj)
         elif isinstance(obj, (str, int, float, bool, type(None))):
             return obj
         elif isinstance(obj, datetime):
@@ -135,14 +154,18 @@ class ReportGenerator:
         modules = {}
         target = "Unknown"
         
+        # First pass: collect modules
         for name, result in results.items():
             if name.startswith('_'):
                 continue
                 
             if result and 'data' in result:
+                # Make sure data is serializable
+                data = self._make_serializable(result['data'])
+                
                 modules[name] = {
                     'name': name,
-                    'data': result['data'],
+                    'data': data,
                     'sources': result.get('sources', [])
                 }
                 
@@ -150,8 +173,20 @@ class ReportGenerator:
                 if target == "Unknown" and 'target' in result:
                     target = result['target']
         
-        # Get correlation
+        # Get correlation and ensure it's serializable
         correlation = results.get('_correlation', {})
+        correlation = self._make_serializable(correlation)
+        
+        # Final check: pastikan entities dalam bentuk list
+        if correlation and 'entities' in correlation:
+            for etype, entities in correlation['entities'].items():
+                if isinstance(entities, list):
+                    # Already good
+                    pass
+                elif isinstance(entities, set):
+                    correlation['entities'][etype] = list(entities)
+                else:
+                    correlation['entities'][etype] = []
         
         return {
             'target': target,
