@@ -243,7 +243,7 @@ class GhostIntelEngine:
         # Show correlation if available
         if '_correlation' in results:
             corr = results['_correlation']
-            entities = corr.get('entities', [])
+            entities = corr.get('entities', {})
             
             if entities:
                 console.print("\n[bold yellow]🔗 Correlated Intelligence:[/bold yellow]")
@@ -253,6 +253,7 @@ class GhostIntelEngine:
                 for entity_type, entity_list in entities.items():
                     if entity_list:
                         branch = tree.add(f"[yellow]{entity_type}[/yellow]")
+                        # entity_list sudah dalam bentuk list, bukan set
                         for entity in entity_list[:5]:
                             branch.add(f"[dim]{entity}[/dim]")
                 
