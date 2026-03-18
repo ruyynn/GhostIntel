@@ -468,7 +468,7 @@ Contributions are very welcome!
 4. 📤 Push to branch — `git push origin cool-feature`
 5. 🔄 Open a Pull Request
 
-Read the full guide → [CONTRIBUTING.md](CONTRIBUTING.md)
+Read the full guide → [Contributing.md](Contributing.md)
 
 ---
 
