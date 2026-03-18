@@ -330,39 +330,7 @@ ghostintel -i 8.8.8.8
 └─ Organization: Google LLC
 ```
 
-## 🧠 Correlation Engine - Intel Graph
-
-GhostIntel menghubungkan semua data yang ditemukan!
-
-```bash
-ghostintel investigate ruyynn --report
-```
-```text
-🔗 INTELLIGENCE CORRELATION
-╔═══════════════════════════════════════╗
-║                 ruyynn                ║
-╚═══════════════════════════════════════╝
-     ├─ 👤 USERNAME: ruyynn
-     │    ├─ GitHub: https://github.com/ruyynn
-     │    ├─ Twitter: https://twitter.com/ruyynn
-     │    └─ Telegram: https://t.me/ruyynn
-     │
-     ├─ 📧 EMAIL: ruyynn@gmail.com
-     │    ├─ Domain: gmail.com
-     │    └─ Gravatar: ✅ Found
-     │
-     ├─ 🌐 DOMAIN: ruyynn.dev
-     │    ├─ IP: 104.28.12.34
-     │    ├─ Hosting: Cloudflare
-     │    └─ Server: nginx
-     │
-     └─ 🌍 IP: 104.28.12.34
-          ├─ Country: USA
-          ├─ ISP: Cloudflare
-          └─ Organization: Cloudflare Inc.
-```
-
-## 📊 Report Generator - Premium Output
+## 📊 Report Generator
 
 Buat laporan profesional dengan 3 format!
 
@@ -376,22 +344,6 @@ ghostintel investigate target --format json -o data.json
 # TXT Report (simple, cepat)
 ghostintel investigate target --format txt -o output.txt
 ```
-### Fitur Report HTML:
-
-🌓 Dark/Light theme toggle - Bisa ganti-ganti tema
-
-🔍 Live search - Cari data dengan highlight
-
-📋 Copy to clipboard - Salin data dengan sekali klik
-
-📱 Fully responsive - Buka di HP juga oke
-
-🖨️ Print-friendly - Siap cetak atau jadi PDF
-
-⚡ Fast loading - Optimized performance
-
-🎨 Modern UI - Tampilan kekinian
-
 ---
 
 ## 🚀 Cara Install
