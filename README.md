@@ -213,122 +213,37 @@ Mobile Prefixes:
 ```
 </details>
 
-## 👤 Username OSINT - 100+ Platform
+## 👤 Username OSINT
 
-*Cari username di seluruh platform sekaligus!*
-
-```bash
-ghostintel -u ruyynn
-```
-### Platform Lengkap (100+):
-
-|Kategori	   |     Platform     |
-|----------------|------------------|
-|🌐 Social Media|	Twitter, Instagram, TikTok, Facebook, Pinterest, Snapchat, Tumblr, Mastodon|
-|💻 Developer|   	GitHub, GitLab, Bitbucket, Replit, CodePen, Stack Overflow, HackerOne, Bugcrowd|
-|🗣️ Forum|	       Reddit, Quora, HackerNews, Kaskus, Detik Forum, Indowebster|
-|📝 Blog|	       Medium, Dev.to, Kompasiana, WordPress, Ghost, Blogger|
-|💬 Messaging|	       Telegram, WhatsApp, Discord, Slack, Matrix, Signal|
-|🎮 Gaming|	       Steam, Minecraft, Chess.com, Roblox, Epic Games, Xbox, PlayStation|
-|💼 Professional|	LinkedIn, Upwork, Fiverr, Freelancer, Toptal, AngelList|
-|🎵 Music|	       Spotify, SoundCloud, Last.fm, Bandcamp, ReverbNation, Mixcloud|
-|🎬 Video|	       YouTube, Twitch, Vimeo, Dailymotion, Kick, Rumble|
-|🇮🇩 Indonesian|  	Kaskus, Kompasiana, Detik Forum, Indowebster, Lintas.me|
+<p align="center">
+  <img src="assets/username-osint.png" width="850">
+</p>
 
 ---
 
-## 📧 Email OSINT - DNS Investigator
+## 📧 Email OSINT
 
-Investigasi email sampai ke akar-akarnya!
+<p align="center">
+  <img src="assets/email-osint.png" width="850">
+</p>
 
-```bash
-ghostintel -e admin@example.com
-```
-```text
-╔═══════════════════════════════════════╗
-║         EMAIL INVESTIGATION           ║
-╚═══════════════════════════════════════╝
+---
 
-📧 Email      : admin@example.com
-👤 Username   : admin
-🌐 Domain     : example.com
+## 🌐 Domain OSINT
 
-📋 DNS RECORDS:
-├─ MX Records:
-│  ├─ mail.example.com (priority 10)
-│  └─ backup.example.com (priority 20)
-├─ SPF Record : v=spf1 include:_spf.example.com ~all
-├─ DMARC      : v=DMARC1; p=reject; rua=mailto:dmarc@example.com
-└─ TXT Records: 3 records found
+<p align="center">
+  <img src="assets/domain-osint.png" width="850">
+</p>
 
-🖼️ Gravatar   : ✅ Found (admin@example.com)
-📦 Disposable : ❌ No
-💸 Free Provider : ❌ No (Custom domain)
-```
+---
 
-## 🌐 Domain OSINT - DNS Recon
+## 🌍 IP OSINT
 
-Scan domain secara mendalam!
+<p align="center">
+  <img src="assets/ip-osint.png" width="850">
+</p>
 
-```bash
-ghostintel -d example.com
-```
-```text
-╔═══════════════════════════════════════╗
-║         DOMAIN INVESTIGATION          ║
-╚═══════════════════════════════════════╝
-
-🌐 Domain     : example.com
-
-📡 DNS RECORDS:
-├─ A Records  : 93.184.216.34, 2606:2800:220:1:248:1893:25c8:1946
-├─ NS Records :
-│  ├─ a.iana-servers.net
-│  └─ b.iana-servers.net
-├─ MX Records :
-│  ├─ mail.example.com (10)
-├─ TXT Records: v=spf1 -all
-└─ SOA Record : a.iana-servers.net (2024021201)
-
-🌍 WEBSITE INFO:
-├─ HTTP Status: 200 OK
-├─ Server     : ECS/example
-├─ Title      : Example Domain
-└─ HTTPS      : ✅ Enabled
-```
-## 🌍 IP OSINT - Geolocation & RDAP
-
-Lacak IP address dengan akurat!
-
-```bash
-ghostintel -i 8.8.8.8
-```
-```text
-╔═══════════════════════════════════════╗
-║            IP INVESTIGATION           ║
-╚═══════════════════════════════════════╝
-
-🌍 IP Address : 8.8.8.8
-📦 Version    : IPv4
-🏠 Private    : ❌ No
-
-📍 GEOLOCATION:
-├─ Country    : United States
-├─ City       : Mountain View
-├─ Coordinates: 37.3860, -122.0838
-├─ Timezone   : America/Los_Angeles
-├─ ISP        : Google LLC
-├─ Organization: Google Public DNS
-└─ ASN        : AS15169 Google
-
-🔄 Reverse DNS: dns.google
-
-📋 RDAP INFO:
-├─ RIR        : ARIN
-├─ Handle     : NET-8-8-8-0-1
-├─ Registered : 1992-12-01
-└─ Organization: Google LLC
-```
+---
 
 ## 📊 Report Generator
 
