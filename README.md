@@ -1,45 +1,71 @@
+<!-- GhostIntel v2.0 - OSINT Framework Python Indonesia - digital investigation tools username email domain IP phone number lookup reconnaissance cybersecurity ethical hacking open source intelligence osint-indonesia osint-tool osint-framework python-osint phone-number-lookup username-search kali-linux-tools bug-bounty-recon information-gathering no-api-key async-python -->
+
 # 👻 GhostIntel v2.0
 
-**OSINT Framework Indonesia • Tools Investigasi Digital • 100% Public Data**
+*GhostIntel is a Python-based OSINT framework for digital investigation using public data such as username, email, domain, IP address, and phone number.*
+
+**OSINT Framework Indonesia • Digital Investigation Tools • Public Data**
 
 <div align="center">
-  
+
 [![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-2.0.0-ff6b6b?style=for-the-badge&logo=git&logoColor=white)]()
 [![GitHub Stars](https://img.shields.io/github/stars/ruyynn/GhostIntel?style=for-the-badge&logo=github&logoColor=white&color=gold)](https://github.com/ruyynn/GhostIntel/stargazers)
-[![Downloads](https://img.shields.io/badge/Downloads-1.2k+-brightgreen?style=for-the-badge&logo=download&logoColor=white)]()
 [![Maintained](https://img.shields.io/badge/Maintained-Yes-success?style=for-the-badge&logo=maintenance&logoColor=white)]()
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-9b59b6?style=for-the-badge&logo=githubactions&logoColor=white)](CONTRIBUTING.md)
+[![GitHub forks](https://img.shields.io/github/forks/ruyynn/GhostIntel?style=for-the-badge&logo=github)](https://github.com/ruyynn/GhostIntel/network)
+[![GitHub issues](https://img.shields.io/github/issues/ruyynn/GhostIntel?style=for-the-badge&logo=github)](https://github.com/ruyynn/GhostIntel/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/ruyynn/GhostIntel?style=for-the-badge&logo=git)](https://github.com/ruyynn/GhostIntel)
 
 </div>
 
 ---
 
-## 📌 **Tentang GhostIntel**
+## 📌 About GhostIntel
 
-**GhostIntel** adalah framework OSINT (Open Source Intelligence) pertama dari Indonesia yang dirancang khusus untuk memudahkan investigasi digital melalui sumber-sumber publik. Dikembangkan oleh **Ruyynn**, tools ini menggabungkan berbagai teknik OSINT menjadi satu mesin pencari intelijen yang **cepat**, **modular**, dan **mudah digunakan**.
+*GhostIntel is a Python-based OSINT framework designed to assist digital investigation using publicly available data. This tool combines various reconnaissance techniques such as username analysis, email investigation, domain scanning, IP address lookup, and phone number intelligence into one lightweight and easy-to-use system.*
 
-### 🎯 **Use Case GhostIntel**
+*GhostIntel focuses on **collecting intelligence from open sources (Open Source Intelligence)** without performing any illegal access to target systems. Developed by **Ruyynn**, this project aims to provide an OSINT toolset that is **fast, modular, and easy to use** for security researchers, developers, and cybersecurity learners.*
 
-| Bidang | Kegunaan |
-|--------|----------|
-| 🔍 **OSINT Analyst** | Pengumpulan data target dari sumber terbuka |
-| 🛡️ **Security Researcher** | Investigasi keamanan dan footprinting |
-| 📚 **Mahasiswa/Dosen** | Materi pembelajaran keamanan siber |
-| 🕵️ **Bug Bounty Hunter** | Reconnaissance tahap awal |
-| 👮 **Penegak Hukum** | Investigasi digital (dengan izin resmi) |
+*With a modular approach, GhostIntel allows easy addition of new modules so it can continuously evolve alongside modern digital investigation needs.*
 
 ---
 
-## ✨ **Fitur Unggulan**
+## 🚀 Why GhostIntel?
 
-### 🔍 **Auto Entity Detection**
-Tidak perlu pusing menentukan jenis target. GhostIntel otomatis mendeteksi!
+```
+✅ Zero API Keys      — Use immediately, no registration or payment required
+✅ Async & Fast       — Parallel investigation, far faster than similar tools
+✅ Auto Entity Detect — Input anything, GhostIntel detects the type automatically
+✅ Multi-Country      — Phone OSINT for 5 countries at once
+✅ 100+ Platforms     — Username checked across 100+ sites simultaneously
+✅ Data Correlation   — All findings from different modules linked automatically
+✅ Export Reports     — Save results to JSON, HTML, or TXT
+✅ Made in Indonesia  — Optimized for local investigation needs
+```
+
+### 🎯 Use Cases
+
+| Scenario | Description |
+|----------|-------------|
+| 🔍 **Digital Investigation** | Collect information from various public sources |
+| 🛡️ **Security Reconnaissance** | Initial footprinting before security testing |
+| 🧠 **OSINT Learning** | Practical learning tool for cybersecurity beginners |
+| 🐞 **Bug Bounty Recon** | Identify initial target information before testing |
+| 📊 **Research & Analysis** | Collect open data for security analysis and research |
+
+---
+
+## ✨ Key Features
+
+### 🔮 Auto Entity Detection
+
+No need to specify the target type. GhostIntel detects it automatically!
 
 ```bash
 ┌──(ghostintel㉿localhost)-[~]
-└─$ ghostintel investigate ruyynn        
+└─$ ghostintel investigate ruyynn
 [+] Detected: USERNAME
 
 ┌──(ghostintel㉿localhost)-[~]
@@ -47,173 +73,162 @@ Tidak perlu pusing menentukan jenis target. GhostIntel otomatis mendeteksi!
 [+] Detected: EMAIL
 
 ┌──(ghostintel㉿localhost)-[~]
-└─$ ghostintel investigate 08123456789    
+└─$ ghostintel investigate 08123456789
 [+] Detected: PHONE (Indonesia)
 
 ┌──(ghostintel㉿localhost)-[~]
-└─$ ghostintel investigate example.com    
+└─$ ghostintel investigate example.com
 [+] Detected: DOMAIN
 
 ┌──(ghostintel㉿localhost)-[~]
-└─$ ghostintel investigate 8.8.8.8        
+└─$ ghostintel investigate 8.8.8.8
 [+] Detected: IP ADDRESS
 ```
 
-## 📱 Phone OSINT - 5 Negara
-Satu-satunya tools OSINT Indonesia dengan dukungan multi-country!
+---
 
-<details> <summary><b>🇮🇩 INDONESIA (62)</b></summary> <br>
-       
-```bash       
+## 📱 Phone OSINT — 5 Countries
+
+> The only Indonesian OSINT tool with **multi-country phone lookup** support!
+
+<details>
+<summary><b>🇮🇩 Indonesia (+62)</b></summary>
+<br>
+
+```bash
 ghostintel -p 08123456789
 ```
-```markdown
-Informasi	Hasil
 
-Provider	Telkomsel / Indosat / XL / Three / Smartfren
+| Info | Result |
+|------|--------|
+| Provider | Telkomsel / Indosat / XL / Three / Smartfren |
+| Type | Mobile / Fixed Line |
+| Valid | ✅ Yes |
+| Format | +62 812-3456-789 |
+| Location | Jakarta / West Java / etc |
 
-Type	Mobile / Fixed Line
+**Detected Providers:**
 
-Valid	✅ Ya
+| Prefix | Provider |
+|--------|----------|
+| 0811, 0812, 0813, 0821, 0822, 0823, 0851, 0852, 0853 | 📱 Telkomsel |
+| 0814, 0815, 0816, 0855, 0856, 0857, 0858 | 📱 Indosat |
+| 0817, 0818, 0819, 0877, 0878, 0879 | 📱 XL |
+| 0895, 0896, 0897, 0898, 0899 | 📱 Three |
+| 0881, 0882, 0883, 0884, 0885, 0886, 0887, 0888, 0889 | 📱 Smartfren |
 
-Format	+62 812-3456-789
+</details>
 
-Location	Jakarta / Jawa Barat / dll
-
-Provider yang terdeteksi:
-
-📱 Telkomsel: 0811, 0812, 0813, 0821, 0822, 0823, 0851, 0852, 0853
-
-📱 Indosat: 0814, 0815, 0816, 0855, 0856, 0857, 0858
-
-📱 XL: 0817, 0818, 0819, 0859, 0877, 0878, 0879
-
-📱 Three: 0895, 0896, 0897, 0898, 0899
-
-📱 Smartfren: 0881, 0882, 0883, 0884, 0885, 0886, 0887, 0888, 0889
-```
-
-</details><details> <summary><b>🇺🇸 USA (1)</b></summary> <br>
+<details>
+<summary><b>🇺🇸 USA (+1)</b></summary>
+<br>
 
 ```bash
 ghostintel -p +12125551234
 ```
-```markdown
-Informasi	Hasil
 
-Provider	AT&T / Verizon / T-Mobile
+| Info | Result |
+|------|--------|
+| Provider | AT&T / Verizon / T-Mobile |
+| Area Code | 212 (New York) |
+| Type | Mobile |
+| Valid | ✅ Yes |
 
-Area Code	212 (New York)
+**Area Codes:**
 
-Type	Mobile
+| Code | City | Provider |
+|------|------|----------|
+| 212, 646 | New York | AT&T / Verizon |
+| 310, 818 | Los Angeles | T-Mobile / AT&T |
+| 415, 510 | San Francisco | AT&T |
+| 617 | Boston | Verizon |
+| 702 | Las Vegas | T-Mobile |
+| 832 | Houston | T-Mobile |
 
-Valid	✅ Ya
+</details>
 
-Area Codes:
-
-📍 212: New York (AT&T)
-
-📍 310: Los Angeles (T-Mobile)
-
-📍 415: San Francisco (AT&T)
-
-📍 617: Boston (Verizon)
-
-📍 702: Las Vegas (T-Mobile)
-
-📍 718: New York (Verizon)
-
-📍 818: Los Angeles (AT&T)
-
-📍 832: Houston (T-Mobile)
-```
-
-</details><details> <summary><b>🇬🇧 UK (44)</b></summary> <br>
+<details>
+<summary><b>🇬🇧 UK (+44)</b></summary>
+<br>
 
 ```bash
 ghostintel -p +447700123456
 ```
-```markdown
-Informasi	Hasil
 
-Provider	EE / O2 / Vodafone / Three
+| Info | Result |
+|------|--------|
+| Provider | EE / O2 / Vodafone / Three |
+| Type | Mobile |
+| Valid | ✅ Yes |
 
-Type	Mobile
+**Mobile Prefixes:**
 
-Valid	✅ Ya
+| Prefix | Provider |
+|--------|----------|
+| 7700–7709, 7750–7752 | EE |
+| 7710–7719, 7740–7742 | O2 |
+| 7720–7725 | Vodafone |
+| 7730–7735 | Three |
 
-Mobile Prefixes:
+</details>
 
-📱 7700-7709: EE
+<details>
+<summary><b>🇲🇾 Malaysia (+60)</b></summary>
+<br>
 
-📱 7710-7719: O2
-
-📱 7720-7725: Vodafone
-
-📱 7730-7735: Three
-
-📱 7740-7742: O2
-
-📱 7750-7752: EE
-```
-</details><details> <summary><b>🇲🇾 MALAYSIA (60)</b></summary> <br>
-       
 ```bash
 ghostintel -p +60123456789
 ```
-```markdown
-Informasi	Hasil
 
-Provider	Maxis / Celcom / DiGi / U Mobile
+| Info | Result |
+|------|--------|
+| Provider | Maxis / Celcom / DiGi / U Mobile |
+| Type | Mobile |
+| Valid | ✅ Yes |
 
-Type	Mobile
+**Mobile Prefixes:**
 
-Valid	✅ Ya
+| Prefix | Provider |
+|--------|----------|
+| 012, 017 | Maxis |
+| 013, 019 | Celcom |
+| 010, 016 | DiGi |
+| 011, 018 | U Mobile |
+| 014, 015 | Maxis/Celcom / Tune Talk |
 
-Mobile Prefixes:
+</details>
 
-📱 012, 017: Maxis
-
-📱 013, 019: Celcom
-
-📱 010, 016: DiGi
-
-📱 011, 018: U Mobile
-
-📱 014: Maxis/Celcom
-
-📱 015: Tune Talk
-```
-
-</details><details> <summary><b>🇮🇳 INDIA (91)</b></summary> <br>
+<details>
+<summary><b>🇮🇳 India (+91)</b></summary>
+<br>
 
 ```bash
 ghostintel -p +919876543210
 ```
-```markdown
-Informasi	Hasil
 
-Provider	Airtel / Vodafone / Jio / BSNL
+| Info | Result |
+|------|--------|
+| Provider | Airtel / Vodafone / Jio / BSNL |
+| Type | Mobile |
+| Valid | ✅ Yes |
 
-Type	Mobile
+**Mobile Prefixes:**
 
-Valid	✅ Ya
+| Prefix | Provider |
+|--------|----------|
+| 9810–9819 | Airtel |
+| 9820–9825 | Vodafone |
+| 9870–9874 | Jio |
+| 8888–8890 | BSNL |
+| 9830–9834 | Idea |
 
-Mobile Prefixes:
-
-📱 9810-9819: Airtel
-
-📱 9820-9825: Vodafone
-
-📱 9870-9874: Jio
-
-📱 8888-8890: BSNL
-
-📱 9830-9834: Idea
-```
 </details>
 
+---
+
 ## 👤 Username OSINT
+
+Check usernames in parallel across **100+ platforms** in one run — Facebook, Instagram, Twitter, GitHub, TikTok, Steam, Kaskus, and many more.
 
 <p align="center">
   <img src="assets/username-osint.png" width="850">
@@ -223,6 +238,8 @@ Mobile Prefixes:
 
 ## 📧 Email OSINT
 
+Email investigation: MX records, SPF, DMARC, Gravatar, disposable & free provider detection.
+
 <p align="center">
   <img src="assets/email-osint.png" width="850">
 </p>
@@ -230,6 +247,8 @@ Mobile Prefixes:
 ---
 
 ## 🌐 Domain OSINT
+
+Full DNS records: A, AAAA, NS, MX, TXT, SOA, CNAME + HTTP/HTTPS status + website title.
 
 <p align="center">
   <img src="assets/domain-osint.png" width="850">
@@ -239,6 +258,8 @@ Mobile Prefixes:
 
 ## 🌍 IP OSINT
 
+Geolocation, Reverse DNS, RDAP to 5 global RIRs (ARIN, RIPE, APNIC, LACNIC, AFRINIC), proxy & hosting detection.
+
 <p align="center">
   <img src="assets/ip-osint.png" width="850">
 </p>
@@ -247,303 +268,266 @@ Mobile Prefixes:
 
 ## 📊 Report Generator
 
-Buat laporan profesional dengan 3 format!
+Generate professional reports in 3 formats!
 
 ```bash
-# HTML Report (interaktif, keren!)
+# HTML Report — visual & interactive
 ghostintel investigate target --format html -o report.html
 
-# JSON Report (untuk parsing lanjutan)
+# JSON Report — for parsing & further integration
 ghostintel investigate target --format json -o data.json
 
-# TXT Report (simple, cepat)
+# TXT Report — simple & lightweight
 ghostintel investigate target --format txt -o output.txt
 ```
+
 ---
 
-## 🚀 Cara Install
+## 🔧 Installation
 
-Metode 1: Clone Repository
+**Method 1 — Direct Clone**
 
 ```bash
-# Clone repo
+git clone https://github.com/ruyynn/GhostIntel.git
+cd GhostIntel
+pip install -r requirements.txt
+python ghostintel.py -h
+```
+
+**Method 2 — Virtual Environment (Recommended)**
+
+```bash
 git clone https://github.com/ruyynn/GhostIntel.git
 cd GhostIntel
 
-# Install dependencies
-pip install -r requirements.txt
-
-# Jalankan
-python ghostintel.py -h
-```
-
-Metode 2: Virtual Environment (Rekomendasi)
-
-```bash
-# Buat virtual env
 python -m venv venv
+source venv/bin/activate        # Linux / macOS
+# venv\Scripts\activate         # Windows
 
-# Aktifkan (Linux/Mac)
-source venv/bin/activate
-# Atau (Windows)
-venv\Scripts\activate
-
-# Install
 pip install -r requirements.txt
 python ghostintel.py -h
 ```
 
-## 📖 Panduan Lengkap
+---
 
-Basic Commands
+## 📖 Usage Guide
+
+**Basic Commands**
 
 ```bash
-# Help
-python ghostintel.py -h
+python ghostintel.py -h                          # Help
+python ghostintel.py -v                          # Version
+python ghostintel.py investigate TARGET          # Auto-detect
 
-# Version
-python ghostintel.py -v
-
-# Username
-python ghostintel.py -u username
-
-# Email
-python ghostintel.py -e email@example.com
-
-# Phone (Indonesia)
-python ghostintel.py -p 08123456789
-
-# Phone (USA)
-python ghostintel.py -p +12125551234
-
-# Phone (UK)
-python ghostintel.py -p +447700123456
-
-# Phone (Malaysia)
-python ghostintel.py -p +60123456789
-
-# Phone (India)
-python ghostintel.py -p +919876543210
-
-# Domain
-python ghostintel.py -d example.com
-
-# IP
-python ghostintel.py -i 8.8.8.8
-
-# Auto-detect
-python ghostintel.py investigate target
+python ghostintel.py -u username                 # Username
+python ghostintel.py -e email@example.com        # Email
+python ghostintel.py -p 08123456789              # Phone Indonesia
+python ghostintel.py -p +12125551234             # Phone USA
+python ghostintel.py -p +447700123456            # Phone UK
+python ghostintel.py -p +60123456789             # Phone Malaysia
+python ghostintel.py -p +919876543210            # Phone India
+python ghostintel.py -d example.com              # Domain
+python ghostintel.py -i 8.8.8.8                 # IP Address
 ```
 
-Report Generation
+**Report & Output**
 
 ```bash
-# Comprehensive report (semua module)
 python ghostintel.py -u username --report
-
-# HTML report dengan custom filename
-python ghostintel.py -d example.com --format html -o example.com.html
-
-# JSON report untuk parsing
+python ghostintel.py -d example.com --format html -o example.html
 python ghostintel.py -e email@example.com --format json -o email.json
-
-# Text report simple
 python ghostintel.py -p 08123456789 --format txt -o phone.txt
-Advanced Options
-bash
-# Custom timeout (untuk target lambat)
-python ghostintel.py -d example.com --timeout 30
-
-# More threads (lebih cepat)
-python ghostintel.py -u username --threads 50
-
-# No colors (untuk output file)
-python ghostintel.py -u username --no-color
 ```
+
+**Advanced Options**
+
+```bash
+python ghostintel.py -d example.com --timeout 30     # Custom timeout
+python ghostintel.py -u username --threads 50         # More threads
+python ghostintel.py -u username --no-color           # Disable colors
+```
+
+---
 
 ## 📋 Requirements
-```txt
-Python 3.8+
-aiohttp==3.9.0
-beautifulsoup4==4.12.0
-dnspython==2.6.0
-phonenumbers==8.13.0
-rich==13.7.0
-tldextract==5.1.0
-jinja2==3.1.0
-aiofiles==23.2.0
-colorama==0.4.6
+
+```
+Python         3.8+
+aiohttp        3.9.0+
+beautifulsoup4 4.12.0+
+dnspython      2.6.0+
+phonenumbers   8.13.0+
+rich           13.7.0+
+tldextract     5.1.0+
+jinja2         3.1.0+
+aiofiles       23.2.0+
+colorama       0.4.6+
 ```
 
-## 🏗️ Struktur Project
-```text
-📁 ghostintel/
-├── 📄 ghostintel.py           # Main entry point
-├── 📄 requirements.txt        # Dependencies
-├── 📄 README.md               # You are here
-├── 📄 CONTRIBUTING.md         # Contribution guide
-├── 📄 LICENSE                  # MIT License
-│
-├── 📁 core/                    # Core modules
-│   ├── 📄 engine.py            # Main engine
-│   ├── 📄 detector.py          # Entity detection
-│   ├── 📄 banner.py            # UI banner
-│   ├── 📄 utils.py             # Utilities
-│   └── 📄 correlation.py       # Intel correlation
-│
-├── 📁 modules/                 # OSINT modules
-│   ├── 📄 username.py          # Username checker (100+ platforms)
-│   ├── 📄 email.py             # Email investigator
-│   ├── 📄 phone.py             # Phone module (5 negara)
-│   ├── 📄 domain.py            # Domain recon
-│   └── 📄 ip.py                # IP lookup
-│
-├── 📁 sources/                  # Data sources
-│   ├── 📄 social_media.py       # 100+ platform database
-│   ├── 📄 phone_db.py           # Provider database multi-country
-│   └── 📄 breach_db.py          # Public breach information
-│
-├── 📁 reports/                   # Report generator
-│   ├── 📄 generator.py           # Report engine
-│   ├── 📄 html_template.py       # HTML template with CSS/JS
-│   └── 📄 json_formatter.py      # JSON formatter
-│
-└── 📁 output/                    # Auto-generated reports
+---
+
+## 🏗️ Project Structure
+
 ```
+📁 GhostIntel/
+├── 📄 ghostintel.py           ← Entry point & CLI parser
+├── 📄 requirements.txt
+├── 📄 README.md
+├── 📄 CONTRIBUTING.md
+├── 📄 LICENSE
+│
+├── 📁 core/
+│   ├── engine.py              ← Main orchestrator
+│   ├── detector.py            ← Auto entity detection
+│   ├── banner.py              ← Rich terminal UI
+│   ├── utils.py               ← Utilities & help menu
+│   └── correlation.py         ← Intelligence correlator
+│
+├── 📁 modules/
+│   ├── base.py                ← Base class for all modules
+│   ├── username.py            ← Username checker (100+ platforms)
+│   ├── email.py               ← Email investigator
+│   ├── phone.py               ← Phone OSINT (5 countries)
+│   ├── domain.py              ← Domain + DNS scanner
+│   └── ip.py                  ← IP + RDAP + geolocation
+│
+├── 📁 sources/
+│   ├── social_media.py        ← 100+ platform URL database
+│   ├── phone_db.py            ← Provider prefix database
+│   └── breach_db.py           ← Public breach database
+│
+├── 📁 reports/
+│   ├── generator.py           ← Report engine (JSON/HTML/TXT)
+│   ├── html_template.py       ← Jinja2 HTML template
+│   └── json_formatter.py      ← JSON serializer
+│
+└── 📁 output/                 ← Auto-generated reports
+```
+
+---
 
 ## ⚠️ Legal Disclaimer
 
-### Purpose
-GhostIntel dibuat hanya untuk tujuan berikut:
+**Purpose** — GhostIntel is built only for:
+- Education and cybersecurity learning
+- Legitimate security research
+- Testing on systems you own or have explicit permission to test
+- Developing OSINT and reconnaissance skills professionally
 
-- Edukasi dan pembelajaran cybersecurity
-- Penelitian keamanan yang sah (legitimate security research)
-- Pengujian pada sistem milik sendiri atau dengan izin
-- Pengembangan kemampuan OSINT dan reconnaissance
+**Data Sources** — GhostIntel only uses public sources:
+- Public DNS lookup, RDAP / WHOIS records
+- Information from public websites & legal APIs
+- Data that is already openly available
 
-### Data Sources
-GhostIntel hanya menggunakan sumber data yang **bersifat publik**, seperti:
+**Prohibited Use** — Strictly forbidden:
+- Doxing or exposing personal data without consent
+- Stalking, harassment, or intimidation
+- Illegal or criminal activities
+- Accessing systems or data without authorization
 
-- Public DNS lookup
-- Public RDAP / WHOIS records
-- Informasi dari website publik
-- API publik yang legal
-- Data yang memang tersedia secara terbuka
+> By using GhostIntel, you take full responsibility for how you use this tool. The author is not responsible for any misuse.
 
-### Prohibited Use
-Penggunaan berikut **dilarang keras**:
-
-- Doxing atau mengekspos data pribadi tanpa izin
-- Stalking, harassment, atau intimidasi
-- Aktivitas ilegal atau kriminal
-- Mengakses sistem atau data tanpa otorisasi
-
-### Responsibility
-Dengan menggunakan GhostIntel, Anda setuju bahwa:
-
-- Anda bertanggung jawab penuh atas penggunaan tool ini
-- Anda akan mematuhi hukum yang berlaku di wilayah Anda
-- Author tidak bertanggung jawab atas penyalahgunaan tool ini
 ---
 
-## 📝 Lisensi
-MIT License - Silakan gunakan, modifikasi, dan distribusikan dengan mencantumkan kredit kepada Ruyynn.
+## 📝 License
+
+MIT License — Feel free to use, modify, and distribute with credit to **Ruyynn**.
 
 ---
 
 ## 👨‍💻 Author
 
-### **Ruyynn**
+**Ruyynn** — Developer & Maintainer
 
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ruyynn)
+| Platform | Link |
+|----------|------|
+| 🐙 GitHub | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/ruyynn) |
+| 📘 Facebook | [![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=flat-square&logo=facebook&logoColor=white)](https://web.facebook.com/profile.php?id=61587795784907) |
+| 📸 Instagram | [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/ellreynn) |
+| 📧 Email | [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:ruyynn25@gmail.com) |
 
 ---
 
-### 📌 **Project Links**
+### 📌 Project Links
 
-| Link | Tujuan |
-|------|--------|
-| [![Project](https://img.shields.io/badge/Project-GhostIntel-2dd4bf?style=flat-square&logo=github)](https://github.com/ruyynn/GhostIntel) | Repository utama |
-| [![Issues](https://img.shields.io/badge/Issues-Report%20Bug-ff6b6b?style=flat-square&logo=github)](https://github.com/ruyynn/GhostIntel/issues) | Laporkan bug |
-| [![Discussions](https://img.shields.io/badge/Discussions-Join%20Diskusi-9b59b6?style=flat-square&logo=github)](https://github.com/ruyynn/GhostIntel/discussions) | Diskusi & saran |
+| Link | Purpose |
+|------|---------|
+| [![Repo](https://img.shields.io/badge/Project-GhostIntel-2dd4bf?style=flat-square&logo=github)](https://github.com/ruyynn/GhostIntel) | Main repository |
+| [![Issues](https://img.shields.io/badge/Issues-Report%20Bug-ff6b6b?style=flat-square&logo=github)](https://github.com/ruyynn/GhostIntel/issues) | Report a bug |
+| [![Discussions](https://img.shields.io/badge/Discussions-Join%20Discussion-9b59b6?style=flat-square&logo=github)](https://github.com/ruyynn/GhostIntel/discussions) | Discussions & suggestions |
 
-## 🤝 Cara Berkontribusi
+---
 
-Kami sangat terbuka untuk kontribusi!
+## 🤝 Contributing
 
-🍴 Fork repository ini
+Contributions are very welcome!
 
-🌿 Buat branch baru (git checkout -b fitur-keren)
+1. 🍴 Fork this repository
+2. 🌿 Create a new branch — `git checkout -b cool-feature`
+3. 💻 Commit your changes — `git commit -m 'feat: add cool feature'`
+4. 📤 Push to branch — `git push origin cool-feature`
+5. 🔄 Open a Pull Request
 
-💻 Commit perubahan (git commit -m 'Add fitur keren')
+Read the full guide → [CONTRIBUTING.md](CONTRIBUTING.md)
 
-📤 Push ke branch (git push origin fitur-keren)
+---
 
-🔄 Buka Pull Request
-
-Lihat [CONTRIBUTING.md](CONTRIBUTING.md) untuk panduan lengkap.
-
-## ⭐ **Dukungan & Star**
+## ⭐ Support & Star
 
 <div align="center">
 
-### 🌟 **Dukung GhostIntel!** 🌟
+> **If GhostIntel has been useful to you, a single ⭐ star goes a long way in keeping this project alive and growing!**
 
 [![GitHub stars](https://img.shields.io/github/stars/ruyynn/GhostIntel?style=for-the-badge&logo=github&logoColor=white&color=gold)](https://github.com/ruyynn/GhostIntel/stargazers)
 
 </div>
 
-Cara paling simple buat dukung GhostIntel:
+| # | How to Support |
+|---|----------------|
+| 1 | ⭐ **Star** this repository |
+| 2 | 📢 **Share** with friends, communities, or cybersecurity groups |
+| 3 | 🐛 **Report** bugs you find |
+| 4 | 💡 **Suggest** new features via Discussions |
+| 5 | 🤝 **Contribute** code or documentation |
 
-| # | Cara | Emoji |
-|---|------|-------|
-| 1 | ⭐ **Beri star** di repository ini | `⭐` |
-| 2 | 📢 **Share** ke teman-teman | `📢` |
-| 3 | 🐛 **Laporkan** issues | `🐛` |
-| 4 | 💡 **Saran** fitur baru | `💡` |
-| 5 | 🤝 **Kontribusi** kode | `🤝` |
+### 💖 Donate
 
-> Setiap star dan kontribusi sangat berarti untuk pengembangan tools ini! 💪
+| Platform | Link | For |
+|----------|------|-----|
+| 🇮🇩 **Saweria** | <a href="https://saweria.co/Ruyynn"><img src="https://user-images.githubusercontent.com/26188697/180601310-e82c63e4-412b-4c36-b7b5-7ba713c80380.png" width="150"></a> | Indonesian donors |
+| 🌍 **Ko-fi** | <a href="https://ko-fi.com/H2H11W13IP"><img src="https://ko-fi.com/img/githubbutton_sm.svg" width="150"></a> | International donors |
 
-### 💖 **Support via Saweria / Ko-fi**
+> *Every donation and star means a lot for the continued development of GhostIntel! 💪*
 
-Support developer biar makin semangat ngoding! 🚀
+---
 
-| Platform | Link | Untuk |
-|----------|------|-------|
-| **🇮🇩 Saweria** | [<img src="https://user-images.githubusercontent.com/26188697/180601310-e82c63e4-412b-4c36-b7b5-7ba713c80380.png" width="150" alt="Saweria">](https://saweria.co/Ruyynn) | Untuk donor Indonesia |
-| **🌍 Ko-fi** | [<img src="https://ko-fi.com/img/githubbutton_sm.svg" width="150" alt="Ko-fi">](https://ko-fi.com/H2H11W13IP) | Untuk donor internasional |
-
-</div>
-
-## 📞 **Contact**
+## 📞 Contact
 
 <div align="center">
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ruyynn)
 [![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://web.facebook.com/profile.php?id=61587795784907)
-[![Gmail](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:ruyynn25@gmail.com)
+[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/ellreynn)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:ruyynn25@gmail.com)
 
 </div>
 
----
+### 💬 Get in Touch
 
-### 💬 **Mau Ngobrol Langsung?**
-
-- 🐛 **Report bug** → [GitHub Issues](https://github.com/ruyynn/GhostIntel/issues)
-- 💡 **Saran fitur** → [GitHub Discussions](https://github.com/ruyynn/GhostIntel/discussions)
-- ❓ **Pertanyaan** → Bisa DM via sosial media di atas
-- 🤝 **Kerjasama** → Email ke [Click Me](mailto:ruyynn25@gmail.com)
+- 🐛 **Report a bug** → [GitHub Issues](https://github.com/ruyynn/GhostIntel/issues)
+- 💡 **Feature request** → [GitHub Discussions](https://github.com/ruyynn/GhostIntel/discussions)
+- ❓ **Questions** → DM via social media above
+- 🤝 **Collaboration** → [Contact Me](mailto:ruyynn25@gmail.com)
 
 ---
 
-## 🙏 **Terima Kasih**
+## 🙏 Thank You
 
 <div align="center">
 
-**Terima kasih kepada semua kontributor, pengguna, dan donatur yang sudah mendukung GhostIntel!**  
+**Thank you to all contributors, users, and donors who have supported GhostIntel!**
 
-Tools ini dibuat dengan ❤️ untuk kemajuan dunia keamanan siber di Indonesia.
+This tool is built with ❤️ for the advancement of cybersecurity knowledge.
 
 ---
 
@@ -551,8 +535,8 @@ Tools ini dibuat dengan ❤️ untuk kemajuan dunia keamanan siber di Indonesia.
 
 ---
 
-**GhostIntel v2.0**  
-*OSINT Framework Indonesia • 100% Public Data • Untuk Edukasi Keamanan Siber*
+**GhostIntel v2.0**
+*OSINT Framework Indonesia • 100% Public Data • For Cybersecurity Education*
 
 © 2026 Ruyynn. All Rights Reserved.
 
