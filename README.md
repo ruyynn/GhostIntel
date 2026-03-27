@@ -538,6 +538,6 @@ This tool is built with ❤️ for the advancement of cybersecurity knowledge.
 **GhostIntel v2.0**
 *OSINT Framework Indonesia • 100% Public Data • For Cybersecurity Education*
 
-© 2026 Ruyynn. All Rights Reserved.
+© 2026 Ruyynn.
 
 </div>
