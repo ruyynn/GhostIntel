@@ -657,5 +657,5 @@ Have questions that aren't covered here? Reach out directly:
 </p>
 
 <p align="center">
-  <b>© 2026 Ruyynn. All Rights Reserved.</b>
+  <b>© 2026 Ruyynn.</b>
 </p>
