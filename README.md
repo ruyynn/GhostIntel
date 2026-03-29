@@ -469,7 +469,7 @@ MIT License — Feel free to use, modify, and distribute with credit to **Ruyynn
 **GhostIntel v2.5**  
 *OSINT Framework Indonesia • 100% Public Data • For Cybersecurity Education*
 
-![GhostIntel Footer](ghostintel-footer.svg)
+![GhostIntel Footer](https://github.com/ruyynn/GhostIntel/blob/main/assets/ghostintel-footer.svg)
 
 **© 2026 Ruyynn.**
 
