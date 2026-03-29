@@ -1,0 +1,3011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostIntel Report - ryan</title>
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark theme (default) */
+            --bg-primary: #0a0c0f;
+            --bg-secondary: #14181c;
+            --bg-tertiary: #1e2329;
+            --bg-hover: #252d36;
+            --text-primary: #e6e9ef;
+            --text-secondary: #9aa3b4;
+            --text-muted: #6b7485;
+            --accent-cyan: #2dd4bf;
+            --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
+            --accent-orange: #f97316;
+            --accent-red: #ef4444;
+            --accent-purple: #a78bfa;
+            --accent-blue: #3b82f6;
+            --border-color: #2a3038;
+            --border-light: #333b44;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Light theme */
+        .light-theme {
+            --bg-primary: #f3f4f6;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f9fafb;
+            --bg-hover: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --border-light: #d1d5db;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ===== BASE STYLES ===== */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--text-primary);
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent-green);
+            text-decoration: underline;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .header::before {
+            content: '👻';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10rem;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .header-title h1 {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+            font-size: 3rem;
+        }
+
+        .header-badge {
+            background: var(--accent-green);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-meta {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 1rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item strong {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            padding: 0.25rem;
+            display: flex;
+            gap: 0.25rem;
+            z-index: 10;
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .theme-btn.active {
+            background: var(--accent-cyan);
+            color: white;
+        }
+
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, border-color 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== MODULE CARDS ===== */
+        .module-card {
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .module-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 15px 30px -10px rgba(45, 212, 191, 0.2);
+        }
+
+        .module-header {
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .module-header:hover {
+            background: var(--bg-hover);
+        }
+
+        .module-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .module-title h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--accent-cyan);
+        }
+
+        .module-icon {
+            font-size: 1.5rem;
+        }
+
+        .module-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .module-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .toggle-btn:hover {
+            background: var(--bg-hover);
+            color: var(--accent-cyan);
+        }
+
+        /* ===== DATA GRID ===== */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .data-item {
+            background: var(--bg-tertiary);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.2s;
+        }
+
+        .data-item:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .data-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .data-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .data-value {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .data-value.success { color: var(--success); }
+        .data-value.warning { color: var(--warning); }
+        .data-value.danger { color: var(--danger); }
+        .data-value.info { color: var(--info); }
+
+        /* ===== LISTS ===== */
+        .list {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .list li {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            margin-bottom: 0.25rem;
+            border-left: 3px solid var(--accent-cyan);
+            word-break: break-word;
+            font-size: 0.875rem;
+            transition: transform 0.2s;
+        }
+
+        .list li:hover {
+            transform: translateX(5px);
+            background: var(--bg-hover);
+        }
+
+        .list li a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            display: block;
+        }
+
+        .list li a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== TAGS/CHIPS ===== */
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin: 0.25rem;
+        }
+
+        .tag.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .tag.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .tag.danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .tag.info {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+            border-color: var(--info);
+        }
+
+        /* ===== PROGRESS BARS ===== */
+        .progress {
+            background: var(--bg-hover);
+            border-radius: 1rem;
+            height: 0.5rem;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+            height: 100%;
+            border-radius: 1rem;
+            transition: width 0.3s;
+        }
+
+        /* ===== BREACH ALERT STYLES ===== */
+        .breach-alert {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.05));
+            border-left: 4px solid var(--accent-red);
+        }
+
+        .breach-detail {
+            background: var(--bg-secondary);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--accent-yellow);
+        }
+
+        .recommendation-box {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 0.75rem;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        /* ===== CATEGORY BADGES ===== */
+        .category-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-hover);
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+        }
+
+        .platform-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+            transition: all 0.2s;
+        }
+
+        .platform-tag:hover {
+            background: var(--accent-cyan);
+            color: white;
+            border-color: var(--accent-cyan);
+        }
+
+        /* ===== SEARCH BOX ===== */
+        .search-box {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        /* ===== EXPORT BUTTONS ===== */
+        .export-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .export-btn:hover {
+            background: var(--accent-cyan);
+            color: white;
+            border-color: var(--accent-cyan);
+        }
+
+        /* ===== SOURCES SECTION ===== */
+        .sources {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sources span {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .source-badge {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.7rem;
+        }
+
+        /* ===== TIMESTAMP ===== */
+        .timestamp {
+            font-family: monospace;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== CORRELATION TREE ===== */
+        .correlation-tree {
+            background: var(--bg-tertiary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .tree-root {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tree-root::before {
+            content: '🔗';
+            position: absolute;
+            left: -0.5rem;
+            top: 0;
+        }
+
+        .tree-branch {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .tree-leaf {
+            padding: 0.25rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tree-leaf::before {
+            content: '↳';
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        .tree-leaf strong {
+            color: var(--accent-green);
+            min-width: 80px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .header { padding: 1.5rem; }
+            .header::before { font-size: 6rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .data-grid { grid-template-columns: 1fr; }
+            .theme-toggle { position: static; margin-bottom: 1rem; }
+        }
+
+        @media print {
+            .theme-toggle, .export-buttons, .toggle-btn { display: none; }
+            .module-card { break-inside: avoid; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button class="theme-btn active" onclick="setTheme('dark')">🌙 Dark</button>
+        <button class="theme-btn" onclick="setTheme('light')">☀️ Light</button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>👻 GhostIntel Report</h1>
+                    <span class="header-badge">v2.5</span>
+                </div>
+                <div class="header-meta">
+                    <div class="meta-item"><span>🎯 Target:</span><strong>ryan</strong></div>
+                    <div class="meta-item"><span>📅 Generated:</span><strong>2026-03-28 22:46:39</strong></div>
+                    <div class="meta-item"><span>📊 Modules:</span><strong>1</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="export-buttons">
+            <button class="export-btn" onclick="exportJSON()"><span>📋</span> Export JSON</button>
+            <button class="export-btn" onclick="exportMarkdown()"><span>📝</span> Export Markdown</button>
+            <button class="export-btn" onclick="window.print()"><span>🖨️</span> Print / PDF</button>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search in report..." onkeyup="searchReport(this.value)">
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-value">1</div>
+                <div class="stat-label">Modules Run</div>
+            </div>
+            
+        </div>
+
+        <!-- Modules -->
+        
+        <div class="module-card" data-module="username">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    <span class="module-icon">
+                        👤
+                        
+                    </span>
+                    <h3>USERNAME</h3>
+                    
+                </div>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="data-grid">
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="username">
+                            <div class="data-label" data-tooltip="Username">
+                                Username
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        ryan
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="total_checked">
+                            <div class="data-label" data-tooltip="Total Checked">
+                                Total Checked
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        129
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="total_found">
+                            <div class="data-label" data-tooltip="Total Found">
+                                Total Found
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        67
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="found">
+                            <div class="data-label" data-tooltip="Found">
+                                Found
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Instagram:</strong>
+                                                    <a href="https://www.instagram.com/ryan" target="_blank">https://www.instagram.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>LinkedIn:</strong>
+                                                    <a href="https://www.linkedin.com/in/ryan" target="_blank">https://www.linkedin.com/in/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>TikTok:</strong>
+                                                    <a href="https://www.tiktok.com/@ryan" target="_blank">https://www.tiktok.com/@ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Pinterest:</strong>
+                                                    <a href="https://www.pinterest.com/ryan/" target="_blank">https://www.pinterest.com/ryan/</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Tumblr:</strong>
+                                                    <a href="https://ryan.tumblr.com" target="_blank">https://ryan.tumblr.com</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Threads:</strong>
+                                                    <a href="https://www.threads.com/login/?next=https://www.threads.com/@ryan/" target="_blank">https://www.threads.com/login/?next=https://www...</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Bluesky:</strong>
+                                                    <a href="https://bsky.app/profile/ryan" target="_blank">https://bsky.app/profile/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Mastodon.social:</strong>
+                                                    <a href="https://mastodon.social/@ryan" target="_blank">https://mastodon.social/@ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Mastodon.online:</strong>
+                                                    <a href="https://mastodon.online/@ryan" target="_blank">https://mastodon.online/@ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Truth Social:</strong>
+                                                    <a href="https://truthsocial.com/@ryan" target="_blank">https://truthsocial.com/@ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Parler:</strong>
+                                                    <a href="https://parler.com/profile/ryan" target="_blank">https://parler.com/profile/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Gettr:</strong>
+                                                    <a href="https://gettr.com/user/ryan" target="_blank">https://gettr.com/user/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Telegram:</strong>
+                                                    <a href="https://t.me/ryan" target="_blank">https://t.me/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Discord:</strong>
+                                                    <a href="https://discord.com/users/ryan" target="_blank">https://discord.com/users/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Signal:</strong>
+                                                    <a href="https://signal.me/" target="_blank">https://signal.me/</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Weibo:</strong>
+                                                    <a href="https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap&a=enter&url=https://m.weibo.cn/ryan?%26jumpfrom%3Dweibocom&domain=.weibo.cn&sudaref=&ua=php-sso_sdk_client-0.6.36&_rand=1774712760.4931" target="_blank">https://visitor.passport.weibo.cn/visitor/visit...</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Kaskus:</strong>
+                                                    <a href="https://www.kaskus.co.id/profile/ryan" target="_blank">https://www.kaskus.co.id/profile/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Kompasiana:</strong>
+                                                    <a href="https://www.kompasiana.com/ryan" target="_blank">https://www.kompasiana.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>GitHub:</strong>
+                                                    <a href="https://github.com/ryan" target="_blank">https://github.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>GitLab:</strong>
+                                                    <a href="https://gitlab.com/ryan" target="_blank">https://gitlab.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Bitbucket:</strong>
+                                                    <a href="https://bitbucket.org/ryan/workspace/repositories/" target="_blank">https://bitbucket.org/ryan/workspace/repositories/</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>SourceForge:</strong>
+                                                    <a href="https://sourceforge.net/u/ryan/profile/" target="_blank">https://sourceforge.net/u/ryan/profile/</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Codeberg:</strong>
+                                                    <a href="https://codeberg.org/ryan" target="_blank">https://codeberg.org/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Gitee:</strong>
+                                                    <a href="https://gitee.com/ryan" target="_blank">https://gitee.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Bugcrowd:</strong>
+                                                    <a href="https://bugcrowd.com/h/ryan" target="_blank">https://bugcrowd.com/h/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Intigriti:</strong>
+                                                    <a href="https://login.intigriti.com/Account/Login?ReturnUrl=/connect/authorize/callback?request_uri%3Durn%253Aietf%253Aparams%253Aoauth%253Arequest_uri%253A44D419BFA2AA2F325D8C684608A83D10982269752E410D989C10867015314F5F%26client_id%3Dbff-init" target="_blank">https://login.intigriti.com/Account/Login?Retur...</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Keybase:</strong>
+                                                    <a href="https://keybase.io/ryan" target="_blank">https://keybase.io/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Bugzilla:</strong>
+                                                    <a href="https://bugzilla.mozilla.org/user_profile?user_id=ryan" target="_blank">https://bugzilla.mozilla.org/user_profile?user_id=ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Replit:</strong>
+                                                    <a href="https://replit.com/@ryan" target="_blank">https://replit.com/@ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>CodeSandbox:</strong>
+                                                    <a href="https://codesandbox.io/u/ryan" target="_blank">https://codesandbox.io/u/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Glitch:</strong>
+                                                    <a href="https://blog.glitch.com" target="_blank">https://blog.glitch.com</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>StackBlitz:</strong>
+                                                    <a href="https://stackblitz.com/@ryan" target="_blank">https://stackblitz.com/@ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>HackerRank:</strong>
+                                                    <a href="https://www.hackerrank.com/profile/ryan" target="_blank">https://www.hackerrank.com/profile/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>CodeChef:</strong>
+                                                    <a href="https://www.codechef.com/users/ryan" target="_blank">https://www.codechef.com/users/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>TopCoder:</strong>
+                                                    <a href="https://www.topcoder.com/members/ryan" target="_blank">https://www.topcoder.com/members/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Codingame:</strong>
+                                                    <a href="https://www.codingame.com/profile/ryan" target="_blank">https://www.codingame.com/profile/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Dev.to:</strong>
+                                                    <a href="https://dev.to/ryan" target="_blank">https://dev.to/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>HackerNews:</strong>
+                                                    <a href="https://news.ycombinator.com/user?id=ryan" target="_blank">https://news.ycombinator.com/user?id=ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Imgur:</strong>
+                                                    <a href="https://imgur.com/user/ryan" target="_blank">https://imgur.com/user/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>YouTube:</strong>
+                                                    <a href="https://m.youtube.com/@ryan" target="_blank">https://m.youtube.com/@ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Twitch:</strong>
+                                                    <a href="https://www.twitch.tv/ryan" target="_blank">https://www.twitch.tv/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Vimeo:</strong>
+                                                    <a href="https://vimeo.com/ryan" target="_blank">https://vimeo.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Dailymotion:</strong>
+                                                    <a href="https://www.dailymotion.com/ryan" target="_blank">https://www.dailymotion.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Odysee:</strong>
+                                                    <a href="https://odysee.com/@ryan" target="_blank">https://odysee.com/@ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Trovo:</strong>
+                                                    <a href="https://trovo.live/s/ryan?roomType=1" target="_blank">https://trovo.live/s/ryan?roomType=1</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Spotify:</strong>
+                                                    <a href="https://open.spotify.com/user/ryan" target="_blank">https://open.spotify.com/user/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Bandcamp:</strong>
+                                                    <a href="https://bandcamp.com/ryan" target="_blank">https://bandcamp.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Mixcloud:</strong>
+                                                    <a href="https://www.mixcloud.com/ryan/" target="_blank">https://www.mixcloud.com/ryan/</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Last.fm:</strong>
+                                                    <a href="https://www.last.fm/user/ryan" target="_blank">https://www.last.fm/user/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Genius:</strong>
+                                                    <a href="https://genius.com/Ryan" target="_blank">https://genius.com/Ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Audiomack:</strong>
+                                                    <a href="https://audiomack.com/ryan" target="_blank">https://audiomack.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Steam:</strong>
+                                                    <a href="https://steamcommunity.com/id/ryan" target="_blank">https://steamcommunity.com/id/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Steam Group:</strong>
+                                                    <a href="https://steamcommunity.com/groups/ryan" target="_blank">https://steamcommunity.com/groups/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Chess.com:</strong>
+                                                    <a href="https://www.chess.com/member/ryan" target="_blank">https://www.chess.com/member/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Lichess:</strong>
+                                                    <a href="https://lichess.org/@/ryan" target="_blank">https://lichess.org/@/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Riot Games:</strong>
+                                                    <a href="https://www.riotgames.com/en" target="_blank">https://www.riotgames.com/en</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Google Scholar:</strong>
+                                                    <a href="https://accounts.google.com/v3/signin/identifier?continue=https://scholar.google.com/citations?user%3Dryan&dsh=S1125954558:1774712789154771&hl=en&service=citations&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=AT1y2_VCBbyHhhaLSiugje8l2Tqy9whzh9yQIERPn9eEA1I0DCOFLOChYP-wnewFoNoLmmQ_6_lBUA" target="_blank">https://accounts.google.com/v3/signin/identifie...</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>ORCID:</strong>
+                                                    <a href="https://orcid.org/404" target="_blank">https://orcid.org/404</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Archive.org:</strong>
+                                                    <a href="https://archive.org/details/@ryan" target="_blank">https://archive.org/details/@ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Patreon:</strong>
+                                                    <a href="https://www.patreon.com/cw/Ryan" target="_blank">https://www.patreon.com/cw/Ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>BuyMeACoffee:</strong>
+                                                    <a href="https://buymeacoffee.com/ryan" target="_blank">https://buymeacoffee.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Gumroad:</strong>
+                                                    <a href="https://ryan.gumroad.com/" target="_blank">https://ryan.gumroad.com/</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Behance:</strong>
+                                                    <a href="https://www.behance.net/ryan/moodboards" target="_blank">https://www.behance.net/ryan/moodboards</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Dribbble:</strong>
+                                                    <a href="https://dribbble.com/ryan/collections" target="_blank">https://dribbble.com/ryan/collections</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Flickr:</strong>
+                                                    <a href="https://flickr.com/people/ryan" target="_blank">https://flickr.com/people/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>500px:</strong>
+                                                    <a href="https://500px.com/ryan" target="_blank">https://500px.com/ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>Goodreads:</strong>
+                                                    <a href="https://www.goodreads.com/user/show/84100-ryan" target="_blank">https://www.goodreads.com/user/show/84100-ryan</a>
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item full-width">
+                            <div class="data-label">📂 Categories Found</div>
+                            <div class="data-value">
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">SOCIAL</span>
+                                    <span style="color: var(--text-muted);">(12 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://www.instagram.com/ryan" target="_blank" class="platform-tag">Instagram</a>
+                                        
+                                        <a href="https://www.tiktok.com/@ryan" target="_blank" class="platform-tag">TikTok</a>
+                                        
+                                        <a href="https://www.pinterest.com/ryan/" target="_blank" class="platform-tag">Pinterest</a>
+                                        
+                                        <a href="https://www.threads.com/login/?next=https://www.threads.com/@ryan/" target="_blank" class="platform-tag">Threads</a>
+                                        
+                                        <a href="https://bsky.app/profile/ryan" target="_blank" class="platform-tag">Bluesky</a>
+                                        
+                                        <a href="https://mastodon.social/@ryan" target="_blank" class="platform-tag">Mastodon.social</a>
+                                        
+                                        <a href="https://mastodon.online/@ryan" target="_blank" class="platform-tag">Mastodon.online</a>
+                                        
+                                        <a href="https://truthsocial.com/@ryan" target="_blank" class="platform-tag">Truth Social</a>
+                                        
+                                        <a href="https://parler.com/profile/ryan" target="_blank" class="platform-tag">Parler</a>
+                                        
+                                        <a href="https://gettr.com/user/ryan" target="_blank" class="platform-tag">Gettr</a>
+                                        
+                                        <a href="https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap&a=enter&url=https://m.weibo.cn/ryan?%26jumpfrom%3Dweibocom&domain=.weibo.cn&sudaref=&ua=php-sso_sdk_client-0.6.36&_rand=1774712760.4931" target="_blank" class="platform-tag">Weibo</a>
+                                        
+                                        <a href="https://imgur.com/user/ryan" target="_blank" class="platform-tag">Imgur</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">PROFESSIONAL</span>
+                                    <span style="color: var(--text-muted);">(1 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://www.linkedin.com/in/ryan" target="_blank" class="platform-tag">LinkedIn</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">BLOG</span>
+                                    <span style="color: var(--text-muted);">(2 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://ryan.tumblr.com" target="_blank" class="platform-tag">Tumblr</a>
+                                        
+                                        <a href="https://www.kompasiana.com/ryan" target="_blank" class="platform-tag">Kompasiana</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">MESSAGING</span>
+                                    <span style="color: var(--text-muted);">(2 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://t.me/ryan" target="_blank" class="platform-tag">Telegram</a>
+                                        
+                                        <a href="https://signal.me/" target="_blank" class="platform-tag">Signal</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">CHAT</span>
+                                    <span style="color: var(--text-muted);">(1 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://discord.com/users/ryan" target="_blank" class="platform-tag">Discord</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">FORUM</span>
+                                    <span style="color: var(--text-muted);">(2 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://www.kaskus.co.id/profile/ryan" target="_blank" class="platform-tag">Kaskus</a>
+                                        
+                                        <a href="https://news.ycombinator.com/user?id=ryan" target="_blank" class="platform-tag">HackerNews</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">DEV</span>
+                                    <span style="color: var(--text-muted);">(11 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://github.com/ryan" target="_blank" class="platform-tag">GitHub</a>
+                                        
+                                        <a href="https://gitlab.com/ryan" target="_blank" class="platform-tag">GitLab</a>
+                                        
+                                        <a href="https://bitbucket.org/ryan/workspace/repositories/" target="_blank" class="platform-tag">Bitbucket</a>
+                                        
+                                        <a href="https://sourceforge.net/u/ryan/profile/" target="_blank" class="platform-tag">SourceForge</a>
+                                        
+                                        <a href="https://codeberg.org/ryan" target="_blank" class="platform-tag">Codeberg</a>
+                                        
+                                        <a href="https://gitee.com/ryan" target="_blank" class="platform-tag">Gitee</a>
+                                        
+                                        <a href="https://replit.com/@ryan" target="_blank" class="platform-tag">Replit</a>
+                                        
+                                        <a href="https://codesandbox.io/u/ryan" target="_blank" class="platform-tag">CodeSandbox</a>
+                                        
+                                        <a href="https://blog.glitch.com" target="_blank" class="platform-tag">Glitch</a>
+                                        
+                                        <a href="https://stackblitz.com/@ryan" target="_blank" class="platform-tag">StackBlitz</a>
+                                        
+                                        <a href="https://dev.to/ryan" target="_blank" class="platform-tag">Dev.to</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">SECURITY</span>
+                                    <span style="color: var(--text-muted);">(4 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://bugcrowd.com/h/ryan" target="_blank" class="platform-tag">Bugcrowd</a>
+                                        
+                                        <a href="https://login.intigriti.com/Account/Login?ReturnUrl=/connect/authorize/callback?request_uri%3Durn%253Aietf%253Aparams%253Aoauth%253Arequest_uri%253A44D419BFA2AA2F325D8C684608A83D10982269752E410D989C10867015314F5F%26client_id%3Dbff-init" target="_blank" class="platform-tag">Intigriti</a>
+                                        
+                                        <a href="https://keybase.io/ryan" target="_blank" class="platform-tag">Keybase</a>
+                                        
+                                        <a href="https://bugzilla.mozilla.org/user_profile?user_id=ryan" target="_blank" class="platform-tag">Bugzilla</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">CODING</span>
+                                    <span style="color: var(--text-muted);">(4 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://www.hackerrank.com/profile/ryan" target="_blank" class="platform-tag">HackerRank</a>
+                                        
+                                        <a href="https://www.codechef.com/users/ryan" target="_blank" class="platform-tag">CodeChef</a>
+                                        
+                                        <a href="https://www.topcoder.com/members/ryan" target="_blank" class="platform-tag">TopCoder</a>
+                                        
+                                        <a href="https://www.codingame.com/profile/ryan" target="_blank" class="platform-tag">Codingame</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">VIDEO</span>
+                                    <span style="color: var(--text-muted);">(4 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://m.youtube.com/@ryan" target="_blank" class="platform-tag">YouTube</a>
+                                        
+                                        <a href="https://vimeo.com/ryan" target="_blank" class="platform-tag">Vimeo</a>
+                                        
+                                        <a href="https://www.dailymotion.com/ryan" target="_blank" class="platform-tag">Dailymotion</a>
+                                        
+                                        <a href="https://odysee.com/@ryan" target="_blank" class="platform-tag">Odysee</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">STREAMING</span>
+                                    <span style="color: var(--text-muted);">(2 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://www.twitch.tv/ryan" target="_blank" class="platform-tag">Twitch</a>
+                                        
+                                        <a href="https://trovo.live/s/ryan?roomType=1" target="_blank" class="platform-tag">Trovo</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">MUSIC</span>
+                                    <span style="color: var(--text-muted);">(6 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://open.spotify.com/user/ryan" target="_blank" class="platform-tag">Spotify</a>
+                                        
+                                        <a href="https://bandcamp.com/ryan" target="_blank" class="platform-tag">Bandcamp</a>
+                                        
+                                        <a href="https://www.mixcloud.com/ryan/" target="_blank" class="platform-tag">Mixcloud</a>
+                                        
+                                        <a href="https://www.last.fm/user/ryan" target="_blank" class="platform-tag">Last.fm</a>
+                                        
+                                        <a href="https://genius.com/Ryan" target="_blank" class="platform-tag">Genius</a>
+                                        
+                                        <a href="https://audiomack.com/ryan" target="_blank" class="platform-tag">Audiomack</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">GAMING</span>
+                                    <span style="color: var(--text-muted);">(5 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://steamcommunity.com/id/ryan" target="_blank" class="platform-tag">Steam</a>
+                                        
+                                        <a href="https://steamcommunity.com/groups/ryan" target="_blank" class="platform-tag">Steam Group</a>
+                                        
+                                        <a href="https://www.chess.com/member/ryan" target="_blank" class="platform-tag">Chess.com</a>
+                                        
+                                        <a href="https://lichess.org/@/ryan" target="_blank" class="platform-tag">Lichess</a>
+                                        
+                                        <a href="https://www.riotgames.com/en" target="_blank" class="platform-tag">Riot Games</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">ACADEMIC</span>
+                                    <span style="color: var(--text-muted);">(2 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://accounts.google.com/v3/signin/identifier?continue=https://scholar.google.com/citations?user%3Dryan&dsh=S1125954558:1774712789154771&hl=en&service=citations&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=AT1y2_VCBbyHhhaLSiugje8l2Tqy9whzh9yQIERPn9eEA1I0DCOFLOChYP-wnewFoNoLmmQ_6_lBUA" target="_blank" class="platform-tag">Google Scholar</a>
+                                        
+                                        <a href="https://orcid.org/404" target="_blank" class="platform-tag">ORCID</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">ARCHIVE</span>
+                                    <span style="color: var(--text-muted);">(1 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://archive.org/details/@ryan" target="_blank" class="platform-tag">Archive.org</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">FUNDING</span>
+                                    <span style="color: var(--text-muted);">(3 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://www.patreon.com/cw/Ryan" target="_blank" class="platform-tag">Patreon</a>
+                                        
+                                        <a href="https://buymeacoffee.com/ryan" target="_blank" class="platform-tag">BuyMeACoffee</a>
+                                        
+                                        <a href="https://ryan.gumroad.com/" target="_blank" class="platform-tag">Gumroad</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">CREATIVE</span>
+                                    <span style="color: var(--text-muted);">(2 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://www.behance.net/ryan/moodboards" target="_blank" class="platform-tag">Behance</a>
+                                        
+                                        <a href="https://dribbble.com/ryan/collections" target="_blank" class="platform-tag">Dribbble</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">PHOTO</span>
+                                    <span style="color: var(--text-muted);">(2 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://flickr.com/people/ryan" target="_blank" class="platform-tag">Flickr</a>
+                                        
+                                        <a href="https://500px.com/ryan" target="_blank" class="platform-tag">500px</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 12px;">
+                                    <span class="tag success">BOOKS</span>
+                                    <span style="color: var(--text-muted);">(1 platforms)</span>
+                                    <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px;">
+                                        
+                                        <a href="https://www.goodreads.com/user/show/84100-ryan" target="_blank" class="platform-tag">Goodreads</a>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                        
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="profiles">
+                            <div class="data-label" data-tooltip="Profiles">
+                                Profiles
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.instagram.com/ryan" target="_blank">https://www.instagram.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.linkedin.com/in/ryan" target="_blank">https://www.linkedin.com/in/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.tiktok.com/@ryan" target="_blank">https://www.tiktok.com/@ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.pinterest.com/ryan/" target="_blank">https://www.pinterest.com/ryan/</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://ryan.tumblr.com" target="_blank">https://ryan.tumblr.com</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.threads.com/login/?next=https://www.threads.com/@ryan/" target="_blank">https://www.threads.com/login/?next=https://www...</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://bsky.app/profile/ryan" target="_blank">https://bsky.app/profile/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://mastodon.social/@ryan" target="_blank">https://mastodon.social/@ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://mastodon.online/@ryan" target="_blank">https://mastodon.online/@ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://truthsocial.com/@ryan" target="_blank">https://truthsocial.com/@ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://parler.com/profile/ryan" target="_blank">https://parler.com/profile/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://gettr.com/user/ryan" target="_blank">https://gettr.com/user/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://t.me/ryan" target="_blank">https://t.me/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://discord.com/users/ryan" target="_blank">https://discord.com/users/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://signal.me/" target="_blank">https://signal.me/</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap&a=enter&url=https://m.weibo.cn/ryan?%26jumpfrom%3Dweibocom&domain=.weibo.cn&sudaref=&ua=php-sso_sdk_client-0.6.36&_rand=1774712760.4931" target="_blank">https://visitor.passport.weibo.cn/visitor/visit...</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.kaskus.co.id/profile/ryan" target="_blank">https://www.kaskus.co.id/profile/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.kompasiana.com/ryan" target="_blank">https://www.kompasiana.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://github.com/ryan" target="_blank">https://github.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://gitlab.com/ryan" target="_blank">https://gitlab.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://bitbucket.org/ryan/workspace/repositories/" target="_blank">https://bitbucket.org/ryan/workspace/repositories/</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://sourceforge.net/u/ryan/profile/" target="_blank">https://sourceforge.net/u/ryan/profile/</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://codeberg.org/ryan" target="_blank">https://codeberg.org/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://gitee.com/ryan" target="_blank">https://gitee.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://bugcrowd.com/h/ryan" target="_blank">https://bugcrowd.com/h/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://login.intigriti.com/Account/Login?ReturnUrl=/connect/authorize/callback?request_uri%3Durn%253Aietf%253Aparams%253Aoauth%253Arequest_uri%253A44D419BFA2AA2F325D8C684608A83D10982269752E410D989C10867015314F5F%26client_id%3Dbff-init" target="_blank">https://login.intigriti.com/Account/Login?Retur...</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://keybase.io/ryan" target="_blank">https://keybase.io/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://bugzilla.mozilla.org/user_profile?user_id=ryan" target="_blank">https://bugzilla.mozilla.org/user_profile?user_id=ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://replit.com/@ryan" target="_blank">https://replit.com/@ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://codesandbox.io/u/ryan" target="_blank">https://codesandbox.io/u/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://blog.glitch.com" target="_blank">https://blog.glitch.com</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://stackblitz.com/@ryan" target="_blank">https://stackblitz.com/@ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.hackerrank.com/profile/ryan" target="_blank">https://www.hackerrank.com/profile/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.codechef.com/users/ryan" target="_blank">https://www.codechef.com/users/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.topcoder.com/members/ryan" target="_blank">https://www.topcoder.com/members/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.codingame.com/profile/ryan" target="_blank">https://www.codingame.com/profile/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://dev.to/ryan" target="_blank">https://dev.to/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://news.ycombinator.com/user?id=ryan" target="_blank">https://news.ycombinator.com/user?id=ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://imgur.com/user/ryan" target="_blank">https://imgur.com/user/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://m.youtube.com/@ryan" target="_blank">https://m.youtube.com/@ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.twitch.tv/ryan" target="_blank">https://www.twitch.tv/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://vimeo.com/ryan" target="_blank">https://vimeo.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.dailymotion.com/ryan" target="_blank">https://www.dailymotion.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://odysee.com/@ryan" target="_blank">https://odysee.com/@ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://trovo.live/s/ryan?roomType=1" target="_blank">https://trovo.live/s/ryan?roomType=1</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://open.spotify.com/user/ryan" target="_blank">https://open.spotify.com/user/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://bandcamp.com/ryan" target="_blank">https://bandcamp.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.mixcloud.com/ryan/" target="_blank">https://www.mixcloud.com/ryan/</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.last.fm/user/ryan" target="_blank">https://www.last.fm/user/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://genius.com/Ryan" target="_blank">https://genius.com/Ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://audiomack.com/ryan" target="_blank">https://audiomack.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://steamcommunity.com/id/ryan" target="_blank">https://steamcommunity.com/id/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://steamcommunity.com/groups/ryan" target="_blank">https://steamcommunity.com/groups/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.chess.com/member/ryan" target="_blank">https://www.chess.com/member/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://lichess.org/@/ryan" target="_blank">https://lichess.org/@/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.riotgames.com/en" target="_blank">https://www.riotgames.com/en</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://accounts.google.com/v3/signin/identifier?continue=https://scholar.google.com/citations?user%3Dryan&dsh=S1125954558:1774712789154771&hl=en&service=citations&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=AT1y2_VCBbyHhhaLSiugje8l2Tqy9whzh9yQIERPn9eEA1I0DCOFLOChYP-wnewFoNoLmmQ_6_lBUA" target="_blank">https://accounts.google.com/v3/signin/identifie...</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://orcid.org/404" target="_blank">https://orcid.org/404</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://archive.org/details/@ryan" target="_blank">https://archive.org/details/@ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.patreon.com/cw/Ryan" target="_blank">https://www.patreon.com/cw/Ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://buymeacoffee.com/ryan" target="_blank">https://buymeacoffee.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://ryan.gumroad.com/" target="_blank">https://ryan.gumroad.com/</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.behance.net/ryan/moodboards" target="_blank">https://www.behance.net/ryan/moodboards</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://dribbble.com/ryan/collections" target="_blank">https://dribbble.com/ryan/collections</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://flickr.com/people/ryan" target="_blank">https://flickr.com/people/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://500px.com/ryan" target="_blank">https://500px.com/ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                <a href="https://www.goodreads.com/user/show/84100-ryan" target="_blank">https://www.goodreads.com/user/show/84100-ryan</a>
+                                                
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="possible_emails">
+                            <div class="data-label" data-tooltip="Possible Emails">
+                                Possible Emails
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                ryan@gmail.com
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan@yahoo.com
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan@outlook.com
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan@hotmail.com
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan@protonmail.com
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan@mail.com
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="variations">
+                            <div class="data-label" data-tooltip="Variations">
+                                Variations
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                ryan
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                RYAN
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                Ryan
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan0
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan_0
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan.0
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan1
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan_1
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan.1
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ryan2
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="categories">
+                            <div class="data-label" data-tooltip="Categories">
+                                Categories
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                social
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                professional
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                blog
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                messaging
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                chat
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                forum
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                dev
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                security
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                coding
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                video
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                streaming
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                music
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                gaming
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                academic
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                archive
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                funding
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                creative
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                photo
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                books
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                </div>
+                
+                
+                <div class="sources">
+                    <span>🔍 Sources:</span>
+                    
+                    <span class="source-badge">Instagram</span>
+                    
+                    <span class="source-badge">LinkedIn</span>
+                    
+                    <span class="source-badge">TikTok</span>
+                    
+                    <span class="source-badge">Pinterest</span>
+                    
+                    <span class="source-badge">Tumblr</span>
+                    
+                    <span class="source-badge">Threads</span>
+                    
+                    <span class="source-badge">Bluesky</span>
+                    
+                    <span class="source-badge">Mastodon.social</span>
+                    
+                    <span class="source-badge">Mastodon.online</span>
+                    
+                    <span class="source-badge">Truth Social</span>
+                    
+                    <span class="source-badge">Parler</span>
+                    
+                    <span class="source-badge">Gettr</span>
+                    
+                    <span class="source-badge">Telegram</span>
+                    
+                    <span class="source-badge">Discord</span>
+                    
+                    <span class="source-badge">Signal</span>
+                    
+                    <span class="source-badge">Weibo</span>
+                    
+                    <span class="source-badge">Kaskus</span>
+                    
+                    <span class="source-badge">Kompasiana</span>
+                    
+                    <span class="source-badge">GitHub</span>
+                    
+                    <span class="source-badge">GitLab</span>
+                    
+                    <span class="source-badge">Bitbucket</span>
+                    
+                    <span class="source-badge">SourceForge</span>
+                    
+                    <span class="source-badge">Codeberg</span>
+                    
+                    <span class="source-badge">Gitee</span>
+                    
+                    <span class="source-badge">Bugcrowd</span>
+                    
+                    <span class="source-badge">Intigriti</span>
+                    
+                    <span class="source-badge">Keybase</span>
+                    
+                    <span class="source-badge">Bugzilla</span>
+                    
+                    <span class="source-badge">Replit</span>
+                    
+                    <span class="source-badge">CodeSandbox</span>
+                    
+                    <span class="source-badge">Glitch</span>
+                    
+                    <span class="source-badge">StackBlitz</span>
+                    
+                    <span class="source-badge">HackerRank</span>
+                    
+                    <span class="source-badge">CodeChef</span>
+                    
+                    <span class="source-badge">TopCoder</span>
+                    
+                    <span class="source-badge">Codingame</span>
+                    
+                    <span class="source-badge">Dev.to</span>
+                    
+                    <span class="source-badge">HackerNews</span>
+                    
+                    <span class="source-badge">Imgur</span>
+                    
+                    <span class="source-badge">YouTube</span>
+                    
+                    <span class="source-badge">Twitch</span>
+                    
+                    <span class="source-badge">Vimeo</span>
+                    
+                    <span class="source-badge">Dailymotion</span>
+                    
+                    <span class="source-badge">Odysee</span>
+                    
+                    <span class="source-badge">Trovo</span>
+                    
+                    <span class="source-badge">Spotify</span>
+                    
+                    <span class="source-badge">Bandcamp</span>
+                    
+                    <span class="source-badge">Mixcloud</span>
+                    
+                    <span class="source-badge">Last.fm</span>
+                    
+                    <span class="source-badge">Genius</span>
+                    
+                    <span class="source-badge">Audiomack</span>
+                    
+                    <span class="source-badge">Steam</span>
+                    
+                    <span class="source-badge">Steam Group</span>
+                    
+                    <span class="source-badge">Chess.com</span>
+                    
+                    <span class="source-badge">Lichess</span>
+                    
+                    <span class="source-badge">Riot Games</span>
+                    
+                    <span class="source-badge">Google Scholar</span>
+                    
+                    <span class="source-badge">ORCID</span>
+                    
+                    <span class="source-badge">Archive.org</span>
+                    
+                    <span class="source-badge">Patreon</span>
+                    
+                    <span class="source-badge">BuyMeACoffee</span>
+                    
+                    <span class="source-badge">Gumroad</span>
+                    
+                    <span class="source-badge">Behance</span>
+                    
+                    <span class="source-badge">Dribbble</span>
+                    
+                    <span class="source-badge">Flickr</span>
+                    
+                    <span class="source-badge">500px</span>
+                    
+                    <span class="source-badge">Goodreads</span>
+                    
+                </div>
+                
+                
+                
+                <div class="timestamp">⏱️ Last updated: 2026-03-28T22:46:39.329221</div>
+                
+            </div>
+        </div>
+        
+
+        <!-- Correlation -->
+        
+
+        <!-- Footer -->
+        <div class="footer">
+            <div>👻 GhostIntel v2.5 - OSINT Mashup Engine</div>
+            <div class="footer-links">
+                <a href="https://github.com/ruyynn/GhostIntel" target="_blank">GitHub</a>
+                <a href="#" onclick="window.print()">Print Report</a>
+                <a href="#" onclick="scrollToTop()">Back to Top</a>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.7rem;">
+                ⚠️ For Educational Purposes Only • No API Keys Required
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleModule(header) {
+            const content = header.nextElementSibling;
+            const btn = header.querySelector('.toggle-btn');
+            if (content.style.display === 'none' || !content.style.display) {
+                content.style.display = 'block';
+                btn.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                btn.textContent = '▼';
+            }
+        }
+
+        function setTheme(theme) {
+            const body = document.body;
+            const darkBtn = document.querySelector('.theme-btn:first-child');
+            const lightBtn = document.querySelector('.theme-btn:last-child');
+            if (theme === 'dark') {
+                body.classList.remove('light-theme');
+                darkBtn.classList.add('active');
+                lightBtn.classList.remove('active');
+                localStorage.setItem('ghostintel-theme', 'dark');
+            } else {
+                body.classList.add('light-theme');
+                lightBtn.classList.add('active');
+                darkBtn.classList.remove('active');
+                localStorage.setItem('ghostintel-theme', 'light');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('ghostintel-theme');
+        if (savedTheme === 'light') setTheme('light');
+
+        function searchReport(query) {
+            query = query.toLowerCase();
+            document.querySelectorAll('.module-card').forEach(module => {
+                const content = module.querySelector('.module-content');
+                const text = content.textContent.toLowerCase();
+                module.style.display = text.includes(query) || query === '' ? 'block' : 'none';
+            });
+        }
+
+        function exportJSON() {
+            const data = {
+                target: "ryan",
+                generated: "2026-03-28 22:46:39",
+                modules: {"username": {"data": {"by_category": {"academic": [{"category": "academic", "platform": "Google Scholar", "profile_name": null, "status": "found", "url": "https://accounts.google.com/v3/signin/identifier?continue=https://scholar.google.com/citations?user%3Dryan\u0026dsh=S1125954558:1774712789154771\u0026hl=en\u0026service=citations\u0026flowName=GlifWebSignIn\u0026flowEntry=ServiceLogin\u0026ifkv=AT1y2_VCBbyHhhaLSiugje8l2Tqy9whzh9yQIERPn9eEA1I0DCOFLOChYP-wnewFoNoLmmQ_6_lBUA"}, {"category": "academic", "platform": "ORCID", "profile_name": null, "status": "found", "url": "https://orcid.org/404"}], "archive": [{"category": "archive", "platform": "Archive.org", "profile_name": null, "status": "found", "url": "https://archive.org/details/@ryan"}], "blog": [{"category": "blog", "platform": "Tumblr", "profile_name": null, "status": "found", "url": "https://ryan.tumblr.com"}, {"category": "blog", "platform": "Kompasiana", "profile_name": null, "status": "found", "url": "https://www.kompasiana.com/ryan"}], "books": [{"category": "books", "platform": "Goodreads", "profile_name": null, "status": "found", "url": "https://www.goodreads.com/user/show/84100-ryan"}], "chat": [{"category": "chat", "platform": "Discord", "profile_name": null, "status": "found", "url": "https://discord.com/users/ryan"}], "coding": [{"category": "coding", "platform": "HackerRank", "profile_name": null, "status": "found", "url": "https://www.hackerrank.com/profile/ryan"}, {"category": "coding", "platform": "CodeChef", "profile_name": null, "status": "found", "url": "https://www.codechef.com/users/ryan"}, {"category": "coding", "platform": "TopCoder", "profile_name": null, "status": "found", "url": "https://www.topcoder.com/members/ryan"}, {"category": "coding", "platform": "Codingame", "profile_name": null, "status": "found", "url": "https://www.codingame.com/profile/ryan"}], "creative": [{"category": "creative", "platform": "Behance", "profile_name": null, "status": "found", "url": "https://www.behance.net/ryan/moodboards"}, {"category": "creative", "platform": "Dribbble", "profile_name": null, "status": "found", "url": "https://dribbble.com/ryan/collections"}], "dev": [{"category": "dev", "platform": "GitHub", "profile_name": null, "status": "found", "url": "https://github.com/ryan"}, {"category": "dev", "platform": "GitLab", "profile_name": null, "status": "found", "url": "https://gitlab.com/ryan"}, {"category": "dev", "platform": "Bitbucket", "profile_name": null, "status": "found", "url": "https://bitbucket.org/ryan/workspace/repositories/"}, {"category": "dev", "platform": "SourceForge", "profile_name": null, "status": "found", "url": "https://sourceforge.net/u/ryan/profile/"}, {"category": "dev", "platform": "Codeberg", "profile_name": null, "status": "found", "url": "https://codeberg.org/ryan"}, {"category": "dev", "platform": "Gitee", "profile_name": null, "status": "found", "url": "https://gitee.com/ryan"}, {"category": "dev", "platform": "Replit", "profile_name": null, "status": "found", "url": "https://replit.com/@ryan"}, {"category": "dev", "platform": "CodeSandbox", "profile_name": null, "status": "found", "url": "https://codesandbox.io/u/ryan"}, {"category": "dev", "platform": "Glitch", "profile_name": null, "status": "found", "url": "https://blog.glitch.com"}, {"category": "dev", "platform": "StackBlitz", "profile_name": null, "status": "found", "url": "https://stackblitz.com/@ryan"}, {"category": "dev", "platform": "Dev.to", "profile_name": null, "status": "found", "url": "https://dev.to/ryan"}], "forum": [{"category": "forum", "platform": "Kaskus", "profile_name": null, "status": "found", "url": "https://www.kaskus.co.id/profile/ryan"}, {"category": "forum", "platform": "HackerNews", "profile_name": null, "status": "found", "url": "https://news.ycombinator.com/user?id=ryan"}], "funding": [{"category": "funding", "platform": "Patreon", "profile_name": null, "status": "found", "url": "https://www.patreon.com/cw/Ryan"}, {"category": "funding", "platform": "BuyMeACoffee", "profile_name": null, "status": "found", "url": "https://buymeacoffee.com/ryan"}, {"category": "funding", "platform": "Gumroad", "profile_name": null, "status": "found", "url": "https://ryan.gumroad.com/"}], "gaming": [{"category": "gaming", "platform": "Steam", "profile_name": null, "status": "found", "url": "https://steamcommunity.com/id/ryan"}, {"category": "gaming", "platform": "Steam Group", "profile_name": null, "status": "found", "url": "https://steamcommunity.com/groups/ryan"}, {"category": "gaming", "platform": "Chess.com", "profile_name": null, "status": "found", "url": "https://www.chess.com/member/ryan"}, {"category": "gaming", "platform": "Lichess", "profile_name": null, "status": "found", "url": "https://lichess.org/@/ryan"}, {"category": "gaming", "platform": "Riot Games", "profile_name": null, "status": "found", "url": "https://www.riotgames.com/en"}], "messaging": [{"category": "messaging", "platform": "Telegram", "profile_name": null, "status": "found", "url": "https://t.me/ryan"}, {"category": "messaging", "platform": "Signal", "profile_name": null, "status": "found", "url": "https://signal.me/"}], "music": [{"category": "music", "platform": "Spotify", "profile_name": null, "status": "found", "url": "https://open.spotify.com/user/ryan"}, {"category": "music", "platform": "Bandcamp", "profile_name": null, "status": "found", "url": "https://bandcamp.com/ryan"}, {"category": "music", "platform": "Mixcloud", "profile_name": null, "status": "found", "url": "https://www.mixcloud.com/ryan/"}, {"category": "music", "platform": "Last.fm", "profile_name": null, "status": "found", "url": "https://www.last.fm/user/ryan"}, {"category": "music", "platform": "Genius", "profile_name": null, "status": "found", "url": "https://genius.com/Ryan"}, {"category": "music", "platform": "Audiomack", "profile_name": null, "status": "found", "url": "https://audiomack.com/ryan"}], "photo": [{"category": "photo", "platform": "Flickr", "profile_name": null, "status": "found", "url": "https://flickr.com/people/ryan"}, {"category": "photo", "platform": "500px", "profile_name": null, "status": "found", "url": "https://500px.com/ryan"}], "professional": [{"category": "professional", "platform": "LinkedIn", "profile_name": null, "status": "found", "url": "https://www.linkedin.com/in/ryan"}], "security": [{"category": "security", "platform": "Bugcrowd", "profile_name": null, "status": "found", "url": "https://bugcrowd.com/h/ryan"}, {"category": "security", "platform": "Intigriti", "profile_name": null, "status": "found", "url": "https://login.intigriti.com/Account/Login?ReturnUrl=/connect/authorize/callback?request_uri%3Durn%253Aietf%253Aparams%253Aoauth%253Arequest_uri%253A44D419BFA2AA2F325D8C684608A83D10982269752E410D989C10867015314F5F%26client_id%3Dbff-init"}, {"category": "security", "platform": "Keybase", "profile_name": null, "status": "found", "url": "https://keybase.io/ryan"}, {"category": "security", "platform": "Bugzilla", "profile_name": null, "status": "found", "url": "https://bugzilla.mozilla.org/user_profile?user_id=ryan"}], "social": [{"category": "social", "platform": "Instagram", "profile_name": null, "status": "found", "url": "https://www.instagram.com/ryan"}, {"category": "social", "platform": "TikTok", "profile_name": null, "status": "found", "url": "https://www.tiktok.com/@ryan"}, {"category": "social", "platform": "Pinterest", "profile_name": null, "status": "found", "url": "https://www.pinterest.com/ryan/"}, {"category": "social", "platform": "Threads", "profile_name": null, "status": "found", "url": "https://www.threads.com/login/?next=https://www.threads.com/@ryan/"}, {"category": "social", "platform": "Bluesky", "profile_name": null, "status": "found", "url": "https://bsky.app/profile/ryan"}, {"category": "social", "platform": "Mastodon.social", "profile_name": null, "status": "found", "url": "https://mastodon.social/@ryan"}, {"category": "social", "platform": "Mastodon.online", "profile_name": null, "status": "found", "url": "https://mastodon.online/@ryan"}, {"category": "social", "platform": "Truth Social", "profile_name": null, "status": "found", "url": "https://truthsocial.com/@ryan"}, {"category": "social", "platform": "Parler", "profile_name": null, "status": "found", "url": "https://parler.com/profile/ryan"}, {"category": "social", "platform": "Gettr", "profile_name": null, "status": "found", "url": "https://gettr.com/user/ryan"}, {"category": "social", "platform": "Weibo", "profile_name": null, "status": "found", "url": "https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap\u0026a=enter\u0026url=https://m.weibo.cn/ryan?%26jumpfrom%3Dweibocom\u0026domain=.weibo.cn\u0026sudaref=\u0026ua=php-sso_sdk_client-0.6.36\u0026_rand=1774712760.4931"}, {"category": "social", "platform": "Imgur", "profile_name": null, "status": "found", "url": "https://imgur.com/user/ryan"}], "streaming": [{"category": "streaming", "platform": "Twitch", "profile_name": null, "status": "found", "url": "https://www.twitch.tv/ryan"}, {"category": "streaming", "platform": "Trovo", "profile_name": null, "status": "found", "url": "https://trovo.live/s/ryan?roomType=1"}], "video": [{"category": "video", "platform": "YouTube", "profile_name": null, "status": "found", "url": "https://m.youtube.com/@ryan"}, {"category": "video", "platform": "Vimeo", "profile_name": null, "status": "found", "url": "https://vimeo.com/ryan"}, {"category": "video", "platform": "Dailymotion", "profile_name": null, "status": "found", "url": "https://www.dailymotion.com/ryan"}, {"category": "video", "platform": "Odysee", "profile_name": null, "status": "found", "url": "https://odysee.com/@ryan"}]}, "categories": ["social", "professional", "blog", "messaging", "chat", "forum", "dev", "security", "coding", "video", "streaming", "music", "gaming", "academic", "archive", "funding", "creative", "photo", "books"], "found": [{"category": "social", "platform": "Instagram", "profile_name": null, "status": "found", "url": "https://www.instagram.com/ryan"}, {"category": "professional", "platform": "LinkedIn", "profile_name": null, "status": "found", "url": "https://www.linkedin.com/in/ryan"}, {"category": "social", "platform": "TikTok", "profile_name": null, "status": "found", "url": "https://www.tiktok.com/@ryan"}, {"category": "social", "platform": "Pinterest", "profile_name": null, "status": "found", "url": "https://www.pinterest.com/ryan/"}, {"category": "blog", "platform": "Tumblr", "profile_name": null, "status": "found", "url": "https://ryan.tumblr.com"}, {"category": "social", "platform": "Threads", "profile_name": null, "status": "found", "url": "https://www.threads.com/login/?next=https://www.threads.com/@ryan/"}, {"category": "social", "platform": "Bluesky", "profile_name": null, "status": "found", "url": "https://bsky.app/profile/ryan"}, {"category": "social", "platform": "Mastodon.social", "profile_name": null, "status": "found", "url": "https://mastodon.social/@ryan"}, {"category": "social", "platform": "Mastodon.online", "profile_name": null, "status": "found", "url": "https://mastodon.online/@ryan"}, {"category": "social", "platform": "Truth Social", "profile_name": null, "status": "found", "url": "https://truthsocial.com/@ryan"}, {"category": "social", "platform": "Parler", "profile_name": null, "status": "found", "url": "https://parler.com/profile/ryan"}, {"category": "social", "platform": "Gettr", "profile_name": null, "status": "found", "url": "https://gettr.com/user/ryan"}, {"category": "messaging", "platform": "Telegram", "profile_name": null, "status": "found", "url": "https://t.me/ryan"}, {"category": "chat", "platform": "Discord", "profile_name": null, "status": "found", "url": "https://discord.com/users/ryan"}, {"category": "messaging", "platform": "Signal", "profile_name": null, "status": "found", "url": "https://signal.me/"}, {"category": "social", "platform": "Weibo", "profile_name": null, "status": "found", "url": "https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap\u0026a=enter\u0026url=https://m.weibo.cn/ryan?%26jumpfrom%3Dweibocom\u0026domain=.weibo.cn\u0026sudaref=\u0026ua=php-sso_sdk_client-0.6.36\u0026_rand=1774712760.4931"}, {"category": "forum", "platform": "Kaskus", "profile_name": null, "status": "found", "url": "https://www.kaskus.co.id/profile/ryan"}, {"category": "blog", "platform": "Kompasiana", "profile_name": null, "status": "found", "url": "https://www.kompasiana.com/ryan"}, {"category": "dev", "platform": "GitHub", "profile_name": null, "status": "found", "url": "https://github.com/ryan"}, {"category": "dev", "platform": "GitLab", "profile_name": null, "status": "found", "url": "https://gitlab.com/ryan"}, {"category": "dev", "platform": "Bitbucket", "profile_name": null, "status": "found", "url": "https://bitbucket.org/ryan/workspace/repositories/"}, {"category": "dev", "platform": "SourceForge", "profile_name": null, "status": "found", "url": "https://sourceforge.net/u/ryan/profile/"}, {"category": "dev", "platform": "Codeberg", "profile_name": null, "status": "found", "url": "https://codeberg.org/ryan"}, {"category": "dev", "platform": "Gitee", "profile_name": null, "status": "found", "url": "https://gitee.com/ryan"}, {"category": "security", "platform": "Bugcrowd", "profile_name": null, "status": "found", "url": "https://bugcrowd.com/h/ryan"}, {"category": "security", "platform": "Intigriti", "profile_name": null, "status": "found", "url": "https://login.intigriti.com/Account/Login?ReturnUrl=/connect/authorize/callback?request_uri%3Durn%253Aietf%253Aparams%253Aoauth%253Arequest_uri%253A44D419BFA2AA2F325D8C684608A83D10982269752E410D989C10867015314F5F%26client_id%3Dbff-init"}, {"category": "security", "platform": "Keybase", "profile_name": null, "status": "found", "url": "https://keybase.io/ryan"}, {"category": "security", "platform": "Bugzilla", "profile_name": null, "status": "found", "url": "https://bugzilla.mozilla.org/user_profile?user_id=ryan"}, {"category": "dev", "platform": "Replit", "profile_name": null, "status": "found", "url": "https://replit.com/@ryan"}, {"category": "dev", "platform": "CodeSandbox", "profile_name": null, "status": "found", "url": "https://codesandbox.io/u/ryan"}, {"category": "dev", "platform": "Glitch", "profile_name": null, "status": "found", "url": "https://blog.glitch.com"}, {"category": "dev", "platform": "StackBlitz", "profile_name": null, "status": "found", "url": "https://stackblitz.com/@ryan"}, {"category": "coding", "platform": "HackerRank", "profile_name": null, "status": "found", "url": "https://www.hackerrank.com/profile/ryan"}, {"category": "coding", "platform": "CodeChef", "profile_name": null, "status": "found", "url": "https://www.codechef.com/users/ryan"}, {"category": "coding", "platform": "TopCoder", "profile_name": null, "status": "found", "url": "https://www.topcoder.com/members/ryan"}, {"category": "coding", "platform": "Codingame", "profile_name": null, "status": "found", "url": "https://www.codingame.com/profile/ryan"}, {"category": "dev", "platform": "Dev.to", "profile_name": null, "status": "found", "url": "https://dev.to/ryan"}, {"category": "forum", "platform": "HackerNews", "profile_name": null, "status": "found", "url": "https://news.ycombinator.com/user?id=ryan"}, {"category": "social", "platform": "Imgur", "profile_name": null, "status": "found", "url": "https://imgur.com/user/ryan"}, {"category": "video", "platform": "YouTube", "profile_name": null, "status": "found", "url": "https://m.youtube.com/@ryan"}, {"category": "streaming", "platform": "Twitch", "profile_name": null, "status": "found", "url": "https://www.twitch.tv/ryan"}, {"category": "video", "platform": "Vimeo", "profile_name": null, "status": "found", "url": "https://vimeo.com/ryan"}, {"category": "video", "platform": "Dailymotion", "profile_name": null, "status": "found", "url": "https://www.dailymotion.com/ryan"}, {"category": "video", "platform": "Odysee", "profile_name": null, "status": "found", "url": "https://odysee.com/@ryan"}, {"category": "streaming", "platform": "Trovo", "profile_name": null, "status": "found", "url": "https://trovo.live/s/ryan?roomType=1"}, {"category": "music", "platform": "Spotify", "profile_name": null, "status": "found", "url": "https://open.spotify.com/user/ryan"}, {"category": "music", "platform": "Bandcamp", "profile_name": null, "status": "found", "url": "https://bandcamp.com/ryan"}, {"category": "music", "platform": "Mixcloud", "profile_name": null, "status": "found", "url": "https://www.mixcloud.com/ryan/"}, {"category": "music", "platform": "Last.fm", "profile_name": null, "status": "found", "url": "https://www.last.fm/user/ryan"}, {"category": "music", "platform": "Genius", "profile_name": null, "status": "found", "url": "https://genius.com/Ryan"}, {"category": "music", "platform": "Audiomack", "profile_name": null, "status": "found", "url": "https://audiomack.com/ryan"}, {"category": "gaming", "platform": "Steam", "profile_name": null, "status": "found", "url": "https://steamcommunity.com/id/ryan"}, {"category": "gaming", "platform": "Steam Group", "profile_name": null, "status": "found", "url": "https://steamcommunity.com/groups/ryan"}, {"category": "gaming", "platform": "Chess.com", "profile_name": null, "status": "found", "url": "https://www.chess.com/member/ryan"}, {"category": "gaming", "platform": "Lichess", "profile_name": null, "status": "found", "url": "https://lichess.org/@/ryan"}, {"category": "gaming", "platform": "Riot Games", "profile_name": null, "status": "found", "url": "https://www.riotgames.com/en"}, {"category": "academic", "platform": "Google Scholar", "profile_name": null, "status": "found", "url": "https://accounts.google.com/v3/signin/identifier?continue=https://scholar.google.com/citations?user%3Dryan\u0026dsh=S1125954558:1774712789154771\u0026hl=en\u0026service=citations\u0026flowName=GlifWebSignIn\u0026flowEntry=ServiceLogin\u0026ifkv=AT1y2_VCBbyHhhaLSiugje8l2Tqy9whzh9yQIERPn9eEA1I0DCOFLOChYP-wnewFoNoLmmQ_6_lBUA"}, {"category": "academic", "platform": "ORCID", "profile_name": null, "status": "found", "url": "https://orcid.org/404"}, {"category": "archive", "platform": "Archive.org", "profile_name": null, "status": "found", "url": "https://archive.org/details/@ryan"}, {"category": "funding", "platform": "Patreon", "profile_name": null, "status": "found", "url": "https://www.patreon.com/cw/Ryan"}, {"category": "funding", "platform": "BuyMeACoffee", "profile_name": null, "status": "found", "url": "https://buymeacoffee.com/ryan"}, {"category": "funding", "platform": "Gumroad", "profile_name": null, "status": "found", "url": "https://ryan.gumroad.com/"}, {"category": "creative", "platform": "Behance", "profile_name": null, "status": "found", "url": "https://www.behance.net/ryan/moodboards"}, {"category": "creative", "platform": "Dribbble", "profile_name": null, "status": "found", "url": "https://dribbble.com/ryan/collections"}, {"category": "photo", "platform": "Flickr", "profile_name": null, "status": "found", "url": "https://flickr.com/people/ryan"}, {"category": "photo", "platform": "500px", "profile_name": null, "status": "found", "url": "https://500px.com/ryan"}, {"category": "books", "platform": "Goodreads", "profile_name": null, "status": "found", "url": "https://www.goodreads.com/user/show/84100-ryan"}], "possible_emails": ["ryan@gmail.com", "ryan@yahoo.com", "ryan@outlook.com", "ryan@hotmail.com", "ryan@protonmail.com", "ryan@mail.com"], "profiles": ["https://www.instagram.com/ryan", "https://www.linkedin.com/in/ryan", "https://www.tiktok.com/@ryan", "https://www.pinterest.com/ryan/", "https://ryan.tumblr.com", "https://www.threads.com/login/?next=https://www.threads.com/@ryan/", "https://bsky.app/profile/ryan", "https://mastodon.social/@ryan", "https://mastodon.online/@ryan", "https://truthsocial.com/@ryan", "https://parler.com/profile/ryan", "https://gettr.com/user/ryan", "https://t.me/ryan", "https://discord.com/users/ryan", "https://signal.me/", "https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap\u0026a=enter\u0026url=https://m.weibo.cn/ryan?%26jumpfrom%3Dweibocom\u0026domain=.weibo.cn\u0026sudaref=\u0026ua=php-sso_sdk_client-0.6.36\u0026_rand=1774712760.4931", "https://www.kaskus.co.id/profile/ryan", "https://www.kompasiana.com/ryan", "https://github.com/ryan", "https://gitlab.com/ryan", "https://bitbucket.org/ryan/workspace/repositories/", "https://sourceforge.net/u/ryan/profile/", "https://codeberg.org/ryan", "https://gitee.com/ryan", "https://bugcrowd.com/h/ryan", "https://login.intigriti.com/Account/Login?ReturnUrl=/connect/authorize/callback?request_uri%3Durn%253Aietf%253Aparams%253Aoauth%253Arequest_uri%253A44D419BFA2AA2F325D8C684608A83D10982269752E410D989C10867015314F5F%26client_id%3Dbff-init", "https://keybase.io/ryan", "https://bugzilla.mozilla.org/user_profile?user_id=ryan", "https://replit.com/@ryan", "https://codesandbox.io/u/ryan", "https://blog.glitch.com", "https://stackblitz.com/@ryan", "https://www.hackerrank.com/profile/ryan", "https://www.codechef.com/users/ryan", "https://www.topcoder.com/members/ryan", "https://www.codingame.com/profile/ryan", "https://dev.to/ryan", "https://news.ycombinator.com/user?id=ryan", "https://imgur.com/user/ryan", "https://m.youtube.com/@ryan", "https://www.twitch.tv/ryan", "https://vimeo.com/ryan", "https://www.dailymotion.com/ryan", "https://odysee.com/@ryan", "https://trovo.live/s/ryan?roomType=1", "https://open.spotify.com/user/ryan", "https://bandcamp.com/ryan", "https://www.mixcloud.com/ryan/", "https://www.last.fm/user/ryan", "https://genius.com/Ryan", "https://audiomack.com/ryan", "https://steamcommunity.com/id/ryan", "https://steamcommunity.com/groups/ryan", "https://www.chess.com/member/ryan", "https://lichess.org/@/ryan", "https://www.riotgames.com/en", "https://accounts.google.com/v3/signin/identifier?continue=https://scholar.google.com/citations?user%3Dryan\u0026dsh=S1125954558:1774712789154771\u0026hl=en\u0026service=citations\u0026flowName=GlifWebSignIn\u0026flowEntry=ServiceLogin\u0026ifkv=AT1y2_VCBbyHhhaLSiugje8l2Tqy9whzh9yQIERPn9eEA1I0DCOFLOChYP-wnewFoNoLmmQ_6_lBUA", "https://orcid.org/404", "https://archive.org/details/@ryan", "https://www.patreon.com/cw/Ryan", "https://buymeacoffee.com/ryan", "https://ryan.gumroad.com/", "https://www.behance.net/ryan/moodboards", "https://dribbble.com/ryan/collections", "https://flickr.com/people/ryan", "https://500px.com/ryan", "https://www.goodreads.com/user/show/84100-ryan"], "timestamp": "2026-03-28T22:46:39.329221", "total_checked": 129, "total_found": 67, "username": "ryan", "variations": ["ryan", "RYAN", "Ryan", "ryan0", "ryan_0", "ryan.0", "ryan1", "ryan_1", "ryan.1", "ryan2"]}, "name": "username", "sources": ["Instagram", "LinkedIn", "TikTok", "Pinterest", "Tumblr", "Threads", "Bluesky", "Mastodon.social", "Mastodon.online", "Truth Social", "Parler", "Gettr", "Telegram", "Discord", "Signal", "Weibo", "Kaskus", "Kompasiana", "GitHub", "GitLab", "Bitbucket", "SourceForge", "Codeberg", "Gitee", "Bugcrowd", "Intigriti", "Keybase", "Bugzilla", "Replit", "CodeSandbox", "Glitch", "StackBlitz", "HackerRank", "CodeChef", "TopCoder", "Codingame", "Dev.to", "HackerNews", "Imgur", "YouTube", "Twitch", "Vimeo", "Dailymotion", "Odysee", "Trovo", "Spotify", "Bandcamp", "Mixcloud", "Last.fm", "Genius", "Audiomack", "Steam", "Steam Group", "Chess.com", "Lichess", "Riot Games", "Google Scholar", "ORCID", "Archive.org", "Patreon", "BuyMeACoffee", "Gumroad", "Behance", "Dribbble", "Flickr", "500px", "Goodreads"]}}
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ghostintel-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportMarkdown() {
+            let markdown = `# GhostIntel Report - ryan
+
+Generated: 2026-03-28 22:46:39
+
+`;
+            
+            markdown += `## USERNAME
+
+`;
+            
+            markdown += `- **Username**: ${JSON.stringify("ryan")}
+`;
+            
+            markdown += `- **Total Checked**: ${JSON.stringify(129)}
+`;
+            
+            markdown += `- **Total Found**: ${JSON.stringify(67)}
+`;
+            
+            markdown += `- **Found**: ${JSON.stringify([{"category": "social", "platform": "Instagram", "profile_name": null, "status": "found", "url": "https://www.instagram.com/ryan"}, {"category": "professional", "platform": "LinkedIn", "profile_name": null, "status": "found", "url": "https://www.linkedin.com/in/ryan"}, {"category": "social", "platform": "TikTok", "profile_name": null, "status": "found", "url": "https://www.tiktok.com/@ryan"}, {"category": "social", "platform": "Pinterest", "profile_name": null, "status": "found", "url": "https://www.pinterest.com/ryan/"}, {"category": "blog", "platform": "Tumblr", "profile_name": null, "status": "found", "url": "https://ryan.tumblr.com"}, {"category": "social", "platform": "Threads", "profile_name": null, "status": "found", "url": "https://www.threads.com/login/?next=https://www.threads.com/@ryan/"}, {"category": "social", "platform": "Bluesky", "profile_name": null, "status": "found", "url": "https://bsky.app/profile/ryan"}, {"category": "social", "platform": "Mastodon.social", "profile_name": null, "status": "found", "url": "https://mastodon.social/@ryan"}, {"category": "social", "platform": "Mastodon.online", "profile_name": null, "status": "found", "url": "https://mastodon.online/@ryan"}, {"category": "social", "platform": "Truth Social", "profile_name": null, "status": "found", "url": "https://truthsocial.com/@ryan"}, {"category": "social", "platform": "Parler", "profile_name": null, "status": "found", "url": "https://parler.com/profile/ryan"}, {"category": "social", "platform": "Gettr", "profile_name": null, "status": "found", "url": "https://gettr.com/user/ryan"}, {"category": "messaging", "platform": "Telegram", "profile_name": null, "status": "found", "url": "https://t.me/ryan"}, {"category": "chat", "platform": "Discord", "profile_name": null, "status": "found", "url": "https://discord.com/users/ryan"}, {"category": "messaging", "platform": "Signal", "profile_name": null, "status": "found", "url": "https://signal.me/"}, {"category": "social", "platform": "Weibo", "profile_name": null, "status": "found", "url": "https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap\u0026a=enter\u0026url=https://m.weibo.cn/ryan?%26jumpfrom%3Dweibocom\u0026domain=.weibo.cn\u0026sudaref=\u0026ua=php-sso_sdk_client-0.6.36\u0026_rand=1774712760.4931"}, {"category": "forum", "platform": "Kaskus", "profile_name": null, "status": "found", "url": "https://www.kaskus.co.id/profile/ryan"}, {"category": "blog", "platform": "Kompasiana", "profile_name": null, "status": "found", "url": "https://www.kompasiana.com/ryan"}, {"category": "dev", "platform": "GitHub", "profile_name": null, "status": "found", "url": "https://github.com/ryan"}, {"category": "dev", "platform": "GitLab", "profile_name": null, "status": "found", "url": "https://gitlab.com/ryan"}, {"category": "dev", "platform": "Bitbucket", "profile_name": null, "status": "found", "url": "https://bitbucket.org/ryan/workspace/repositories/"}, {"category": "dev", "platform": "SourceForge", "profile_name": null, "status": "found", "url": "https://sourceforge.net/u/ryan/profile/"}, {"category": "dev", "platform": "Codeberg", "profile_name": null, "status": "found", "url": "https://codeberg.org/ryan"}, {"category": "dev", "platform": "Gitee", "profile_name": null, "status": "found", "url": "https://gitee.com/ryan"}, {"category": "security", "platform": "Bugcrowd", "profile_name": null, "status": "found", "url": "https://bugcrowd.com/h/ryan"}, {"category": "security", "platform": "Intigriti", "profile_name": null, "status": "found", "url": "https://login.intigriti.com/Account/Login?ReturnUrl=/connect/authorize/callback?request_uri%3Durn%253Aietf%253Aparams%253Aoauth%253Arequest_uri%253A44D419BFA2AA2F325D8C684608A83D10982269752E410D989C10867015314F5F%26client_id%3Dbff-init"}, {"category": "security", "platform": "Keybase", "profile_name": null, "status": "found", "url": "https://keybase.io/ryan"}, {"category": "security", "platform": "Bugzilla", "profile_name": null, "status": "found", "url": "https://bugzilla.mozilla.org/user_profile?user_id=ryan"}, {"category": "dev", "platform": "Replit", "profile_name": null, "status": "found", "url": "https://replit.com/@ryan"}, {"category": "dev", "platform": "CodeSandbox", "profile_name": null, "status": "found", "url": "https://codesandbox.io/u/ryan"}, {"category": "dev", "platform": "Glitch", "profile_name": null, "status": "found", "url": "https://blog.glitch.com"}, {"category": "dev", "platform": "StackBlitz", "profile_name": null, "status": "found", "url": "https://stackblitz.com/@ryan"}, {"category": "coding", "platform": "HackerRank", "profile_name": null, "status": "found", "url": "https://www.hackerrank.com/profile/ryan"}, {"category": "coding", "platform": "CodeChef", "profile_name": null, "status": "found", "url": "https://www.codechef.com/users/ryan"}, {"category": "coding", "platform": "TopCoder", "profile_name": null, "status": "found", "url": "https://www.topcoder.com/members/ryan"}, {"category": "coding", "platform": "Codingame", "profile_name": null, "status": "found", "url": "https://www.codingame.com/profile/ryan"}, {"category": "dev", "platform": "Dev.to", "profile_name": null, "status": "found", "url": "https://dev.to/ryan"}, {"category": "forum", "platform": "HackerNews", "profile_name": null, "status": "found", "url": "https://news.ycombinator.com/user?id=ryan"}, {"category": "social", "platform": "Imgur", "profile_name": null, "status": "found", "url": "https://imgur.com/user/ryan"}, {"category": "video", "platform": "YouTube", "profile_name": null, "status": "found", "url": "https://m.youtube.com/@ryan"}, {"category": "streaming", "platform": "Twitch", "profile_name": null, "status": "found", "url": "https://www.twitch.tv/ryan"}, {"category": "video", "platform": "Vimeo", "profile_name": null, "status": "found", "url": "https://vimeo.com/ryan"}, {"category": "video", "platform": "Dailymotion", "profile_name": null, "status": "found", "url": "https://www.dailymotion.com/ryan"}, {"category": "video", "platform": "Odysee", "profile_name": null, "status": "found", "url": "https://odysee.com/@ryan"}, {"category": "streaming", "platform": "Trovo", "profile_name": null, "status": "found", "url": "https://trovo.live/s/ryan?roomType=1"}, {"category": "music", "platform": "Spotify", "profile_name": null, "status": "found", "url": "https://open.spotify.com/user/ryan"}, {"category": "music", "platform": "Bandcamp", "profile_name": null, "status": "found", "url": "https://bandcamp.com/ryan"}, {"category": "music", "platform": "Mixcloud", "profile_name": null, "status": "found", "url": "https://www.mixcloud.com/ryan/"}, {"category": "music", "platform": "Last.fm", "profile_name": null, "status": "found", "url": "https://www.last.fm/user/ryan"}, {"category": "music", "platform": "Genius", "profile_name": null, "status": "found", "url": "https://genius.com/Ryan"}, {"category": "music", "platform": "Audiomack", "profile_name": null, "status": "found", "url": "https://audiomack.com/ryan"}, {"category": "gaming", "platform": "Steam", "profile_name": null, "status": "found", "url": "https://steamcommunity.com/id/ryan"}, {"category": "gaming", "platform": "Steam Group", "profile_name": null, "status": "found", "url": "https://steamcommunity.com/groups/ryan"}, {"category": "gaming", "platform": "Chess.com", "profile_name": null, "status": "found", "url": "https://www.chess.com/member/ryan"}, {"category": "gaming", "platform": "Lichess", "profile_name": null, "status": "found", "url": "https://lichess.org/@/ryan"}, {"category": "gaming", "platform": "Riot Games", "profile_name": null, "status": "found", "url": "https://www.riotgames.com/en"}, {"category": "academic", "platform": "Google Scholar", "profile_name": null, "status": "found", "url": "https://accounts.google.com/v3/signin/identifier?continue=https://scholar.google.com/citations?user%3Dryan\u0026dsh=S1125954558:1774712789154771\u0026hl=en\u0026service=citations\u0026flowName=GlifWebSignIn\u0026flowEntry=ServiceLogin\u0026ifkv=AT1y2_VCBbyHhhaLSiugje8l2Tqy9whzh9yQIERPn9eEA1I0DCOFLOChYP-wnewFoNoLmmQ_6_lBUA"}, {"category": "academic", "platform": "ORCID", "profile_name": null, "status": "found", "url": "https://orcid.org/404"}, {"category": "archive", "platform": "Archive.org", "profile_name": null, "status": "found", "url": "https://archive.org/details/@ryan"}, {"category": "funding", "platform": "Patreon", "profile_name": null, "status": "found", "url": "https://www.patreon.com/cw/Ryan"}, {"category": "funding", "platform": "BuyMeACoffee", "profile_name": null, "status": "found", "url": "https://buymeacoffee.com/ryan"}, {"category": "funding", "platform": "Gumroad", "profile_name": null, "status": "found", "url": "https://ryan.gumroad.com/"}, {"category": "creative", "platform": "Behance", "profile_name": null, "status": "found", "url": "https://www.behance.net/ryan/moodboards"}, {"category": "creative", "platform": "Dribbble", "profile_name": null, "status": "found", "url": "https://dribbble.com/ryan/collections"}, {"category": "photo", "platform": "Flickr", "profile_name": null, "status": "found", "url": "https://flickr.com/people/ryan"}, {"category": "photo", "platform": "500px", "profile_name": null, "status": "found", "url": "https://500px.com/ryan"}, {"category": "books", "platform": "Goodreads", "profile_name": null, "status": "found", "url": "https://www.goodreads.com/user/show/84100-ryan"}])}
+`;
+            
+            markdown += `- **By Category**: ${JSON.stringify({"academic": [{"category": "academic", "platform": "Google Scholar", "profile_name": null, "status": "found", "url": "https://accounts.google.com/v3/signin/identifier?continue=https://scholar.google.com/citations?user%3Dryan\u0026dsh=S1125954558:1774712789154771\u0026hl=en\u0026service=citations\u0026flowName=GlifWebSignIn\u0026flowEntry=ServiceLogin\u0026ifkv=AT1y2_VCBbyHhhaLSiugje8l2Tqy9whzh9yQIERPn9eEA1I0DCOFLOChYP-wnewFoNoLmmQ_6_lBUA"}, {"category": "academic", "platform": "ORCID", "profile_name": null, "status": "found", "url": "https://orcid.org/404"}], "archive": [{"category": "archive", "platform": "Archive.org", "profile_name": null, "status": "found", "url": "https://archive.org/details/@ryan"}], "blog": [{"category": "blog", "platform": "Tumblr", "profile_name": null, "status": "found", "url": "https://ryan.tumblr.com"}, {"category": "blog", "platform": "Kompasiana", "profile_name": null, "status": "found", "url": "https://www.kompasiana.com/ryan"}], "books": [{"category": "books", "platform": "Goodreads", "profile_name": null, "status": "found", "url": "https://www.goodreads.com/user/show/84100-ryan"}], "chat": [{"category": "chat", "platform": "Discord", "profile_name": null, "status": "found", "url": "https://discord.com/users/ryan"}], "coding": [{"category": "coding", "platform": "HackerRank", "profile_name": null, "status": "found", "url": "https://www.hackerrank.com/profile/ryan"}, {"category": "coding", "platform": "CodeChef", "profile_name": null, "status": "found", "url": "https://www.codechef.com/users/ryan"}, {"category": "coding", "platform": "TopCoder", "profile_name": null, "status": "found", "url": "https://www.topcoder.com/members/ryan"}, {"category": "coding", "platform": "Codingame", "profile_name": null, "status": "found", "url": "https://www.codingame.com/profile/ryan"}], "creative": [{"category": "creative", "platform": "Behance", "profile_name": null, "status": "found", "url": "https://www.behance.net/ryan/moodboards"}, {"category": "creative", "platform": "Dribbble", "profile_name": null, "status": "found", "url": "https://dribbble.com/ryan/collections"}], "dev": [{"category": "dev", "platform": "GitHub", "profile_name": null, "status": "found", "url": "https://github.com/ryan"}, {"category": "dev", "platform": "GitLab", "profile_name": null, "status": "found", "url": "https://gitlab.com/ryan"}, {"category": "dev", "platform": "Bitbucket", "profile_name": null, "status": "found", "url": "https://bitbucket.org/ryan/workspace/repositories/"}, {"category": "dev", "platform": "SourceForge", "profile_name": null, "status": "found", "url": "https://sourceforge.net/u/ryan/profile/"}, {"category": "dev", "platform": "Codeberg", "profile_name": null, "status": "found", "url": "https://codeberg.org/ryan"}, {"category": "dev", "platform": "Gitee", "profile_name": null, "status": "found", "url": "https://gitee.com/ryan"}, {"category": "dev", "platform": "Replit", "profile_name": null, "status": "found", "url": "https://replit.com/@ryan"}, {"category": "dev", "platform": "CodeSandbox", "profile_name": null, "status": "found", "url": "https://codesandbox.io/u/ryan"}, {"category": "dev", "platform": "Glitch", "profile_name": null, "status": "found", "url": "https://blog.glitch.com"}, {"category": "dev", "platform": "StackBlitz", "profile_name": null, "status": "found", "url": "https://stackblitz.com/@ryan"}, {"category": "dev", "platform": "Dev.to", "profile_name": null, "status": "found", "url": "https://dev.to/ryan"}], "forum": [{"category": "forum", "platform": "Kaskus", "profile_name": null, "status": "found", "url": "https://www.kaskus.co.id/profile/ryan"}, {"category": "forum", "platform": "HackerNews", "profile_name": null, "status": "found", "url": "https://news.ycombinator.com/user?id=ryan"}], "funding": [{"category": "funding", "platform": "Patreon", "profile_name": null, "status": "found", "url": "https://www.patreon.com/cw/Ryan"}, {"category": "funding", "platform": "BuyMeACoffee", "profile_name": null, "status": "found", "url": "https://buymeacoffee.com/ryan"}, {"category": "funding", "platform": "Gumroad", "profile_name": null, "status": "found", "url": "https://ryan.gumroad.com/"}], "gaming": [{"category": "gaming", "platform": "Steam", "profile_name": null, "status": "found", "url": "https://steamcommunity.com/id/ryan"}, {"category": "gaming", "platform": "Steam Group", "profile_name": null, "status": "found", "url": "https://steamcommunity.com/groups/ryan"}, {"category": "gaming", "platform": "Chess.com", "profile_name": null, "status": "found", "url": "https://www.chess.com/member/ryan"}, {"category": "gaming", "platform": "Lichess", "profile_name": null, "status": "found", "url": "https://lichess.org/@/ryan"}, {"category": "gaming", "platform": "Riot Games", "profile_name": null, "status": "found", "url": "https://www.riotgames.com/en"}], "messaging": [{"category": "messaging", "platform": "Telegram", "profile_name": null, "status": "found", "url": "https://t.me/ryan"}, {"category": "messaging", "platform": "Signal", "profile_name": null, "status": "found", "url": "https://signal.me/"}], "music": [{"category": "music", "platform": "Spotify", "profile_name": null, "status": "found", "url": "https://open.spotify.com/user/ryan"}, {"category": "music", "platform": "Bandcamp", "profile_name": null, "status": "found", "url": "https://bandcamp.com/ryan"}, {"category": "music", "platform": "Mixcloud", "profile_name": null, "status": "found", "url": "https://www.mixcloud.com/ryan/"}, {"category": "music", "platform": "Last.fm", "profile_name": null, "status": "found", "url": "https://www.last.fm/user/ryan"}, {"category": "music", "platform": "Genius", "profile_name": null, "status": "found", "url": "https://genius.com/Ryan"}, {"category": "music", "platform": "Audiomack", "profile_name": null, "status": "found", "url": "https://audiomack.com/ryan"}], "photo": [{"category": "photo", "platform": "Flickr", "profile_name": null, "status": "found", "url": "https://flickr.com/people/ryan"}, {"category": "photo", "platform": "500px", "profile_name": null, "status": "found", "url": "https://500px.com/ryan"}], "professional": [{"category": "professional", "platform": "LinkedIn", "profile_name": null, "status": "found", "url": "https://www.linkedin.com/in/ryan"}], "security": [{"category": "security", "platform": "Bugcrowd", "profile_name": null, "status": "found", "url": "https://bugcrowd.com/h/ryan"}, {"category": "security", "platform": "Intigriti", "profile_name": null, "status": "found", "url": "https://login.intigriti.com/Account/Login?ReturnUrl=/connect/authorize/callback?request_uri%3Durn%253Aietf%253Aparams%253Aoauth%253Arequest_uri%253A44D419BFA2AA2F325D8C684608A83D10982269752E410D989C10867015314F5F%26client_id%3Dbff-init"}, {"category": "security", "platform": "Keybase", "profile_name": null, "status": "found", "url": "https://keybase.io/ryan"}, {"category": "security", "platform": "Bugzilla", "profile_name": null, "status": "found", "url": "https://bugzilla.mozilla.org/user_profile?user_id=ryan"}], "social": [{"category": "social", "platform": "Instagram", "profile_name": null, "status": "found", "url": "https://www.instagram.com/ryan"}, {"category": "social", "platform": "TikTok", "profile_name": null, "status": "found", "url": "https://www.tiktok.com/@ryan"}, {"category": "social", "platform": "Pinterest", "profile_name": null, "status": "found", "url": "https://www.pinterest.com/ryan/"}, {"category": "social", "platform": "Threads", "profile_name": null, "status": "found", "url": "https://www.threads.com/login/?next=https://www.threads.com/@ryan/"}, {"category": "social", "platform": "Bluesky", "profile_name": null, "status": "found", "url": "https://bsky.app/profile/ryan"}, {"category": "social", "platform": "Mastodon.social", "profile_name": null, "status": "found", "url": "https://mastodon.social/@ryan"}, {"category": "social", "platform": "Mastodon.online", "profile_name": null, "status": "found", "url": "https://mastodon.online/@ryan"}, {"category": "social", "platform": "Truth Social", "profile_name": null, "status": "found", "url": "https://truthsocial.com/@ryan"}, {"category": "social", "platform": "Parler", "profile_name": null, "status": "found", "url": "https://parler.com/profile/ryan"}, {"category": "social", "platform": "Gettr", "profile_name": null, "status": "found", "url": "https://gettr.com/user/ryan"}, {"category": "social", "platform": "Weibo", "profile_name": null, "status": "found", "url": "https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap\u0026a=enter\u0026url=https://m.weibo.cn/ryan?%26jumpfrom%3Dweibocom\u0026domain=.weibo.cn\u0026sudaref=\u0026ua=php-sso_sdk_client-0.6.36\u0026_rand=1774712760.4931"}, {"category": "social", "platform": "Imgur", "profile_name": null, "status": "found", "url": "https://imgur.com/user/ryan"}], "streaming": [{"category": "streaming", "platform": "Twitch", "profile_name": null, "status": "found", "url": "https://www.twitch.tv/ryan"}, {"category": "streaming", "platform": "Trovo", "profile_name": null, "status": "found", "url": "https://trovo.live/s/ryan?roomType=1"}], "video": [{"category": "video", "platform": "YouTube", "profile_name": null, "status": "found", "url": "https://m.youtube.com/@ryan"}, {"category": "video", "platform": "Vimeo", "profile_name": null, "status": "found", "url": "https://vimeo.com/ryan"}, {"category": "video", "platform": "Dailymotion", "profile_name": null, "status": "found", "url": "https://www.dailymotion.com/ryan"}, {"category": "video", "platform": "Odysee", "profile_name": null, "status": "found", "url": "https://odysee.com/@ryan"}]})}
+`;
+            
+            markdown += `- **Profiles**: ${JSON.stringify(["https://www.instagram.com/ryan", "https://www.linkedin.com/in/ryan", "https://www.tiktok.com/@ryan", "https://www.pinterest.com/ryan/", "https://ryan.tumblr.com", "https://www.threads.com/login/?next=https://www.threads.com/@ryan/", "https://bsky.app/profile/ryan", "https://mastodon.social/@ryan", "https://mastodon.online/@ryan", "https://truthsocial.com/@ryan", "https://parler.com/profile/ryan", "https://gettr.com/user/ryan", "https://t.me/ryan", "https://discord.com/users/ryan", "https://signal.me/", "https://visitor.passport.weibo.cn/visitor/visitor?entry=sinawap\u0026a=enter\u0026url=https://m.weibo.cn/ryan?%26jumpfrom%3Dweibocom\u0026domain=.weibo.cn\u0026sudaref=\u0026ua=php-sso_sdk_client-0.6.36\u0026_rand=1774712760.4931", "https://www.kaskus.co.id/profile/ryan", "https://www.kompasiana.com/ryan", "https://github.com/ryan", "https://gitlab.com/ryan", "https://bitbucket.org/ryan/workspace/repositories/", "https://sourceforge.net/u/ryan/profile/", "https://codeberg.org/ryan", "https://gitee.com/ryan", "https://bugcrowd.com/h/ryan", "https://login.intigriti.com/Account/Login?ReturnUrl=/connect/authorize/callback?request_uri%3Durn%253Aietf%253Aparams%253Aoauth%253Arequest_uri%253A44D419BFA2AA2F325D8C684608A83D10982269752E410D989C10867015314F5F%26client_id%3Dbff-init", "https://keybase.io/ryan", "https://bugzilla.mozilla.org/user_profile?user_id=ryan", "https://replit.com/@ryan", "https://codesandbox.io/u/ryan", "https://blog.glitch.com", "https://stackblitz.com/@ryan", "https://www.hackerrank.com/profile/ryan", "https://www.codechef.com/users/ryan", "https://www.topcoder.com/members/ryan", "https://www.codingame.com/profile/ryan", "https://dev.to/ryan", "https://news.ycombinator.com/user?id=ryan", "https://imgur.com/user/ryan", "https://m.youtube.com/@ryan", "https://www.twitch.tv/ryan", "https://vimeo.com/ryan", "https://www.dailymotion.com/ryan", "https://odysee.com/@ryan", "https://trovo.live/s/ryan?roomType=1", "https://open.spotify.com/user/ryan", "https://bandcamp.com/ryan", "https://www.mixcloud.com/ryan/", "https://www.last.fm/user/ryan", "https://genius.com/Ryan", "https://audiomack.com/ryan", "https://steamcommunity.com/id/ryan", "https://steamcommunity.com/groups/ryan", "https://www.chess.com/member/ryan", "https://lichess.org/@/ryan", "https://www.riotgames.com/en", "https://accounts.google.com/v3/signin/identifier?continue=https://scholar.google.com/citations?user%3Dryan\u0026dsh=S1125954558:1774712789154771\u0026hl=en\u0026service=citations\u0026flowName=GlifWebSignIn\u0026flowEntry=ServiceLogin\u0026ifkv=AT1y2_VCBbyHhhaLSiugje8l2Tqy9whzh9yQIERPn9eEA1I0DCOFLOChYP-wnewFoNoLmmQ_6_lBUA", "https://orcid.org/404", "https://archive.org/details/@ryan", "https://www.patreon.com/cw/Ryan", "https://buymeacoffee.com/ryan", "https://ryan.gumroad.com/", "https://www.behance.net/ryan/moodboards", "https://dribbble.com/ryan/collections", "https://flickr.com/people/ryan", "https://500px.com/ryan", "https://www.goodreads.com/user/show/84100-ryan"])}
+`;
+            
+            markdown += `- **Possible Emails**: ${JSON.stringify(["ryan@gmail.com", "ryan@yahoo.com", "ryan@outlook.com", "ryan@hotmail.com", "ryan@protonmail.com", "ryan@mail.com"])}
+`;
+            
+            markdown += `- **Variations**: ${JSON.stringify(["ryan", "RYAN", "Ryan", "ryan0", "ryan_0", "ryan.0", "ryan1", "ryan_1", "ryan.1", "ryan2"])}
+`;
+            
+            markdown += `- **Categories**: ${JSON.stringify(["social", "professional", "blog", "messaging", "chat", "forum", "dev", "security", "coding", "video", "streaming", "music", "gaming", "academic", "archive", "funding", "creative", "photo", "books"])}
+`;
+            
+            markdown += `- **Timestamp**: ${JSON.stringify("2026-03-28T22:46:39.329221")}
+`;
+            
+            markdown += `
+`;
+            
+            const blob = new Blob([markdown], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ghostintel-${Date.now()}.md`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstModule = document.querySelector('.module-content');
+            if (firstModule) {
+                firstModule.style.display = 'block';
+                const firstBtn = firstModule.previousElementSibling.querySelector('.toggle-btn');
+                if (firstBtn) firstBtn.textContent = '▲';
+            }
+        });
+    </script>
+</body>
+</html>

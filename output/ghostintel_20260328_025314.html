@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostIntel Report - 628123456789</title>
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark theme (default) */
+            --bg-primary: #0a0c0f;
+            --bg-secondary: #14181c;
+            --bg-tertiary: #1e2329;
+            --bg-hover: #252d36;
+            --text-primary: #e6e9ef;
+            --text-secondary: #9aa3b4;
+            --text-muted: #6b7485;
+            --accent-cyan: #2dd4bf;
+            --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
+            --accent-orange: #f97316;
+            --accent-red: #ef4444;
+            --accent-purple: #a78bfa;
+            --accent-blue: #3b82f6;
+            --border-color: #2a3038;
+            --border-light: #333b44;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Light theme */
+        .light-theme {
+            --bg-primary: #f3f4f6;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f9fafb;
+            --bg-hover: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --border-light: #d1d5db;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ===== BASE STYLES ===== */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--text-primary);
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent-green);
+            text-decoration: underline;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .header::before {
+            content: '👻';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10rem;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .header-title h1 {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+            font-size: 3rem;
+        }
+
+        .header-badge {
+            background: var(--accent-green);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-meta {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 1rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item strong {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            padding: 0.25rem;
+            display: flex;
+            gap: 0.25rem;
+            z-index: 10;
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .theme-btn.active {
+            background: var(--accent-cyan);
+            color: white;
+        }
+
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, border-color 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== MODULE CARDS ===== */
+        .module-card {
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .module-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 15px 30px -10px rgba(45, 212, 191, 0.2);
+        }
+
+        .module-header {
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .module-header:hover {
+            background: var(--bg-hover);
+        }
+
+        .module-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .module-title h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--accent-cyan);
+        }
+
+        .module-icon {
+            font-size: 1.5rem;
+        }
+
+        .module-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .module-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .toggle-btn:hover {
+            background: var(--bg-hover);
+            color: var(--accent-cyan);
+        }
+
+        /* ===== DATA GRID ===== */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .data-item {
+            background: var(--bg-tertiary);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.2s;
+        }
+
+        .data-item:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .data-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .data-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .data-value {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .data-value.success { color: var(--success); }
+        .data-value.warning { color: var(--warning); }
+        .data-value.danger { color: var(--danger); }
+        .data-value.info { color: var(--info); }
+
+        /* ===== LISTS ===== */
+        .list {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .list li {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            margin-bottom: 0.25rem;
+            border-left: 3px solid var(--accent-cyan);
+            word-break: break-word;
+            font-size: 0.875rem;
+            transition: transform 0.2s;
+        }
+
+        .list li:hover {
+            transform: translateX(5px);
+            background: var(--bg-hover);
+        }
+
+        .list li a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            display: block;
+        }
+
+        .list li a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== TAGS/CHIPS ===== */
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin: 0.25rem;
+        }
+
+        .tag.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .tag.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .tag.danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .tag.info {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+            border-color: var(--info);
+        }
+
+        /* ===== PROGRESS BARS ===== */
+        .progress {
+            background: var(--bg-hover);
+            border-radius: 1rem;
+            height: 0.5rem;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+            height: 100%;
+            border-radius: 1rem;
+            transition: width 0.3s;
+        }
+
+        /* ===== BREACH ALERT STYLES ===== */
+        .breach-alert {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.05));
+            border-left: 4px solid var(--accent-red);
+        }
+
+        .breach-detail {
+            background: var(--bg-secondary);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--accent-yellow);
+        }
+
+        .recommendation-box {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 0.75rem;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        /* ===== CATEGORY BADGES ===== */
+        .category-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-hover);
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+        }
+
+        .platform-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+            transition: all 0.2s;
+        }
+
+        .platform-tag:hover {
+            background: var(--accent-cyan);
+            color: white;
+            border-color: var(--accent-cyan);
+        }
+
+        /* ===== SEARCH BOX ===== */
+        .search-box {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        /* ===== EXPORT BUTTONS ===== */
+        .export-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .export-btn:hover {
+            background: var(--accent-cyan);
+            color: white;
+            border-color: var(--accent-cyan);
+        }
+
+        /* ===== SOURCES SECTION ===== */
+        .sources {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sources span {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .source-badge {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.7rem;
+        }
+
+        /* ===== TIMESTAMP ===== */
+        .timestamp {
+            font-family: monospace;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== CORRELATION TREE ===== */
+        .correlation-tree {
+            background: var(--bg-tertiary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .tree-root {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tree-root::before {
+            content: '🔗';
+            position: absolute;
+            left: -0.5rem;
+            top: 0;
+        }
+
+        .tree-branch {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .tree-leaf {
+            padding: 0.25rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tree-leaf::before {
+            content: '↳';
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        .tree-leaf strong {
+            color: var(--accent-green);
+            min-width: 80px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .header { padding: 1.5rem; }
+            .header::before { font-size: 6rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .data-grid { grid-template-columns: 1fr; }
+            .theme-toggle { position: static; margin-bottom: 1rem; }
+        }
+
+        @media print {
+            .theme-toggle, .export-buttons, .toggle-btn { display: none; }
+            .module-card { break-inside: avoid; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button class="theme-btn active" onclick="setTheme('dark')">🌙 Dark</button>
+        <button class="theme-btn" onclick="setTheme('light')">☀️ Light</button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>👻 GhostIntel Report</h1>
+                    <span class="header-badge">v2.5</span>
+                </div>
+                <div class="header-meta">
+                    <div class="meta-item"><span>🎯 Target:</span><strong>628123456789</strong></div>
+                    <div class="meta-item"><span>📅 Generated:</span><strong>2026-03-28 02:53:14</strong></div>
+                    <div class="meta-item"><span>📊 Modules:</span><strong>1</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="export-buttons">
+            <button class="export-btn" onclick="exportJSON()"><span>📋</span> Export JSON</button>
+            <button class="export-btn" onclick="exportMarkdown()"><span>📝</span> Export Markdown</button>
+            <button class="export-btn" onclick="window.print()"><span>🖨️</span> Print / PDF</button>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search in report..." onkeyup="searchReport(this.value)">
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-value">1</div>
+                <div class="stat-label">Modules Run</div>
+            </div>
+            
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        📱
+                        
+                    </div>
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">Phone Found</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        🔍
+                        
+                    </div>
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">Provider Found</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        🔍
+                        
+                    </div>
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">Country Found</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        🔍
+                        
+                    </div>
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Possible_handle Found</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        🔍
+                        
+                    </div>
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">Total_connections Found</div>
+                </div>
+                
+            
+        </div>
+
+        <!-- Modules -->
+        
+        <div class="module-card" data-module="phone">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    <span class="module-icon">
+                        📱
+                        
+                    </span>
+                    <h3>PHONE</h3>
+                    
+                        <span class="module-badge success">
+                            ✓ Valid
+                        </span>
+                    
+                </div>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="data-grid">
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="input">
+                            <div class="data-label" data-tooltip="Input">
+                                Input
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        628123456789
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="e164">
+                            <div class="data-label" data-tooltip="E164">
+                                E164
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        +628123456789
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="national">
+                            <div class="data-label" data-tooltip="National">
+                                National
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        0812-3456-789
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="international">
+                            <div class="data-label" data-tooltip="International">
+                                International
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        +62 812-3456-789
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="rfc3966">
+                            <div class="data-label" data-tooltip="Rfc3966">
+                                Rfc3966
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        tel:+62-812-3456-789
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="country_code">
+                            <div class="data-label" data-tooltip="Country Code">
+                                Country Code
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        62
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="country">
+                            <div class="data-label" data-tooltip="Country">
+                                Country
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        Indonesia
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="country_iso">
+                            <div class="data-label" data-tooltip="Country Iso">
+                                Country Iso
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        ID
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="location">
+                            <div class="data-label" data-tooltip="Location">
+                                Location
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="provider">
+                            <div class="data-label" data-tooltip="Provider">
+                                Provider
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        Telkomsel
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="line_type">
+                            <div class="data-label" data-tooltip="Line Type">
+                                Line Type
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        Mobile
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_mobile">
+                            <div class="data-label" data-tooltip="Is Mobile">
+                                Is Mobile
+                            </div>
+                            <div class="data-value success">
+                                
+                                
+                                    
+                                        True
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="timezones">
+                            <div class="data-label" data-tooltip="Timezones">
+                                Timezones
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                Asia/Jakarta
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="valid">
+                            <div class="data-label" data-tooltip="Valid">
+                                Valid
+                            </div>
+                            <div class="data-value success">
+                                
+                                
+                                    
+                                        True
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="possible">
+                            <div class="data-label" data-tooltip="Possible">
+                                Possible
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        True
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="whatsapp_link">
+                            <div class="data-label" data-tooltip="Whatsapp Link">
+                                Whatsapp Link
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <a href="https://wa.me/628123456789" target="_blank">https://wa.me/628123456789</a>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="telegram_link">
+                            <div class="data-label" data-tooltip="Telegram Link">
+                                Telegram Link
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <a href="https://t.me/628123456789" target="_blank">https://t.me/628123456789</a>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="possible_handles">
+                            <div class="data-label" data-tooltip="Possible Handles">
+                                Possible Handles
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                628123456789
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                3456789
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                23456789
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                123456789
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                8123456789
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                08123456789
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="formats">
+                            <div class="data-label" data-tooltip="Formats">
+                                Formats
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                e164
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                international
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                national
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                rfc3966
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                </div>
+                
+                
+                <div class="sources">
+                    <span>🔍 Sources:</span>
+                    
+                    <span class="source-badge">phonenumbers-lib</span>
+                    
+                    <span class="source-badge">provider_db</span>
+                    
+                </div>
+                
+                
+                
+                <div class="timestamp">⏱️ Last updated: 2026-03-28T02:53:14.120503</div>
+                
+            </div>
+        </div>
+        
+
+        <!-- Correlation -->
+        
+        <div class="module-card">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    <span class="module-icon">🔗</span>
+                    <h3>INTELLIGENCE CORRELATION</h3>
+                </div>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="correlation-tree">
+                    <div class="tree-root">628123456789</div>
+                    
+                        
+                        <div class="tree-branch">
+                            <div class="tree-leaf"><strong>PHONE</strong></div>
+                            
+                            <div class="tree-leaf"><span>+628123456789</span></div>
+                            
+                        </div>
+                        
+                    
+                        
+                        <div class="tree-branch">
+                            <div class="tree-leaf"><strong>PROVIDER</strong></div>
+                            
+                            <div class="tree-leaf"><span>Telkomsel</span></div>
+                            
+                        </div>
+                        
+                    
+                        
+                        <div class="tree-branch">
+                            <div class="tree-leaf"><strong>COUNTRY</strong></div>
+                            
+                            <div class="tree-leaf"><span>ID</span></div>
+                            
+                        </div>
+                        
+                    
+                        
+                        <div class="tree-branch">
+                            <div class="tree-leaf"><strong>POSSIBLE_HANDLE</strong></div>
+                            
+                            <div class="tree-leaf"><span>08123456789</span></div>
+                            
+                            <div class="tree-leaf"><span>123456789</span></div>
+                            
+                            <div class="tree-leaf"><span>23456789</span></div>
+                            
+                            <div class="tree-leaf"><span>3456789</span></div>
+                            
+                            <div class="tree-leaf"><span>628123456789</span></div>
+                            
+                            <div class="tree-leaf"><span>8123456789</span></div>
+                            
+                        </div>
+                        
+                    
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Footer -->
+        <div class="footer">
+            <div>👻 GhostIntel v2.5 - OSINT Mashup Engine</div>
+            <div class="footer-links">
+                <a href="https://github.com/ruyynn/GhostIntel" target="_blank">GitHub</a>
+                <a href="#" onclick="window.print()">Print Report</a>
+                <a href="#" onclick="scrollToTop()">Back to Top</a>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.7rem;">
+                ⚠️ For Educational Purposes Only • No API Keys Required
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleModule(header) {
+            const content = header.nextElementSibling;
+            const btn = header.querySelector('.toggle-btn');
+            if (content.style.display === 'none' || !content.style.display) {
+                content.style.display = 'block';
+                btn.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                btn.textContent = '▼';
+            }
+        }
+
+        function setTheme(theme) {
+            const body = document.body;
+            const darkBtn = document.querySelector('.theme-btn:first-child');
+            const lightBtn = document.querySelector('.theme-btn:last-child');
+            if (theme === 'dark') {
+                body.classList.remove('light-theme');
+                darkBtn.classList.add('active');
+                lightBtn.classList.remove('active');
+                localStorage.setItem('ghostintel-theme', 'dark');
+            } else {
+                body.classList.add('light-theme');
+                lightBtn.classList.add('active');
+                darkBtn.classList.remove('active');
+                localStorage.setItem('ghostintel-theme', 'light');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('ghostintel-theme');
+        if (savedTheme === 'light') setTheme('light');
+
+        function searchReport(query) {
+            query = query.toLowerCase();
+            document.querySelectorAll('.module-card').forEach(module => {
+                const content = module.querySelector('.module-content');
+                const text = content.textContent.toLowerCase();
+                module.style.display = text.includes(query) || query === '' ? 'block' : 'none';
+            });
+        }
+
+        function exportJSON() {
+            const data = {
+                target: "628123456789",
+                generated: "2026-03-28 02:53:14",
+                modules: {"phone": {"data": {"country": "Indonesia", "country_code": 62, "country_iso": "ID", "e164": "+628123456789", "formats": {"e164": "+628123456789", "international": "+62 812-3456-789", "national": "0812-3456-789", "rfc3966": "tel:+62-812-3456-789"}, "input": "628123456789", "international": "+62 812-3456-789", "is_mobile": true, "line_type": "Mobile", "location": null, "national": "0812-3456-789", "possible": true, "possible_handles": ["628123456789", "3456789", "23456789", "123456789", "8123456789", "08123456789"], "provider": "Telkomsel", "rfc3966": "tel:+62-812-3456-789", "telegram_link": "https://t.me/628123456789", "timestamp": "2026-03-28T02:53:14.120503", "timezones": ["Asia/Jakarta"], "valid": true, "whatsapp_link": "https://wa.me/628123456789"}, "name": "phone", "sources": ["phonenumbers-lib", "provider_db"]}}
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ghostintel-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportMarkdown() {
+            let markdown = `# GhostIntel Report - 628123456789
+
+Generated: 2026-03-28 02:53:14
+
+`;
+            
+            markdown += `## PHONE
+
+`;
+            
+            markdown += `- **Input**: ${JSON.stringify("628123456789")}
+`;
+            
+            markdown += `- **E164**: ${JSON.stringify("+628123456789")}
+`;
+            
+            markdown += `- **National**: ${JSON.stringify("0812-3456-789")}
+`;
+            
+            markdown += `- **International**: ${JSON.stringify("+62 812-3456-789")}
+`;
+            
+            markdown += `- **Rfc3966**: ${JSON.stringify("tel:+62-812-3456-789")}
+`;
+            
+            markdown += `- **Country Code**: ${JSON.stringify(62)}
+`;
+            
+            markdown += `- **Country**: ${JSON.stringify("Indonesia")}
+`;
+            
+            markdown += `- **Country Iso**: ${JSON.stringify("ID")}
+`;
+            
+            markdown += `- **Location**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Provider**: ${JSON.stringify("Telkomsel")}
+`;
+            
+            markdown += `- **Line Type**: ${JSON.stringify("Mobile")}
+`;
+            
+            markdown += `- **Is Mobile**: ${JSON.stringify(true)}
+`;
+            
+            markdown += `- **Timezones**: ${JSON.stringify(["Asia/Jakarta"])}
+`;
+            
+            markdown += `- **Valid**: ${JSON.stringify(true)}
+`;
+            
+            markdown += `- **Possible**: ${JSON.stringify(true)}
+`;
+            
+            markdown += `- **Whatsapp Link**: ${JSON.stringify("https://wa.me/628123456789")}
+`;
+            
+            markdown += `- **Telegram Link**: ${JSON.stringify("https://t.me/628123456789")}
+`;
+            
+            markdown += `- **Possible Handles**: ${JSON.stringify(["628123456789", "3456789", "23456789", "123456789", "8123456789", "08123456789"])}
+`;
+            
+            markdown += `- **Formats**: ${JSON.stringify({"e164": "+628123456789", "international": "+62 812-3456-789", "national": "0812-3456-789", "rfc3966": "tel:+62-812-3456-789"})}
+`;
+            
+            markdown += `- **Timestamp**: ${JSON.stringify("2026-03-28T02:53:14.120503")}
+`;
+            
+            markdown += `
+`;
+            
+            const blob = new Blob([markdown], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ghostintel-${Date.now()}.md`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstModule = document.querySelector('.module-content');
+            if (firstModule) {
+                firstModule.style.display = 'block';
+                const firstBtn = firstModule.previousElementSibling.querySelector('.toggle-btn');
+                if (firstBtn) firstBtn.textContent = '▲';
+            }
+        });
+    </script>
+</body>
+</html>

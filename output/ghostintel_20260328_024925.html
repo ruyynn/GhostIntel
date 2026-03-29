@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostIntel Report - example.com</title>
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark theme (default) */
+            --bg-primary: #0a0c0f;
+            --bg-secondary: #14181c;
+            --bg-tertiary: #1e2329;
+            --bg-hover: #252d36;
+            --text-primary: #e6e9ef;
+            --text-secondary: #9aa3b4;
+            --text-muted: #6b7485;
+            --accent-cyan: #2dd4bf;
+            --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
+            --accent-orange: #f97316;
+            --accent-red: #ef4444;
+            --accent-purple: #a78bfa;
+            --accent-blue: #3b82f6;
+            --border-color: #2a3038;
+            --border-light: #333b44;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Light theme */
+        .light-theme {
+            --bg-primary: #f3f4f6;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f9fafb;
+            --bg-hover: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --border-light: #d1d5db;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ===== BASE STYLES ===== */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--text-primary);
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent-green);
+            text-decoration: underline;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .header::before {
+            content: '👻';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10rem;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .header-title h1 {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+            font-size: 3rem;
+        }
+
+        .header-badge {
+            background: var(--accent-green);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-meta {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 1rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item strong {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            padding: 0.25rem;
+            display: flex;
+            gap: 0.25rem;
+            z-index: 10;
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .theme-btn.active {
+            background: var(--accent-cyan);
+            color: white;
+        }
+
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, border-color 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== MODULE CARDS ===== */
+        .module-card {
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .module-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 15px 30px -10px rgba(45, 212, 191, 0.2);
+        }
+
+        .module-header {
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .module-header:hover {
+            background: var(--bg-hover);
+        }
+
+        .module-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .module-title h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--accent-cyan);
+        }
+
+        .module-icon {
+            font-size: 1.5rem;
+        }
+
+        .module-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .module-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .toggle-btn:hover {
+            background: var(--bg-hover);
+            color: var(--accent-cyan);
+        }
+
+        /* ===== DATA GRID ===== */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .data-item {
+            background: var(--bg-tertiary);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.2s;
+        }
+
+        .data-item:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .data-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .data-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .data-value {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .data-value.success { color: var(--success); }
+        .data-value.warning { color: var(--warning); }
+        .data-value.danger { color: var(--danger); }
+        .data-value.info { color: var(--info); }
+
+        /* ===== LISTS ===== */
+        .list {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .list li {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            margin-bottom: 0.25rem;
+            border-left: 3px solid var(--accent-cyan);
+            word-break: break-word;
+            font-size: 0.875rem;
+            transition: transform 0.2s;
+        }
+
+        .list li:hover {
+            transform: translateX(5px);
+            background: var(--bg-hover);
+        }
+
+        .list li a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            display: block;
+        }
+
+        .list li a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== TAGS/CHIPS ===== */
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin: 0.25rem;
+        }
+
+        .tag.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .tag.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .tag.danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .tag.info {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+            border-color: var(--info);
+        }
+
+        /* ===== PROGRESS BARS ===== */
+        .progress {
+            background: var(--bg-hover);
+            border-radius: 1rem;
+            height: 0.5rem;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+            height: 100%;
+            border-radius: 1rem;
+            transition: width 0.3s;
+        }
+
+        /* ===== BREACH ALERT STYLES ===== */
+        .breach-alert {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.05));
+            border-left: 4px solid var(--accent-red);
+        }
+
+        .breach-detail {
+            background: var(--bg-secondary);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--accent-yellow);
+        }
+
+        .recommendation-box {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 0.75rem;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        /* ===== CATEGORY BADGES ===== */
+        .category-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-hover);
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+        }
+
+        .platform-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+            transition: all 0.2s;
+        }
+
+        .platform-tag:hover {
+            background: var(--accent-cyan);
+            color: white;
+            border-color: var(--accent-cyan);
+        }
+
+        /* ===== SEARCH BOX ===== */
+        .search-box {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        /* ===== EXPORT BUTTONS ===== */
+        .export-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .export-btn:hover {
+            background: var(--accent-cyan);
+            color: white;
+            border-color: var(--accent-cyan);
+        }
+
+        /* ===== SOURCES SECTION ===== */
+        .sources {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sources span {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .source-badge {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.7rem;
+        }
+
+        /* ===== TIMESTAMP ===== */
+        .timestamp {
+            font-family: monospace;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== CORRELATION TREE ===== */
+        .correlation-tree {
+            background: var(--bg-tertiary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .tree-root {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tree-root::before {
+            content: '🔗';
+            position: absolute;
+            left: -0.5rem;
+            top: 0;
+        }
+
+        .tree-branch {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .tree-leaf {
+            padding: 0.25rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tree-leaf::before {
+            content: '↳';
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        .tree-leaf strong {
+            color: var(--accent-green);
+            min-width: 80px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .header { padding: 1.5rem; }
+            .header::before { font-size: 6rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .data-grid { grid-template-columns: 1fr; }
+            .theme-toggle { position: static; margin-bottom: 1rem; }
+        }
+
+        @media print {
+            .theme-toggle, .export-buttons, .toggle-btn { display: none; }
+            .module-card { break-inside: avoid; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button class="theme-btn active" onclick="setTheme('dark')">🌙 Dark</button>
+        <button class="theme-btn" onclick="setTheme('light')">☀️ Light</button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>👻 GhostIntel Report</h1>
+                    <span class="header-badge">v2.5</span>
+                </div>
+                <div class="header-meta">
+                    <div class="meta-item"><span>🎯 Target:</span><strong>example.com</strong></div>
+                    <div class="meta-item"><span>📅 Generated:</span><strong>2026-03-28 02:49:25</strong></div>
+                    <div class="meta-item"><span>📊 Modules:</span><strong>1</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="export-buttons">
+            <button class="export-btn" onclick="exportJSON()"><span>📋</span> Export JSON</button>
+            <button class="export-btn" onclick="exportMarkdown()"><span>📝</span> Export Markdown</button>
+            <button class="export-btn" onclick="window.print()"><span>🖨️</span> Print / PDF</button>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search in report..." onkeyup="searchReport(this.value)">
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-value">1</div>
+                <div class="stat-label">Modules Run</div>
+            </div>
+            
+        </div>
+
+        <!-- Modules -->
+        
+        <div class="module-card" data-module="domain">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    <span class="module-icon">
+                        🌐
+                        
+                    </span>
+                    <h3>DOMAIN</h3>
+                    
+                </div>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="data-grid">
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="domain">
+                            <div class="data-label" data-tooltip="Domain">
+                                Domain
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        example.com
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="ip_addresses">
+                            <div class="data-label" data-tooltip="Ip Addresses">
+                                Ip Addresses
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                104.18.26.120
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                104.18.27.120
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="ipv6_addresses">
+                            <div class="data-label" data-tooltip="Ipv6 Addresses">
+                                Ipv6 Addresses
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                2606:4700::6812:1b78
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                2606:4700::6812:1a78
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="nameservers">
+                            <div class="data-label" data-tooltip="Nameservers">
+                                Nameservers
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                elliott.ns.cloudflare.com
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                hera.ns.cloudflare.com
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="mx_records">
+                            <div class="data-label" data-tooltip="Mx Records">
+                                Mx Records
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                
+                                                    {'exchange': '', 'priority': 0}
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="txt_records">
+                            <div class="data-label" data-tooltip="Txt Records">
+                                Txt Records
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                v=spf1 -all
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                _k2n1y4vw3qtb4skdx9e7dxt97qrmmq9
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="spf_record">
+                            <div class="data-label" data-tooltip="Spf Record">
+                                Spf Record
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        v=spf1 -all
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="dkim_records">
+                            <div class="data-label" data-tooltip="Dkim Records">
+                                Dkim Records
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <span class="tag">None</span>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="dmarc_record">
+                            <div class="data-label" data-tooltip="Dmarc Record">
+                                Dmarc Record
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="soa_record">
+                            <div class="data-label" data-tooltip="Soa Record">
+                                Soa Record
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                mname
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                rname
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                serial
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                refresh
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                retry
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                expire
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                minimum
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="cname_record">
+                            <div class="data-label" data-tooltip="Cname Record">
+                                Cname Record
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="ptr_record">
+                            <div class="data-label" data-tooltip="Ptr Record">
+                                Ptr Record
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="http_status">
+                            <div class="data-label" data-tooltip="Http Status">
+                                Http Status
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="https_status">
+                            <div class="data-label" data-tooltip="Https Status">
+                                Https Status
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="redirect_url">
+                            <div class="data-label" data-tooltip="Redirect Url">
+                                Redirect Url
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="server_header">
+                            <div class="data-label" data-tooltip="Server Header">
+                                Server Header
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="x_powered_by">
+                            <div class="data-label" data-tooltip="X Powered By">
+                                X Powered By
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="title">
+                            <div class="data-label" data-tooltip="Title">
+                                Title
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="description">
+                            <div class="data-label" data-tooltip="Description">
+                                Description
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="technologies">
+                            <div class="data-label" data-tooltip="Technologies">
+                                Technologies
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <span class="tag">None</span>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="security_headers">
+                            <div class="data-label" data-tooltip="Security Headers">
+                                Security Headers
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <span class="tag">None</span>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="ssl_info">
+                            <div class="data-label" data-tooltip="Ssl Info">
+                                Ssl Info
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <span class="tag">None</span>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="dnssec">
+                            <div class="data-label" data-tooltip="Dnssec">
+                                Dnssec
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="response_time_ms">
+                            <div class="data-label" data-tooltip="Response Time Ms">
+                                Response Time Ms
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        13
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                </div>
+                
+                
+                <div class="sources">
+                    <span>🔍 Sources:</span>
+                    
+                    <span class="source-badge">dns</span>
+                    
+                </div>
+                
+                
+                
+                <div class="timestamp">⏱️ Last updated: 2026-03-28T02:49:24.803235</div>
+                
+            </div>
+        </div>
+        
+
+        <!-- Correlation -->
+        
+
+        <!-- Footer -->
+        <div class="footer">
+            <div>👻 GhostIntel v2.5 - OSINT Mashup Engine</div>
+            <div class="footer-links">
+                <a href="https://github.com/ruyynn/GhostIntel" target="_blank">GitHub</a>
+                <a href="#" onclick="window.print()">Print Report</a>
+                <a href="#" onclick="scrollToTop()">Back to Top</a>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.7rem;">
+                ⚠️ For Educational Purposes Only • No API Keys Required
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleModule(header) {
+            const content = header.nextElementSibling;
+            const btn = header.querySelector('.toggle-btn');
+            if (content.style.display === 'none' || !content.style.display) {
+                content.style.display = 'block';
+                btn.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                btn.textContent = '▼';
+            }
+        }
+
+        function setTheme(theme) {
+            const body = document.body;
+            const darkBtn = document.querySelector('.theme-btn:first-child');
+            const lightBtn = document.querySelector('.theme-btn:last-child');
+            if (theme === 'dark') {
+                body.classList.remove('light-theme');
+                darkBtn.classList.add('active');
+                lightBtn.classList.remove('active');
+                localStorage.setItem('ghostintel-theme', 'dark');
+            } else {
+                body.classList.add('light-theme');
+                lightBtn.classList.add('active');
+                darkBtn.classList.remove('active');
+                localStorage.setItem('ghostintel-theme', 'light');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('ghostintel-theme');
+        if (savedTheme === 'light') setTheme('light');
+
+        function searchReport(query) {
+            query = query.toLowerCase();
+            document.querySelectorAll('.module-card').forEach(module => {
+                const content = module.querySelector('.module-content');
+                const text = content.textContent.toLowerCase();
+                module.style.display = text.includes(query) || query === '' ? 'block' : 'none';
+            });
+        }
+
+        function exportJSON() {
+            const data = {
+                target: "example.com",
+                generated: "2026-03-28 02:49:25",
+                modules: {"domain": {"data": {"cname_record": null, "description": null, "dkim_records": [], "dmarc_record": null, "dnssec": false, "domain": "example.com", "http_status": null, "https_status": null, "ip_addresses": ["104.18.26.120", "104.18.27.120"], "ipv6_addresses": ["2606:4700::6812:1b78", "2606:4700::6812:1a78"], "mx_records": [{"exchange": "", "priority": 0}], "nameservers": ["elliott.ns.cloudflare.com", "hera.ns.cloudflare.com"], "ptr_record": null, "redirect_url": null, "response_time_ms": 13, "security_headers": {}, "server_header": null, "soa_record": {"expire": 604800, "minimum": 1800, "mname": "elliott.ns.cloudflare.com", "refresh": 10000, "retry": 2400, "rname": "dns.cloudflare.com", "serial": 2399341694}, "spf_record": "v=spf1 -all", "ssl_info": {}, "technologies": [], "timestamp": "2026-03-28T02:49:24.803235", "title": null, "txt_records": ["v=spf1 -all", "_k2n1y4vw3qtb4skdx9e7dxt97qrmmq9"], "x_powered_by": null}, "name": "domain", "sources": ["dns"]}}
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ghostintel-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportMarkdown() {
+            let markdown = `# GhostIntel Report - example.com
+
+Generated: 2026-03-28 02:49:25
+
+`;
+            
+            markdown += `## DOMAIN
+
+`;
+            
+            markdown += `- **Domain**: ${JSON.stringify("example.com")}
+`;
+            
+            markdown += `- **Ip Addresses**: ${JSON.stringify(["104.18.26.120", "104.18.27.120"])}
+`;
+            
+            markdown += `- **Ipv6 Addresses**: ${JSON.stringify(["2606:4700::6812:1b78", "2606:4700::6812:1a78"])}
+`;
+            
+            markdown += `- **Nameservers**: ${JSON.stringify(["elliott.ns.cloudflare.com", "hera.ns.cloudflare.com"])}
+`;
+            
+            markdown += `- **Mx Records**: ${JSON.stringify([{"exchange": "", "priority": 0}])}
+`;
+            
+            markdown += `- **Txt Records**: ${JSON.stringify(["v=spf1 -all", "_k2n1y4vw3qtb4skdx9e7dxt97qrmmq9"])}
+`;
+            
+            markdown += `- **Spf Record**: ${JSON.stringify("v=spf1 -all")}
+`;
+            
+            markdown += `- **Dkim Records**: ${JSON.stringify([])}
+`;
+            
+            markdown += `- **Dmarc Record**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Soa Record**: ${JSON.stringify({"expire": 604800, "minimum": 1800, "mname": "elliott.ns.cloudflare.com", "refresh": 10000, "retry": 2400, "rname": "dns.cloudflare.com", "serial": 2399341694})}
+`;
+            
+            markdown += `- **Cname Record**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Ptr Record**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Http Status**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Https Status**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Redirect Url**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Server Header**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **X Powered By**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Title**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Description**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Technologies**: ${JSON.stringify([])}
+`;
+            
+            markdown += `- **Security Headers**: ${JSON.stringify({})}
+`;
+            
+            markdown += `- **Ssl Info**: ${JSON.stringify({})}
+`;
+            
+            markdown += `- **Dnssec**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Response Time Ms**: ${JSON.stringify(13)}
+`;
+            
+            markdown += `- **Timestamp**: ${JSON.stringify("2026-03-28T02:49:24.803235")}
+`;
+            
+            markdown += `
+`;
+            
+            const blob = new Blob([markdown], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ghostintel-${Date.now()}.md`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstModule = document.querySelector('.module-content');
+            if (firstModule) {
+                firstModule.style.display = 'block';
+                const firstBtn = firstModule.previousElementSibling.querySelector('.toggle-btn');
+                if (firstBtn) firstBtn.textContent = '▲';
+            }
+        });
+    </script>
+</body>
+</html>

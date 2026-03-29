@@ -1,0 +1,2381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostIntel Report - tokopedia.com</title>
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark theme (default) */
+            --bg-primary: #0a0c0f;
+            --bg-secondary: #14181c;
+            --bg-tertiary: #1e2329;
+            --bg-hover: #252d36;
+            --text-primary: #e6e9ef;
+            --text-secondary: #9aa3b4;
+            --text-muted: #6b7485;
+            --accent-cyan: #2dd4bf;
+            --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
+            --accent-orange: #f97316;
+            --accent-red: #ef4444;
+            --accent-purple: #a78bfa;
+            --accent-blue: #3b82f6;
+            --border-color: #2a3038;
+            --border-light: #333b44;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Light theme */
+        .light-theme {
+            --bg-primary: #f3f4f6;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f9fafb;
+            --bg-hover: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --border-light: #d1d5db;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ===== BASE STYLES ===== */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--text-primary);
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent-green);
+            text-decoration: underline;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .header::before {
+            content: '👻';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10rem;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .header-title h1 {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+            font-size: 3rem;
+        }
+
+        .header-badge {
+            background: var(--accent-green);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-meta {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 1rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-item strong {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* ===== THEME TOGGLE ===== */
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            padding: 0.25rem;
+            display: flex;
+            gap: 0.25rem;
+            z-index: 10;
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .theme-btn.active {
+            background: var(--accent-cyan);
+            color: white;
+        }
+
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, border-color 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-cyan);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== MODULE CARDS ===== */
+        .module-card {
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .module-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 15px 30px -10px rgba(45, 212, 191, 0.2);
+        }
+
+        .module-header {
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .module-header:hover {
+            background: var(--bg-hover);
+        }
+
+        .module-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .module-title h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--accent-cyan);
+        }
+
+        .module-icon {
+            font-size: 1.5rem;
+        }
+
+        .module-badge {
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .module-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .toggle-btn:hover {
+            background: var(--bg-hover);
+            color: var(--accent-cyan);
+        }
+
+        /* ===== DATA GRID ===== */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .data-item {
+            background: var(--bg-tertiary);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.2s;
+        }
+
+        .data-item:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .data-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .data-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .data-value {
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .data-value.success { color: var(--success); }
+        .data-value.warning { color: var(--warning); }
+        .data-value.danger { color: var(--danger); }
+        .data-value.info { color: var(--info); }
+
+        /* ===== LISTS ===== */
+        .list {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .list li {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            margin-bottom: 0.25rem;
+            border-left: 3px solid var(--accent-cyan);
+            word-break: break-word;
+            font-size: 0.875rem;
+            transition: transform 0.2s;
+        }
+
+        .list li:hover {
+            transform: translateX(5px);
+            background: var(--bg-hover);
+        }
+
+        .list li a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            display: block;
+        }
+
+        .list li a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== TAGS/CHIPS ===== */
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin: 0.25rem;
+        }
+
+        .tag.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .tag.warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .tag.danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .tag.info {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+            border-color: var(--info);
+        }
+
+        /* ===== PROGRESS BARS ===== */
+        .progress {
+            background: var(--bg-hover);
+            border-radius: 1rem;
+            height: 0.5rem;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+            height: 100%;
+            border-radius: 1rem;
+            transition: width 0.3s;
+        }
+
+        /* ===== BREACH ALERT STYLES ===== */
+        .breach-alert {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.05));
+            border-left: 4px solid var(--accent-red);
+        }
+
+        .breach-detail {
+            background: var(--bg-secondary);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--accent-yellow);
+        }
+
+        .recommendation-box {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-top: 0.75rem;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        /* ===== CATEGORY BADGES ===== */
+        .category-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-hover);
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+        }
+
+        .platform-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            font-size: 0.7rem;
+            margin: 0.2rem;
+            transition: all 0.2s;
+        }
+
+        .platform-tag:hover {
+            background: var(--accent-cyan);
+            color: white;
+            border-color: var(--accent-cyan);
+        }
+
+        /* ===== SEARCH BOX ===== */
+        .search-box {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 2rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        /* ===== EXPORT BUTTONS ===== */
+        .export-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .export-btn:hover {
+            background: var(--accent-cyan);
+            color: white;
+            border-color: var(--accent-cyan);
+        }
+
+        /* ===== SOURCES SECTION ===== */
+        .sources {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sources span {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .source-badge {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.7rem;
+        }
+
+        /* ===== TIMESTAMP ===== */
+        .timestamp {
+            font-family: monospace;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== CORRELATION TREE ===== */
+        .correlation-tree {
+            background: var(--bg-tertiary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .tree-root {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tree-root::before {
+            content: '🔗';
+            position: absolute;
+            left: -0.5rem;
+            top: 0;
+        }
+
+        .tree-branch {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--border-color);
+        }
+
+        .tree-leaf {
+            padding: 0.25rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tree-leaf::before {
+            content: '↳';
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        .tree-leaf strong {
+            color: var(--accent-green);
+            min-width: 80px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .header { padding: 1.5rem; }
+            .header::before { font-size: 6rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .data-grid { grid-template-columns: 1fr; }
+            .theme-toggle { position: static; margin-bottom: 1rem; }
+        }
+
+        @media print {
+            .theme-toggle, .export-buttons, .toggle-btn { display: none; }
+            .module-card { break-inside: avoid; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button class="theme-btn active" onclick="setTheme('dark')">🌙 Dark</button>
+        <button class="theme-btn" onclick="setTheme('light')">☀️ Light</button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>👻 GhostIntel Report</h1>
+                    <span class="header-badge">v2.5</span>
+                </div>
+                <div class="header-meta">
+                    <div class="meta-item"><span>🎯 Target:</span><strong>tokopedia.com</strong></div>
+                    <div class="meta-item"><span>📅 Generated:</span><strong>2026-03-28 02:54:35</strong></div>
+                    <div class="meta-item"><span>📊 Modules:</span><strong>2</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="export-buttons">
+            <button class="export-btn" onclick="exportJSON()"><span>📋</span> Export JSON</button>
+            <button class="export-btn" onclick="exportMarkdown()"><span>📝</span> Export Markdown</button>
+            <button class="export-btn" onclick="window.print()"><span>🖨️</span> Print / PDF</button>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Search in report..." onkeyup="searchReport(this.value)">
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📦</div>
+                <div class="stat-value">2</div>
+                <div class="stat-label">Modules Run</div>
+            </div>
+            
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        🌐
+                        
+                    </div>
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">Domain Found</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        🌍
+                        
+                    </div>
+                    <div class="stat-value">1</div>
+                    <div class="stat-label">Ip Found</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        🔍
+                        
+                    </div>
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Nameserver Found</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        🔍
+                        
+                    </div>
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Mail_server Found</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        🔍
+                        
+                    </div>
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Total_connections Found</div>
+                </div>
+                
+            
+        </div>
+
+        <!-- Modules -->
+        
+        <div class="module-card" data-module="domain">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    <span class="module-icon">
+                        🌐
+                        
+                    </span>
+                    <h3>DOMAIN</h3>
+                    
+                </div>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="data-grid">
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="domain">
+                            <div class="data-label" data-tooltip="Domain">
+                                Domain
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        tokopedia.com
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="ip_addresses">
+                            <div class="data-label" data-tooltip="Ip Addresses">
+                                Ip Addresses
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                47.74.244.18
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="ipv6_addresses">
+                            <div class="data-label" data-tooltip="Ipv6 Addresses">
+                                Ipv6 Addresses
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <span class="tag">None</span>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="nameservers">
+                            <div class="data-label" data-tooltip="Nameservers">
+                                Nameservers
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                ns-491.awsdns-61.com
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ns-1184.awsdns-20.org
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ns-869.awsdns-44.net
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ns-1959.awsdns-52.co.uk
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="mx_records">
+                            <div class="data-label" data-tooltip="Mx Records">
+                                Mx Records
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>mx1.bytedance.com</strong>
+                                                    <small>(priority: 1)</small>
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>mx2.bytedance.com</strong>
+                                                    <small>(priority: 5)</small>
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                
+                                                    <strong>mx3.bytedance.com</strong>
+                                                    <small>(priority: 10)</small>
+                                                    
+                                                
+                                                
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="txt_records">
+                            <div class="data-label" data-tooltip="Txt Records">
+                                Txt Records
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                verification-code-site-App_feishu=P7ALeLpem8BnC1JpXxqf
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                onetrust-domain-verification=4ed1917d99c146c3b195aa9b02f4b34f
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                _x0o7v0y2wekbuoxd6qozarr865w1497
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                vz7ycps966y5s7ng85l2g0ydhqrdd6zj
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                _0lav469rtgwyvusp7tau56z4zzuy9uk
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                include:spf.falconide.com -all
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                MS=ms79836748
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                9b612aec551149c1b68a2cdc5c98c308
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                _globalsign-domain-verification=Hdcp4Cw8KD8kmIXazy3858PpRLLl-qfQ2d4v-BEenC
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                7UO7dv0v=d0d5740263085d78bd63440f747b941d
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                atlassian-domain-verification=pDiwdl/KVLSz+vZtSibPvzBRc8PG4BwQUlI3aEJO87q68Y1sVuow5zmnWv5hGXbk
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                f66yqm95phj1n5fhltqsshtt9z2sfqdl
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                _7foy7j2gl8m3pa7mj8h06naxq1j4zxm
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                atlassian-domain-verification=06OmMnv5bNdY64YN0T2hejCLcWR2j5UG1ozXOZXLFT33OPIa96I3xfMoLSwNg8fJ
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                google-site-verification=aSqX0LlIlu8841SQyH4CQAyh6AQmKhXTLZkxACvLrKY
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                _m36eyonv5igb9hz50cj2d1gamll5ybz
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                v=spf1 include:amazonses.com include:servers.mcsv.net include:_spf.salesforce.com include:83025279.ppspf.net ip4:205.201.128.0/20 ip4:198.2.128.0/18 ip4:148.105.0.0/16 ip4:185.132.182.154/32 ip4:185.183.28.138/32 include:spf.onlarksuite.com -all 
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                google-site-verification=_Tn2fFov9FMfsJtK3Dk2Cwx73YnHJ75o8yST0PoZgBw
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                E2AHWE4DM85FDU
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                _globalsign-domain-verification=6sj_kwHk9gtZvh_0X0dTwUdsBhYd4ApFil6hEyaOVn
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                ca3-80de64f20a3d419086d1f259ecf20965
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                google-site-verification=XJ5iwmb7OsLUyuTtr-YGkwbCETb4DzictsCMsWvssv4
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="spf_record">
+                            <div class="data-label" data-tooltip="Spf Record">
+                                Spf Record
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        v=spf1 include:amazonses.com include:servers.mcsv.net include:_spf.salesforce.com include:83025279.ppspf.net ip4:205.201.128.0/20 ip4:198.2.128.0/18 ip4:148.105.0.0/16 ip4:185.132.182.154/32 ip4:185.183.28.138/32 include:spf.onlarksuite.com -all 
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="dkim_records">
+                            <div class="data-label" data-tooltip="Dkim Records">
+                                Dkim Records
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <span class="tag">None</span>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="dmarc_record">
+                            <div class="data-label" data-tooltip="Dmarc Record">
+                                Dmarc Record
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="soa_record">
+                            <div class="data-label" data-tooltip="Soa Record">
+                                Soa Record
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <ul class="list">
+                                        
+                                            <li>
+                                            
+                                                mname
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                rname
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                serial
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                refresh
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                retry
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                expire
+                                            
+                                            </li>
+                                        
+                                            <li>
+                                            
+                                                minimum
+                                            
+                                            </li>
+                                        
+                                        </ul>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="cname_record">
+                            <div class="data-label" data-tooltip="Cname Record">
+                                Cname Record
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="ptr_record">
+                            <div class="data-label" data-tooltip="Ptr Record">
+                                Ptr Record
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="http_status">
+                            <div class="data-label" data-tooltip="Http Status">
+                                Http Status
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="https_status">
+                            <div class="data-label" data-tooltip="Https Status">
+                                Https Status
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="redirect_url">
+                            <div class="data-label" data-tooltip="Redirect Url">
+                                Redirect Url
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="server_header">
+                            <div class="data-label" data-tooltip="Server Header">
+                                Server Header
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="x_powered_by">
+                            <div class="data-label" data-tooltip="X Powered By">
+                                X Powered By
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="title">
+                            <div class="data-label" data-tooltip="Title">
+                                Title
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="description">
+                            <div class="data-label" data-tooltip="Description">
+                                Description
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="technologies">
+                            <div class="data-label" data-tooltip="Technologies">
+                                Technologies
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <span class="tag">None</span>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="security_headers">
+                            <div class="data-label" data-tooltip="Security Headers">
+                                Security Headers
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <span class="tag">None</span>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="ssl_info">
+                            <div class="data-label" data-tooltip="Ssl Info">
+                                Ssl Info
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <span class="tag">None</span>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="dnssec">
+                            <div class="data-label" data-tooltip="Dnssec">
+                                Dnssec
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="response_time_ms">
+                            <div class="data-label" data-tooltip="Response Time Ms">
+                                Response Time Ms
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        11
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                </div>
+                
+                
+                <div class="sources">
+                    <span>🔍 Sources:</span>
+                    
+                    <span class="source-badge">dns</span>
+                    
+                </div>
+                
+                
+                
+                <div class="timestamp">⏱️ Last updated: 2026-03-28T02:54:27.230383</div>
+                
+            </div>
+        </div>
+        
+        <div class="module-card" data-module="ip">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    <span class="module-icon">
+                        🌍
+                        
+                    </span>
+                    <h3>IP</h3>
+                    
+                </div>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="data-grid">
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="ip">
+                            <div class="data-label" data-tooltip="Ip">
+                                Ip
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        47.74.244.18
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="input">
+                            <div class="data-label" data-tooltip="Input">
+                                Input
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        tokopedia.com
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="version">
+                            <div class="data-label" data-tooltip="Version">
+                                Version
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        4
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_private">
+                            <div class="data-label" data-tooltip="Is Private">
+                                Is Private
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_loopback">
+                            <div class="data-label" data-tooltip="Is Loopback">
+                                Is Loopback
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_multicast">
+                            <div class="data-label" data-tooltip="Is Multicast">
+                                Is Multicast
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_global">
+                            <div class="data-label" data-tooltip="Is Global">
+                                Is Global
+                            </div>
+                            <div class="data-value success">
+                                
+                                
+                                    
+                                        True
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_reserved">
+                            <div class="data-label" data-tooltip="Is Reserved">
+                                Is Reserved
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="reverse_dns">
+                            <div class="data-label" data-tooltip="Reverse Dns">
+                                Reverse Dns
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="country">
+                            <div class="data-label" data-tooltip="Country">
+                                Country
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="country_code">
+                            <div class="data-label" data-tooltip="Country Code">
+                                Country Code
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="region">
+                            <div class="data-label" data-tooltip="Region">
+                                Region
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="city">
+                            <div class="data-label" data-tooltip="City">
+                                City
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="zip">
+                            <div class="data-label" data-tooltip="Zip">
+                                Zip
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="lat">
+                            <div class="data-label" data-tooltip="Lat">
+                                Lat
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="lon">
+                            <div class="data-label" data-tooltip="Lon">
+                                Lon
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="timezone">
+                            <div class="data-label" data-tooltip="Timezone">
+                                Timezone
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="isp">
+                            <div class="data-label" data-tooltip="Isp">
+                                Isp
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="org">
+                            <div class="data-label" data-tooltip="Org">
+                                Org
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="asn">
+                            <div class="data-label" data-tooltip="Asn">
+                                Asn
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="asn_name">
+                            <div class="data-label" data-tooltip="Asn Name">
+                                Asn Name
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_mobile">
+                            <div class="data-label" data-tooltip="Is Mobile">
+                                Is Mobile
+                            </div>
+                            <div class="data-value danger">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_proxy">
+                            <div class="data-label" data-tooltip="Is Proxy">
+                                Is Proxy
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_hosting">
+                            <div class="data-label" data-tooltip="Is Hosting">
+                                Is Hosting
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_crawler">
+                            <div class="data-label" data-tooltip="Is Crawler">
+                                Is Crawler
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="is_tor">
+                            <div class="data-label" data-tooltip="Is Tor">
+                                Is Tor
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        False
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="rdap">
+                            <div class="data-label" data-tooltip="Rdap">
+                                Rdap
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    
+                                        <span class="tag">None</span>
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="abuse_contact">
+                            <div class="data-label" data-tooltip="Abuse Contact">
+                                Abuse Contact
+                            </div>
+                            <div class="data-value">
+                                
+                                
+                                    None
+                                
+                            </div>
+                        </div>
+                        
+                    
+                        
+                        
+                        
+                        <div class="data-item" data-label="risk_score">
+                            <div class="data-label" data-tooltip="Risk Score">
+                                Risk Score
+                            </div>
+                            <div class="data-value success">
+                                
+                                
+                                    
+                                        35
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                        
+                    
+                </div>
+                
+                
+                <div class="sources">
+                    <span>🔍 Sources:</span>
+                    
+                    <span class="source-badge">reverse_dns</span>
+                    
+                </div>
+                
+                
+                
+                <div class="timestamp">⏱️ Last updated: 2026-03-28T02:54:30.358063</div>
+                
+            </div>
+        </div>
+        
+
+        <!-- Correlation -->
+        
+        <div class="module-card">
+            <div class="module-header" onclick="toggleModule(this)">
+                <div class="module-title">
+                    <span class="module-icon">🔗</span>
+                    <h3>INTELLIGENCE CORRELATION</h3>
+                </div>
+                <span class="toggle-btn">▼</span>
+            </div>
+            <div class="module-content">
+                <div class="correlation-tree">
+                    <div class="tree-root">tokopedia.com</div>
+                    
+                        
+                        <div class="tree-branch">
+                            <div class="tree-leaf"><strong>DOMAIN</strong></div>
+                            
+                            <div class="tree-leaf"><span>tokopedia.com</span></div>
+                            
+                        </div>
+                        
+                    
+                        
+                        <div class="tree-branch">
+                            <div class="tree-leaf"><strong>IP</strong></div>
+                            
+                            <div class="tree-leaf"><span>47.74.244.18</span></div>
+                            
+                        </div>
+                        
+                    
+                        
+                        <div class="tree-branch">
+                            <div class="tree-leaf"><strong>NAMESERVER</strong></div>
+                            
+                            <div class="tree-leaf"><span>ns-1184.awsdns-20.org</span></div>
+                            
+                            <div class="tree-leaf"><span>ns-1959.awsdns-52.co.uk</span></div>
+                            
+                            <div class="tree-leaf"><span>ns-491.awsdns-61.com</span></div>
+                            
+                            <div class="tree-leaf"><span>ns-869.awsdns-44.net</span></div>
+                            
+                        </div>
+                        
+                    
+                        
+                        <div class="tree-branch">
+                            <div class="tree-leaf"><strong>MAIL_SERVER</strong></div>
+                            
+                            <div class="tree-leaf"><span>mx1.bytedance.com</span></div>
+                            
+                            <div class="tree-leaf"><span>mx2.bytedance.com</span></div>
+                            
+                            <div class="tree-leaf"><span>mx3.bytedance.com</span></div>
+                            
+                        </div>
+                        
+                    
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Footer -->
+        <div class="footer">
+            <div>👻 GhostIntel v2.5 - OSINT Mashup Engine</div>
+            <div class="footer-links">
+                <a href="https://github.com/ruyynn/GhostIntel" target="_blank">GitHub</a>
+                <a href="#" onclick="window.print()">Print Report</a>
+                <a href="#" onclick="scrollToTop()">Back to Top</a>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.7rem;">
+                ⚠️ For Educational Purposes Only • No API Keys Required
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleModule(header) {
+            const content = header.nextElementSibling;
+            const btn = header.querySelector('.toggle-btn');
+            if (content.style.display === 'none' || !content.style.display) {
+                content.style.display = 'block';
+                btn.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                btn.textContent = '▼';
+            }
+        }
+
+        function setTheme(theme) {
+            const body = document.body;
+            const darkBtn = document.querySelector('.theme-btn:first-child');
+            const lightBtn = document.querySelector('.theme-btn:last-child');
+            if (theme === 'dark') {
+                body.classList.remove('light-theme');
+                darkBtn.classList.add('active');
+                lightBtn.classList.remove('active');
+                localStorage.setItem('ghostintel-theme', 'dark');
+            } else {
+                body.classList.add('light-theme');
+                lightBtn.classList.add('active');
+                darkBtn.classList.remove('active');
+                localStorage.setItem('ghostintel-theme', 'light');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('ghostintel-theme');
+        if (savedTheme === 'light') setTheme('light');
+
+        function searchReport(query) {
+            query = query.toLowerCase();
+            document.querySelectorAll('.module-card').forEach(module => {
+                const content = module.querySelector('.module-content');
+                const text = content.textContent.toLowerCase();
+                module.style.display = text.includes(query) || query === '' ? 'block' : 'none';
+            });
+        }
+
+        function exportJSON() {
+            const data = {
+                target: "tokopedia.com",
+                generated: "2026-03-28 02:54:35",
+                modules: {"domain": {"data": {"cname_record": null, "description": null, "dkim_records": [], "dmarc_record": null, "dnssec": false, "domain": "tokopedia.com", "http_status": null, "https_status": null, "ip_addresses": ["47.74.244.18"], "ipv6_addresses": [], "mx_records": [{"exchange": "mx1.bytedance.com", "priority": 1}, {"exchange": "mx2.bytedance.com", "priority": 5}, {"exchange": "mx3.bytedance.com", "priority": 10}], "nameservers": ["ns-491.awsdns-61.com", "ns-1184.awsdns-20.org", "ns-869.awsdns-44.net", "ns-1959.awsdns-52.co.uk"], "ptr_record": null, "redirect_url": null, "response_time_ms": 11, "security_headers": {}, "server_header": null, "soa_record": {"expire": 1209600, "minimum": 86400, "mname": "ns-869.awsdns-44.net", "refresh": 7200, "retry": 900, "rname": "awsdns-hostmaster.amazon.com", "serial": 1}, "spf_record": "v=spf1 include:amazonses.com include:servers.mcsv.net include:_spf.salesforce.com include:83025279.ppspf.net ip4:205.201.128.0/20 ip4:198.2.128.0/18 ip4:148.105.0.0/16 ip4:185.132.182.154/32 ip4:185.183.28.138/32 include:spf.onlarksuite.com -all ", "ssl_info": {}, "technologies": [], "timestamp": "2026-03-28T02:54:27.230383", "title": null, "txt_records": ["verification-code-site-App_feishu=P7ALeLpem8BnC1JpXxqf", "onetrust-domain-verification=4ed1917d99c146c3b195aa9b02f4b34f", "_x0o7v0y2wekbuoxd6qozarr865w1497", "vz7ycps966y5s7ng85l2g0ydhqrdd6zj", "_0lav469rtgwyvusp7tau56z4zzuy9uk", "include:spf.falconide.com -all", "MS=ms79836748", "9b612aec551149c1b68a2cdc5c98c308", "_globalsign-domain-verification=Hdcp4Cw8KD8kmIXazy3858PpRLLl-qfQ2d4v-BEenC", "7UO7dv0v=d0d5740263085d78bd63440f747b941d", "atlassian-domain-verification=pDiwdl/KVLSz+vZtSibPvzBRc8PG4BwQUlI3aEJO87q68Y1sVuow5zmnWv5hGXbk", "f66yqm95phj1n5fhltqsshtt9z2sfqdl", "_7foy7j2gl8m3pa7mj8h06naxq1j4zxm", "atlassian-domain-verification=06OmMnv5bNdY64YN0T2hejCLcWR2j5UG1ozXOZXLFT33OPIa96I3xfMoLSwNg8fJ", "google-site-verification=aSqX0LlIlu8841SQyH4CQAyh6AQmKhXTLZkxACvLrKY", "_m36eyonv5igb9hz50cj2d1gamll5ybz", "v=spf1 include:amazonses.com include:servers.mcsv.net include:_spf.salesforce.com include:83025279.ppspf.net ip4:205.201.128.0/20 ip4:198.2.128.0/18 ip4:148.105.0.0/16 ip4:185.132.182.154/32 ip4:185.183.28.138/32 include:spf.onlarksuite.com -all ", "google-site-verification=_Tn2fFov9FMfsJtK3Dk2Cwx73YnHJ75o8yST0PoZgBw", "E2AHWE4DM85FDU", "_globalsign-domain-verification=6sj_kwHk9gtZvh_0X0dTwUdsBhYd4ApFil6hEyaOVn", "ca3-80de64f20a3d419086d1f259ecf20965", "google-site-verification=XJ5iwmb7OsLUyuTtr-YGkwbCETb4DzictsCMsWvssv4"], "x_powered_by": null}, "name": "domain", "sources": ["dns"]}, "ip": {"data": {"abuse_contact": null, "asn": null, "asn_name": null, "city": null, "country": null, "country_code": null, "input": "tokopedia.com", "ip": "47.74.244.18", "is_crawler": false, "is_global": true, "is_hosting": false, "is_loopback": false, "is_mobile": false, "is_multicast": false, "is_private": false, "is_proxy": false, "is_reserved": false, "is_tor": false, "isp": null, "lat": null, "lon": null, "org": null, "rdap": {}, "region": null, "reverse_dns": null, "risk_score": 35, "timestamp": "2026-03-28T02:54:30.358063", "timezone": null, "version": 4, "zip": null}, "name": "ip", "sources": ["reverse_dns"]}}
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ghostintel-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportMarkdown() {
+            let markdown = `# GhostIntel Report - tokopedia.com
+
+Generated: 2026-03-28 02:54:35
+
+`;
+            
+            markdown += `## DOMAIN
+
+`;
+            
+            markdown += `- **Domain**: ${JSON.stringify("tokopedia.com")}
+`;
+            
+            markdown += `- **Ip Addresses**: ${JSON.stringify(["47.74.244.18"])}
+`;
+            
+            markdown += `- **Ipv6 Addresses**: ${JSON.stringify([])}
+`;
+            
+            markdown += `- **Nameservers**: ${JSON.stringify(["ns-491.awsdns-61.com", "ns-1184.awsdns-20.org", "ns-869.awsdns-44.net", "ns-1959.awsdns-52.co.uk"])}
+`;
+            
+            markdown += `- **Mx Records**: ${JSON.stringify([{"exchange": "mx1.bytedance.com", "priority": 1}, {"exchange": "mx2.bytedance.com", "priority": 5}, {"exchange": "mx3.bytedance.com", "priority": 10}])}
+`;
+            
+            markdown += `- **Txt Records**: ${JSON.stringify(["verification-code-site-App_feishu=P7ALeLpem8BnC1JpXxqf", "onetrust-domain-verification=4ed1917d99c146c3b195aa9b02f4b34f", "_x0o7v0y2wekbuoxd6qozarr865w1497", "vz7ycps966y5s7ng85l2g0ydhqrdd6zj", "_0lav469rtgwyvusp7tau56z4zzuy9uk", "include:spf.falconide.com -all", "MS=ms79836748", "9b612aec551149c1b68a2cdc5c98c308", "_globalsign-domain-verification=Hdcp4Cw8KD8kmIXazy3858PpRLLl-qfQ2d4v-BEenC", "7UO7dv0v=d0d5740263085d78bd63440f747b941d", "atlassian-domain-verification=pDiwdl/KVLSz+vZtSibPvzBRc8PG4BwQUlI3aEJO87q68Y1sVuow5zmnWv5hGXbk", "f66yqm95phj1n5fhltqsshtt9z2sfqdl", "_7foy7j2gl8m3pa7mj8h06naxq1j4zxm", "atlassian-domain-verification=06OmMnv5bNdY64YN0T2hejCLcWR2j5UG1ozXOZXLFT33OPIa96I3xfMoLSwNg8fJ", "google-site-verification=aSqX0LlIlu8841SQyH4CQAyh6AQmKhXTLZkxACvLrKY", "_m36eyonv5igb9hz50cj2d1gamll5ybz", "v=spf1 include:amazonses.com include:servers.mcsv.net include:_spf.salesforce.com include:83025279.ppspf.net ip4:205.201.128.0/20 ip4:198.2.128.0/18 ip4:148.105.0.0/16 ip4:185.132.182.154/32 ip4:185.183.28.138/32 include:spf.onlarksuite.com -all ", "google-site-verification=_Tn2fFov9FMfsJtK3Dk2Cwx73YnHJ75o8yST0PoZgBw", "E2AHWE4DM85FDU", "_globalsign-domain-verification=6sj_kwHk9gtZvh_0X0dTwUdsBhYd4ApFil6hEyaOVn", "ca3-80de64f20a3d419086d1f259ecf20965", "google-site-verification=XJ5iwmb7OsLUyuTtr-YGkwbCETb4DzictsCMsWvssv4"])}
+`;
+            
+            markdown += `- **Spf Record**: ${JSON.stringify("v=spf1 include:amazonses.com include:servers.mcsv.net include:_spf.salesforce.com include:83025279.ppspf.net ip4:205.201.128.0/20 ip4:198.2.128.0/18 ip4:148.105.0.0/16 ip4:185.132.182.154/32 ip4:185.183.28.138/32 include:spf.onlarksuite.com -all ")}
+`;
+            
+            markdown += `- **Dkim Records**: ${JSON.stringify([])}
+`;
+            
+            markdown += `- **Dmarc Record**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Soa Record**: ${JSON.stringify({"expire": 1209600, "minimum": 86400, "mname": "ns-869.awsdns-44.net", "refresh": 7200, "retry": 900, "rname": "awsdns-hostmaster.amazon.com", "serial": 1})}
+`;
+            
+            markdown += `- **Cname Record**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Ptr Record**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Http Status**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Https Status**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Redirect Url**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Server Header**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **X Powered By**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Title**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Description**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Technologies**: ${JSON.stringify([])}
+`;
+            
+            markdown += `- **Security Headers**: ${JSON.stringify({})}
+`;
+            
+            markdown += `- **Ssl Info**: ${JSON.stringify({})}
+`;
+            
+            markdown += `- **Dnssec**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Response Time Ms**: ${JSON.stringify(11)}
+`;
+            
+            markdown += `- **Timestamp**: ${JSON.stringify("2026-03-28T02:54:27.230383")}
+`;
+            
+            markdown += `
+`;
+            
+            markdown += `## IP
+
+`;
+            
+            markdown += `- **Ip**: ${JSON.stringify("47.74.244.18")}
+`;
+            
+            markdown += `- **Input**: ${JSON.stringify("tokopedia.com")}
+`;
+            
+            markdown += `- **Version**: ${JSON.stringify(4)}
+`;
+            
+            markdown += `- **Is Private**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Is Loopback**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Is Multicast**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Is Global**: ${JSON.stringify(true)}
+`;
+            
+            markdown += `- **Is Reserved**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Reverse Dns**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Country**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Country Code**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Region**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **City**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Zip**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Lat**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Lon**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Timezone**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Isp**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Org**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Asn**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Asn Name**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Is Mobile**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Is Proxy**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Is Hosting**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Is Crawler**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Is Tor**: ${JSON.stringify(false)}
+`;
+            
+            markdown += `- **Rdap**: ${JSON.stringify({})}
+`;
+            
+            markdown += `- **Abuse Contact**: ${JSON.stringify(null)}
+`;
+            
+            markdown += `- **Risk Score**: ${JSON.stringify(35)}
+`;
+            
+            markdown += `- **Timestamp**: ${JSON.stringify("2026-03-28T02:54:30.358063")}
+`;
+            
+            markdown += `
+`;
+            
+            const blob = new Blob([markdown], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ghostintel-${Date.now()}.md`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstModule = document.querySelector('.module-content');
+            if (firstModule) {
+                firstModule.style.display = 'block';
+                const firstBtn = firstModule.previousElementSibling.querySelector('.toggle-btn');
+                if (firstBtn) firstBtn.textContent = '▲';
+            }
+        });
+    </script>
+</body>
+</html>
