@@ -6,7 +6,7 @@ Web UI | Batch Processing | Breach Detection | Risk Scoring
 
 <div align="center">
 
-<img src="assets/ghost-icon.png" alt="GhostIntel" width="100">
+<img src="https://github.com/ruyynn/GhostIntel/blob/main/assets/ghost-icon.png" alt="GhostIntel" width="500">
 
 # 👻 GhostIntel v2.5
 
