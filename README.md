@@ -17,11 +17,11 @@ Web UI | Batch Processing | Breach Detection | Risk Scoring
 [![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Version](https://img.shields.io/badge/Version-2.5.0-00aced?style=for-the-badge&logo=git&logoColor=white)]()
 [![GitHub Stars](https://img.shields.io/github/stars/ruyynn/GhostIntel?style=for-the-badge&logo=github&logoColor=white&color=gold)](https://github.com/ruyynn/GhostIntel/stargazers)
+[![Forks](https://img.shields.io/github/forks/ruyynn/GhostIntel?style=for-the-badge&logo=git&logoColor=white&color=blue)](https://github.com/ruyynn/GhostIntel/network/members)
+[![Open Issues](https://img.shields.io/github/issues/ruyynn/GhostIntel?style=for-the-badge&logo=github&logoColor=white&color=red)](https://github.com/ruyynn/GhostIntel/issues)
 [![Downloads](https://img.shields.io/github/downloads/ruyynn/GhostIntel/total?style=for-the-badge&logo=github&color=green)](https://github.com/ruyynn/GhostIntel/releases)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
 [![Made in Indonesia](https://img.shields.io/badge/MADE_IN-INDONESIA-red?style=for-the-badge&logo=ko-fi&logoColor=white)]()
-
-</div>
 
 ---
 
@@ -52,9 +52,21 @@ Web UI | Batch Processing | Breach Detection | Risk Scoring
 
 ---
 
-## 👻 **About GhostIntel**
+## 👻 About GhostIntel
 
-**GhostIntel** is a **powerful, API-free OSINT framework** that helps you investigate publicly available data about usernames, emails, phone numbers, domains, and IP addresses.
+_**GhostIntel** is a **robust and versatile OSINT (Open Source Intelligence) framework** designed to empower cybersecurity enthusiasts, digital investigators, and ethical hackers. Built with **Python** and completely **API-free**, GhostIntel allows users to **explore, analyze, and gather publicly available information** about individuals, organizations, and digital assets quickly and efficiently._
+
+_The framework provides tools to investigate a wide range of data sources, including **usernames, emails, phone numbers, domains, and IP addresses**, making it an all-in-one solution for understanding online footprints, detecting exposure, and performing digital reconnaissance._
+
+_GhostIntel is designed with **ease of use and efficiency in mind**. Its **Web UI** makes navigation intuitive, while features like **batch scanning** and **attachments support** allow users to handle multiple targets and save results for further analysis. The framework is ideal for tasks such as:_
+- _🔹 **OSINT investigations** — uncover public data about people, organizations, or digital assets_
+- _🔹 **Threat intelligence** — identify potential risks and exposure points_
+- _🔹 **Digital footprint mapping** — visualize the presence of an entity across multiple platforms_
+- _🔹 **Ethical hacking reconnaissance** — gather information in a structured and safe way_
+
+_By combining **automation, flexibility, and accessibility**, GhostIntel enables users to work **quickly and efficiently**, whether for personal research, professional cybersecurity projects, or educational purposes. It emphasizes **transparency, security, and the ethical use of publicly available information**, making it a reliable tool for anyone exploring the digital world._
+
+_In short, **GhostIntel is more than just a toolkit** — it’s a **complete framework for understanding and analyzing the online presence of individuals and_ _organizations**, empowering users to make informed decisions based on publicly accessible data._
 
 > 💡 **How it works:** Just type a target — username, email, phone, domain, or IP — and GhostIntel scans **hundreds of public sources** to find everything connected to it.
 
