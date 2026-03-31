@@ -23,6 +23,8 @@ Web UI | Batch Processing | Breach Detection | Risk Scoring
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
 [![Made in Indonesia](https://img.shields.io/badge/MADE_IN-INDONESIA-red?style=for-the-badge&logo=ko-fi&logoColor=white)]()
 
+</div>
+
 ---
 
 ## 📑 **Table of Contents**
