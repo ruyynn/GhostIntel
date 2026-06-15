@@ -1,4 +1,4 @@
-# 🤝 Contributing to GhostIntel
+# 🤝 Contributing To GhostIntel
 
 <p align="center">
   <b>Hey! Thanks for taking the time to contribute to GhostIntel! 👋</b><br>
