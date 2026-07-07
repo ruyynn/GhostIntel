@@ -472,6 +472,19 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for full guide.
 
 ---
 
+## Upcoming Update 🚀
+
+> **Version 3.0 is coming soon.**
+
+Thank you so much to everyone who has supported this project, especially those who have given a star — it really helps a lot and keeps us motivated to continue developing this project.
+
+We hope **GhostIntel** continues to be useful for you, whether for learning, exploring, or just being curious about the world of **OSINT**.
+
+We really appreciate you all for sticking around.  
+**More exciting things are on the way.**
+
+---
+
 ## License
 
 MIT License — Feel free to use, modify, and distribute with credit to **Ruyynn**.
